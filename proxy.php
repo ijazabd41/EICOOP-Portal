@@ -1,7 +1,7 @@
 <?php
 // proxy.php — PHP production proxy, mirrors server.js logic
 // Forwards requests to the Odoo ERP and bypasses CORS
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/config.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');

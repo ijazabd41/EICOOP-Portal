@@ -2175,8 +2175,8 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
   const getShareholderCertificates = (num) => POST('/api/shareholder/certificates', { shareholder_number: num });
   const getShareholderRewards = (num) => POST('/api/shareholder/rewards', { shareholder_number: num });
   
-  const transferShares = (num, receiver, shares) => POST('/api/shareholder/transfer/request', { receiver_membership: receiver, shares });
-  const sellShares = (num, shares, price) => POST('/api/shareholder/share-market/sell', { shares, price_per_share: price });
+  const transferShares = (num, receiver, shares) => POST('/api/shareholder/transfer/request', { to_membership_no: receiver, number_of_shares: shares, reason: "Family transfer", source: "web" });
+  const sellShares = (num, shares, price) => POST('/api/shareholder/share-market/sell', { number_of_shares: shares, asking_price_per_share: price, source: "web" });
   const getShareListings = () => GET('/api/shareholder/share-market/list');
   const buyInterest = (num, listingId, offerPrice) => POST('/api/shareholder/share-market/interest', { listing_id: listingId, offer_price: offerPrice });
 

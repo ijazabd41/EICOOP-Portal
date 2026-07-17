@@ -267,29 +267,17 @@ window.loadPortalData = loadPortalData;
       toast(action === 'preview' ? 'Loading preview...' : 'Downloading certificate...');
       
       const sessionToken = localStorage.getItem('cd_session_id') || '';
-      const headers = { 'Content-Type': 'application/json' };
+      const headers = { 'Content-Type': 'application/json', 'Accept': 'application/pdf' };
       if (sessionToken) headers['Cookie'] = 'session_id=' + sessionToken;
 
-      try {
-        const genUrl = API.PX + '/api/shareholder/generate_certificate?by_AJR=1';
-        const shNum = localStorage.getItem('cd_shareholder_number');
-        await fetch(genUrl, {
-          method: 'POST',
-          credentials: 'include',
-          headers: headers,
-          body: JSON.stringify({ shareholder_number: shNum, language: lang })
-        });
-      } catch(err) {
-        console.warn('Generate certificate warning:', err);
-      }
-      
-      const url = API.PX + '/api/shareholder/certificate/' + action + '?by_AJR=1';
+      const url = API.PX + '/api/shareholder/certificate/' + (action === 'download' ? 'download' : 'preview') + '?by_AJR=1';
+      const shNum = localStorage.getItem('cd_shareholder_number');
 
       const res = await fetch(url, {
         method: 'POST',
         credentials: 'include',
         headers: headers,
-        body: JSON.stringify({ share_id: parseInt(shareId) || shareId, language: lang })
+        body: JSON.stringify({ membership_no: shNum, lang: lang })
       });
       
       if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -311,19 +299,7 @@ window.loadPortalData = loadPortalData;
         setTimeout(() => window.URL.revokeObjectURL(objUrl), 5000);
       };
       
-      const contentType = res.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
-        const json = await res.json();
-        if (json.error) throw new Error(json.error);
-        if (json.attachment_id) {
-          const url2 = API.PX + '/api/shareholder/certificate/attachment/' + json.attachment_id;
-          const res2 = await fetch(url2);
-          if (!res2.ok) throw new Error('Failed to fetch attachment');
-          return downloadBlob(await res2.arrayBuffer());
-        }
-      } else {
-        return downloadBlob(await res.arrayBuffer());
-      }
+      return downloadBlob(await res.arrayBuffer());
     } catch (e) {
       alert('Certificate Error: ' + e.message);
     }
@@ -548,8 +524,9 @@ async function handleTransferShares(e) {
   btn.textContent = 'Submitting...';
   try {
       const res = await API.transferShares(shNum, receiver, qty);
-      if (res && (res.success || res.status === 'success' || !res.error)) alert('Transfer request submitted successfully!');
-      else alert('Error submitting request: ' + (res.message || res.error || 'Unknown error'));
+      const isSuccess = res && (res.success === true || res.success === "true" || res.success === 1 || res.success === "1" || res.status === 'success');
+      if (isSuccess) alert('Transfer request submitted successfully!');
+      else alert('Error submitting request: ' + (res?.message || res?.error || 'Unknown error'));
       e.target.reset();
   } catch(err) {
       alert('Transfer failed: ' + err.message);
@@ -570,8 +547,9 @@ async function handleSellShares(e) {
   btn.textContent = 'Submitting...';
   try {
       const res = await API.sellShares(shNum, qty, price);
-      if (res && (res.success || res.status === 'success' || !res.error)) alert('Sell request submitted successfully!');
-      else alert('Error submitting request: ' + (res.message || res.error || 'Unknown error'));
+      const isSuccess = res && (res.success === true || res.success === "true" || res.success === 1 || res.success === "1" || res.status === 'success');
+      if (isSuccess) alert('Sell request submitted successfully!');
+      else alert('Error submitting request: ' + (res?.message || res?.error || 'Unknown error'));
       e.target.reset();
   } catch(err) {
       alert('Sell failed: ' + err.message);

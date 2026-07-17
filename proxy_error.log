@@ -267,3 +267,30 @@ Response: {"success": false, "error": "Report action not found for QWeb template
 2026-07-17 10:06:51 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview?by_AJR=1
 Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_en. Configure report XML ID as ir.actions.report, not ir.ui.view."}
 
+2026-07-17 12:55:55 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"success": "", "message": "Active recipient shareholder not found."}
+
+2026-07-17 12:55:55 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-17 12:56:12 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/share-market/sell
+Response: {"success": "", "message": "Invalid shares or asking price."}
+
+2026-07-17 12:56:12 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-17 12:58:04 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview?by_AJR=1
+Response: {"error":"Proxy cURL Error: end of response with 455431 bytes missing"}
+
+2026-07-17 12:59:07 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"success": "", "message": "Active recipient shareholder not found."}
+
+2026-07-17 12:59:07 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-17 13:02:05 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/share-market/sell
+Response: {"success": "", "message": "Invalid shares or asking price."}
+
+2026-07-17 13:02:05 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
