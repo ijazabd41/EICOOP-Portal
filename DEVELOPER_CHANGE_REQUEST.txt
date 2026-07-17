@@ -1,0 +1,17 @@
+EICOOP WEBSITE – CONFIRMED CHANGE REQUEST
+
+1. Increase the main website logo size and retain the same logo throughout the website and shareholder portal.
+2. Change “Discover EICOOP” to “Best Coop Discounts”.
+3. Add News menu and News section. Connect it to Odoo Blogs using GET /api/website/news?limit=6&lang=en_US.
+4. Add Contact Us menu and section for official email, WhatsApp, location and social-media links. Confirm final contact values before production.
+5. Rewrite About Us using the complete legal/corporate details: official name, trade name, incorporation date, registration, declaration and commercial licence.
+6. Link About Us and Our Purpose to the same About Us section/anchor. Use simple English for the purpose and objectives.
+7. Replace the shareholder-family/famous-person About image with a neutral real operations/store image.
+8. Add founding shareholder section. The supplied PPT lists 19 names, although the request mentions 20 founders. Obtain the missing 20th name and approved photographs. Until then, use neutral UAE business avatar illustrations.
+9. Use only current approved real photographs of Best Coop Discounts LLC. Replace preview images when the marketing team supplies the latest originals.
+10. Change shareholder community figure from 650+ to 700+.
+11. Remove pack-size labels: Twin & Outer Packs, Half Dozen, Dozen and Carton.
+12. Portal: use the same website logo.
+13. Portal: remove Delete Account menu.
+14. Portal: add Transfer Shares, Sell Shares, Available Shares to Sell and Buy Shares, all marked Coming Soon.
+15. Do not change the approved overall theme/layout except for the above additions and content updates.

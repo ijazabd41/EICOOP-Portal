@@ -1,0 +1,218 @@
+{
+  "info": {
+    "name": "EIC Shareholder Bridge v19 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://cooperp.freeddns.org:8070"
+    },
+    {
+      "key": "session_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Lookup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/shareholder/lookup?by_AJR=1",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"membership_no\": \"6666\"}"
+        }
+      }
+    },
+    {
+      "name": "Send OTP",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/shareholder/send_otp?by_AJR=1",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"membership_no\": \"6666\"}"
+        }
+      }
+    },
+    {
+      "name": "Verify OTP",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/shareholder/verify_otp?by_AJR=1",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"membership_no\": \"6666\", \"otp\": \"123456\"}"
+        }
+      }
+    },
+    {
+      "name": "Profile",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "session_id={{session_id}}"
+          }
+        ],
+        "url": "{{base_url}}/api/shareholder/profile?by_AJR=1"
+      }
+    },
+    {
+      "name": "Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "session_id={{session_id}}"
+          }
+        ],
+        "url": "{{base_url}}/api/shareholder/dashboard?by_AJR=1"
+      }
+    },
+    {
+      "name": "Purchases",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "session_id={{session_id}}"
+          }
+        ],
+        "url": "{{base_url}}/api/shareholder/purchases?by_AJR=1"
+      }
+    },
+    {
+      "name": "Certificates",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "session_id={{session_id}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/shareholder/certificates?by_AJR=1",
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        }
+      }
+    },
+    {
+      "name": "Certificate PDF",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "session_id={{session_id}}"
+          }
+        ],
+        "url": "{{base_url}}/report/pdf/eic_shareholder_bridge_v19.report_share_certificate_eic26_en/1"
+      }
+    },
+    {
+      "name": "Rewards",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "session_id={{session_id}}"
+          }
+        ],
+        "url": "{{base_url}}/api/shareholder/rewards?by_AJR=1"
+      }
+    },
+    {
+      "name": "Transfer Shares",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "session_id={{session_id}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/shareholder/transfer/request",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"receiver_membership\": \"7777\", \"shares\": 10}"
+        }
+      }
+    },
+    {
+      "name": "Sell Shares",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "session_id={{session_id}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/shareholder/share-market/sell",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"shares\": 10, \"price_per_share\": 100}"
+        }
+      }
+    },
+    {
+      "name": "Buy Interest",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "session_id={{session_id}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/shareholder/share-market/interest",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"listing_id\": 1, \"offer_price\": 95}"
+        }
+      }
+    }
+  ]
+}

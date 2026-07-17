@@ -1,0 +1,269 @@
+2026-07-11 15:28:09 - Error 401 on http://cooperp.freeddns.org:8070/api/shareholder/certificate/preview
+Response: {"success": false, "error": "Unauthorized"}
+
+2026-07-11 15:37:49 - Error 404 on http://cooperp.freeddns.org:8070/api/shareholder/lookup?by_AJR=1
+Response: {"success": "", "message": "Shareholder number not found.", "can_login": ""}
+
+2026-07-15 18:43:25 - Error 400 on http://cooperp.freeddns.org:8070?_path=/api/shareholder/send_otp&by_AJR=1
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(260,)">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="generator" content="Odoo"/>
+            
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="400 | COOP DISCOUNTS"/>
+        <meta property="og:site_name" content="COOP DISCOUNTS"/>
+        <meta property="og:url" content="http://cooperp.freeddns.org:8070/"/>
+        <meta property="og:image" content="http://cooperp.freeddns.org:8070/web/image/website/1/logo?unique=ca0d62c"/>
+            
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:title" content="400 | COOP DISCOUNTS"/>
+        <meta name="twitter:image" content="http://cooperp.freeddns.org:8070/web/image/website/1/logo/300x300?unique=ca0d62c"/>
+        
+        <link rel="canonical" href="https://hence-desecrate-wharf.ngrok-free.dev/"/>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin=""/>
+        <title>400 | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=ca0d62c"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/6ea1b78/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "43347a323a094e888e8a01e26ee648d272ae72beo1815677004",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": true, "is_internal_user": false, "is_website_user": true, "uid": 
+
+2026-07-15 18:43:51 - Error 400 on http://cooperp.freeddns.org:8070?_path=/api/shareholder/send_otp&by_AJR=1
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(260,)">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="generator" content="Odoo"/>
+            
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="400 | COOP DISCOUNTS"/>
+        <meta property="og:site_name" content="COOP DISCOUNTS"/>
+        <meta property="og:url" content="http://cooperp.freeddns.org:8070/"/>
+        <meta property="og:image" content="http://cooperp.freeddns.org:8070/web/image/website/1/logo?unique=ca0d62c"/>
+            
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:title" content="400 | COOP DISCOUNTS"/>
+        <meta name="twitter:image" content="http://cooperp.freeddns.org:8070/web/image/website/1/logo/300x300?unique=ca0d62c"/>
+        
+        <link rel="canonical" href="https://hence-desecrate-wharf.ngrok-free.dev/"/>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin=""/>
+        <title>400 | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=ca0d62c"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/6ea1b78/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "a7a494dd373e747f8f27e3695674f6d724cf454fo1815677030",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": true, "is_internal_user": false, "is_website_user": true, "uid": 
+
+2026-07-15 18:44:16 - Error 400 on http://cooperp.freeddns.org:8070?_path=/api/shareholder/send_otp&by_AJR=1
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(260,)">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="generator" content="Odoo"/>
+            
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="400 | COOP DISCOUNTS"/>
+        <meta property="og:site_name" content="COOP DISCOUNTS"/>
+        <meta property="og:url" content="http://cooperp.freeddns.org:8070/"/>
+        <meta property="og:image" content="http://cooperp.freeddns.org:8070/web/image/website/1/logo?unique=ca0d62c"/>
+            
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:title" content="400 | COOP DISCOUNTS"/>
+        <meta name="twitter:image" content="http://cooperp.freeddns.org:8070/web/image/website/1/logo/300x300?unique=ca0d62c"/>
+        
+        <link rel="canonical" href="https://hence-desecrate-wharf.ngrok-free.dev/"/>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin=""/>
+        <title>400 | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=ca0d62c"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/6ea1b78/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "7a5d76b887d6ff5ecb339430450cd9e3b572fccbo1815677055",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": true, "is_internal_user": false, "is_website_user": true, "uid": 
+
+2026-07-15 18:44:31 - Error 404 on http://cooperp.freeddns.org:8070/api/shareholder/send_otp
+Response: {"success": "", "message": "Shareholder number not found."}
+
+2026-07-15 18:44:57 - Error 400 on http://cooperp.freeddns.org:8070?by_AJR=1
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(260,)">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="generator" content="Odoo"/>
+            
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="400 | COOP DISCOUNTS"/>
+        <meta property="og:site_name" content="COOP DISCOUNTS"/>
+        <meta property="og:url" content="http://cooperp.freeddns.org:8070/"/>
+        <meta property="og:image" content="http://cooperp.freeddns.org:8070/web/image/website/1/logo?unique=ca0d62c"/>
+            
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:title" content="400 | COOP DISCOUNTS"/>
+        <meta name="twitter:image" content="http://cooperp.freeddns.org:8070/web/image/website/1/logo/300x300?unique=ca0d62c"/>
+        
+        <link rel="canonical" href="https://hence-desecrate-wharf.ngrok-free.dev/"/>
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin=""/>
+        <title>400 | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=ca0d62c"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/6ea1b78/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "85ffb9d1af1881b693df63025958f2ce66c159abo1815677095",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": true, "is_internal_user": false, "is_website_user": true, "uid": 
+
+2026-07-15 18:45:32 - Error 404 on http://cooperp.freeddns.org:8070/api/shareholder/send_otp
+Response: {"success": "", "message": "Shareholder number not found."}
+
+2026-07-15 18:45:52 - Error 404 on http://cooperp.freeddns.org:8070/api/shareholder/lookup
+Response: {"success": "", "message": "Shareholder number not found.", "can_login": ""}
+
+2026-07-16 19:24:03 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:24:03 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:24:17 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:28:32 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:28:32 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:28:45 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"success": "", "message": "Active recipient shareholder not found."}
+
+2026-07-16 19:28:45 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:29:07 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/share-market/sell
+Response: {"success": "", "message": "Invalid shares or asking price."}
+
+2026-07-16 19:29:07 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:33:33 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:33:33 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:33:44 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"success": "", "message": "Active recipient shareholder not found."}
+
+2026-07-16 19:33:45 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:33:59 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/share-market/sell
+Response: {"success": "", "message": "Invalid shares or asking price."}
+
+2026-07-16 19:33:59 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:47:59 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:47:59 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-16 19:48:09 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview
+Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_en. Configure report XML ID as ir.actions.report, not ir.ui.view."}
+
+2026-07-16 19:48:13 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview
+Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_ar. Configure report XML ID as ir.actions.report, not ir.ui.view."}
+
+2026-07-16 19:48:16 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/download
+Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_en. Configure report XML ID as ir.actions.report, not ir.ui.view."}
+
+2026-07-16 19:49:10 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/verify_otp
+Response: {"success": "", "message": "Invalid OTP."}
+
+2026-07-16 19:49:25 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview
+Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_en. Configure report XML ID as ir.actions.report, not ir.ui.view."}
+
+2026-07-16 20:49:02 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview?by_AJR=1
+Response: {"success": false, "error": "Shareholder not found"}
+
+2026-07-16 20:50:02 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview?by_AJR=1
+Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_en. Configure report XML ID as ir.actions.report, not ir.ui.view."}
+
+2026-07-17 09:56:18 - Error 405 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview?shareholder_number=71&lang=en&by_AJR=1
+Response: <!doctype html>
+<html lang=en>
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+
+2026-07-17 09:56:30 - Error 405 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/download?shareholder_number=71&lang=en&by_AJR=1
+Response: <!doctype html>
+<html lang=en>
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+
+2026-07-17 09:57:02 - Error 405 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview?shareholder_number=71&lang=ar&by_AJR=1
+Response: <!doctype html>
+<html lang=en>
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+
+2026-07-17 10:01:31 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview?by_AJR=1
+Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_en. Configure report XML ID as ir.actions.report, not ir.ui.view."}
+
+2026-07-17 10:03:32 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/generate?by_AJR=1
+Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_en. Configure report XML ID as ir.actions.report, not ir.ui.view."}
+
+2026-07-17 10:03:32 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview?by_AJR=1
+Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_en. Configure report XML ID as ir.actions.report, not ir.ui.view."}
+
+2026-07-17 10:03:45 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/generate?by_AJR=1
+Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_ar. Configure report XML ID as ir.actions.report, not ir.ui.view."}
+
+2026-07-17 10:03:46 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/download?by_AJR=1
+Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_ar. Configure report XML ID as ir.actions.report, not ir.ui.view."}
+
+2026-07-17 10:06:51 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/certificate/preview?by_AJR=1
+Response: {"success": false, "error": "Report action not found for QWeb template: eic_shareholder_bridge_v19.report_share_certificate_eic26_en. Configure report XML ID as ir.actions.report, not ir.ui.view."}
+

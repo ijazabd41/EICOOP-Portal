@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07345b">
+  <title>Shareholder Registration | Emirati Industries Cooperative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--blue:#0b72b9;--deep:#07345b;--navy:#041f35;--gold:#ffb417;--orange:#f47c20;--muted:#667788;--line:#dbe7ef;--white:#fff;--red:#b5242e}
+    *{box-sizing:border-box} body{margin:0;color:#112231;font-family:Manrope,sans-serif;background:#f5f9fc}
+    a{text-decoration:none;color:inherit} button,input,select{font:inherit}
+    .wrap{width:min(540px, calc(100% - 40px));margin:40px auto;background:#fff;border-radius:24px;box-shadow:0 10px 40px rgba(4,31,53,.08);padding:40px;text-align:center}
+    .logo{width:160px;margin-bottom:20px}
+    h1{font-size:28px;margin:0 0 10px;color:var(--deep)}
+    p{color:var(--muted);margin-bottom:30px;line-height:1.6}
+    .field{text-align:left;margin-bottom:20px}
+    .field label{display:block;font-size:12px;font-weight:800;color:var(--deep);margin-bottom:8px}
+    .field input, .field select{width:100%;height:50px;border:1px solid var(--line);border-radius:12px;padding:0 15px;outline:none}
+    .field input:focus, .field select:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(11,114,185,.1)}
+    .btn{width:100%;height:54px;border:0;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--deep));color:#fff;font-weight:800;font-size:16px;cursor:pointer;transition:.2s}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(11,114,185,.2)}
+    .btn:disabled{opacity:0.7;cursor:not-allowed;transform:none}
+    .alert{padding:15px;border-radius:12px;margin-bottom:20px;display:none;font-size:14px;font-weight:600}
+    .alert-err{background:#fff1f1;color:var(--red);border:1px solid #ffcdcd}
+    .alert-ok{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+    .login-link{margin-top:20px;font-size:14px;color:var(--muted)}
+    .login-link a{color:var(--blue);font-weight:700}
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+  <img src="assets/eicoop-logo.png" class="logo" alt="EICOOP">
+  <h1>Shareholder Application</h1>
+  <p>Apply to join the Emirati Industries Cooperative shareholder registry and access exclusive benefits.</p>
+
+  <div id="msg" class="alert"></div>
+
+  <div class="field">
+    <label>FULL NAME (AS PER EMIRATES ID)</label>
+    <input type="text" id="regName" placeholder="Enter your full name">
+  </div>
+  <div class="field">
+    <label>EMAIL ADDRESS</label>
+    <input type="email" id="regEmail" placeholder="Enter your email address">
+  </div>
+  <div class="field">
+    <label>MOBILE NUMBER (UAE)</label>
+    <input type="tel" id="regPhone" placeholder="05x xxx xxxx">
+  </div>
+  <div class="field">
+    <label>PROPOSED SHARE SUBSCRIPTION</label>
+    <select id="regShares">
+      <option value="10">10 Shares (Minimum)</option>
+      <option value="50">50 Shares</option>
+      <option value="100">100 Shares</option>
+      <option value="other">Other Amount</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>CREATE PASSWORD</label>
+    <input type="password" id="regPass" placeholder="Minimum 6 characters">
+  </div>
+
+  <button class="btn" id="regBtn" onclick="submitRegistration()">Submit Application</button>
+
+  <div class="login-link">
+    Already an approved shareholder? <a href="index.html">Login here</a>
+  </div>
+</div>
+
+<script src="js/api-cache.js"></script>
+<script src="js/error-logger.js"></script>
+<script src="js/api.js"></script>
+<script>
+async function submitRegistration() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const pass = document.getElementById('regPass').value.trim();
+  const msg = document.getElementById('msg');
+  const btn = document.getElementById('regBtn');
+
+  if (!name || !email || !phone || !pass) {
+    msg.className = 'alert alert-err';
+    msg.textContent = 'Please fill in all fields.';
+    msg.style.display = 'block';
+    return;
+  }
+
+  if (pass.length < 6) {
+    msg.className = 'alert alert-err';
+    msg.textContent = 'Password must be at least 6 characters.';
+    msg.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+  msg.style.display = 'none';
+
+  try {
+    // We reuse the standard register endpoint but append "[SHAREHOLDER APP]" to the name 
+    // or trigger an action in Odoo so the backend knows this is a Shareholder application
+    const res = await API.register(name + ' [SHAREHOLDER APP]', email, pass, phone);
+    
+    // Automatically log them in so we can update their profile with the 'shares' field if needed
+    // But since this is just an application, we might just show a success message
+    
+    msg.className = 'alert alert-ok';
+    msg.innerHTML = '<b>Application Submitted Successfully!</b><br>Our shareholder registry team will review your application and contact you soon.';
+    msg.style.display = 'block';
+    
+    // Clear form
+    document.getElementById('regName').value = '';
+    document.getElementById('regEmail').value = '';
+    document.getElementById('regPhone').value = '';
+    document.getElementById('regPass').value = '';
+    
+  } catch (e) {
+    msg.className = 'alert alert-err';
+    msg.textContent = e.message || 'Error submitting application.';
+    msg.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Submit Application';
+  }
+}
+</script>
+</body>
+</html>
