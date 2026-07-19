@@ -294,3 +294,18 @@ Response: {"success": "", "message": "Invalid shares or asking price."}
 2026-07-17 13:02:05 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
 Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
 
+2026-07-19 10:29:57 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/lookup
+Response: {"success": "", "message": "Shareholder number not found.", "can_login": ""}
+
+2026-07-19 10:30:26 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-19 10:30:26 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-19 10:35:20 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-19 10:35:21 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
