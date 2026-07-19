@@ -77,10 +77,10 @@
     <div class="portalcard" style="margin-top:20px;">
       <h3 style="margin-top:0;margin-bottom:15px;">Share Services</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;">
-        <button class="btn btn-white" onclick="alert('Coming Soon')" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;opacity:0.7">🔁 Transfer Shares (Coming Soon)</button>
-        <button class="btn btn-white" onclick="alert('Coming Soon')" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;opacity:0.7">💵 Sell Shares (Coming Soon)</button>
-        <button class="btn btn-white" onclick="alert('Coming Soon')" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;opacity:0.7">📊 Available Shares (Coming Soon)</button>
-        <button class="btn btn-white" onclick="alert('Coming Soon')" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;opacity:0.7">➕ Buy Shares (Coming Soon)</button>
+        <button class="btn btn-white" onclick="switchTab(8, null)" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;">🔁 Transfer Shares</button>
+        <button class="btn btn-white" onclick="switchTab(12, null)" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;">💵 Sell Shares</button>
+        <button class="btn btn-white" onclick="switchTab(13, null)" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;">📊 Available Shares to Sell</button>
+        <button class="btn btn-white" onclick="switchTab(14, null)" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;">➕ Buy Shares</button>
       </div>
     </div>
   </div>
@@ -133,18 +133,69 @@
       <div id="shareListingsContent">Loading listings...</div>
     </div>
   </div>
+
   <div id="tab-14" class="portal-tab hidden">
-    <h2>➕ Buy Shares</h2>
-    <div class="portalcard">
-        <p style="margin-bottom:15px">Browse <strong>Available Shares to Sell</strong> to buy from other members.</p>
-        <button class="btn btn-primary" onclick="switchTab(13, document.querySelectorAll('.menu button')[12])">View Listings</button>
-    </div>
+     <h2>➕ Buy Shares</h2>
+     <div class="portalcard">
+         <p style="margin-bottom:15px">Browse <strong>Available Shares to Sell</strong> to buy from other members.</p>
+         <button class="btn btn-primary" onclick="switchTab(13, document.querySelectorAll('.menu button')[12])">View Listings</button>
+     </div>
   </div>
 
-  <div id="tab-9" class="portal-tab hidden">
-    <h2 style="margin-top:0">📜 Share Certificates</h2>
-    <div id="certificatesContent"></div>
-  </div>
+   <div id="tab-9" class="portal-tab hidden">
+      <h2 style="margin-top:0">📜 Share Certificates</h2>
+      <div id="certificatesContent"></div>
+   </div>
+
+
+   <div id="tab-8" class="portal-tab hidden">
+      <h2>🔁 Transfer Shares</h2>
+      <div class="portalcard">
+        <form id="transferSharesForm" onsubmit="handleTransferShares(event)">
+          <div class="form-group" style="margin-bottom:15px">
+            <label style="display:block;margin-bottom:5px">Receiver Membership Number:</label>
+            <input type="text" id="transferReceiver" required style="width:100%;padding:10px;border:1px solid #ccc;border-radius:4px;">
+          </div>
+          <div class="form-group" style="margin-bottom:15px">
+            <label style="display:block;margin-bottom:5px">Number of Shares to Transfer:</label>
+            <input type="number" id="transferSharesQty" min="1" required style="width:100%;padding:10px;border:1px solid #ccc;border-radius:4px;">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Transfer Request</button>
+        </form>
+      </div>
+   </div>
+
+   <div id="tab-12" class="portal-tab hidden">
+      <h2>💵 Sell Shares</h2>
+      <div class="portalcard">
+        <form id="sellSharesForm" onsubmit="handleSellShares(event)">
+          <div class="form-group" style="margin-bottom:15px">
+            <label style="display:block;margin-bottom:5px">Number of Shares to Sell:</label>
+            <input type="number" id="sellSharesQty" min="1" required style="width:100%;padding:10px;border:1px solid #ccc;border-radius:4px;">
+          </div>
+          <div class="form-group" style="margin-bottom:15px">
+            <label style="display:block;margin-bottom:5px">Asking Price per Share (AED):</label>
+            <input type="number" step="0.01" id="sellSharesPrice" min="1" required style="width:100%;padding:10px;border:1px solid #ccc;border-radius:4px;">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Sell Request</button>
+        </form>
+      </div>
+   </div>
+
+   <div id="tab-13" class="portal-tab hidden">
+      <h2>📊 Available Shares to Sell</h2>
+      <div class="portalcard">
+        <div id="shareListingsContent">Loading listings...</div>
+      </div>
+   </div>
+
+   <div id="tab-14" class="portal-tab hidden">
+      <h2>➕ Buy Shares</h2>
+      <div class="portalcard">
+          <p style="margin-bottom:15px">Browse <strong>Available Shares to Sell</strong> to buy from other members.</p>
+          <button class="btn btn-primary" onclick="switchTab(13, document.querySelectorAll('.menu button')[12])">View Listings</button>
+      </div>
+   </div>
 
   <div id="tab-10" class="portal-tab hidden">
     <h2 style="margin-top:0">🎁 Shareholder Rewards</h2>
