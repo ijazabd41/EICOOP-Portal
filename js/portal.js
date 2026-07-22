@@ -305,8 +305,8 @@ window.loadPortalData = loadPortalData;
     }
   }
 
-function downloadCertificate(shNum, lang) { return handleCertificateAction('download', shNum, lang); }
-function previewCertificate(shNum, lang) { return handleCertificateAction('preview', shNum, lang); }
+function downloadCertificate(shNum) { return handleCertificateAction('download', shNum, 'en'); }
+function previewCertificate(shNum) { return handleCertificateAction('preview', shNum, 'en'); }
 
 async function loadShareholderCertificates() {
   const c = document.getElementById('certificatesContent');
@@ -327,10 +327,8 @@ async function loadShareholderCertificates() {
         const shares = cert.number_of_shares || cert.num_shares || 0;
         const val = cert.total_value || cert.total_share_value || 0;
         let btns = '';
-        btns += `<a href="javascript:void(0)" onclick="previewCertificate('${shareId}', 'en')" class="btn" style="padding:6px 12px;font-size:11px;background:#eaf7ff;color:var(--blue)">EN Preview</a> `;
-        btns += `<a href="javascript:void(0)" onclick="downloadCertificate('${shareId}', 'en')" class="btn" style="padding:6px 12px;font-size:11px;background:var(--blue);color:#fff">EN PDF</a> `;
-        btns += `<a href="javascript:void(0)" onclick="previewCertificate('${shareId}', 'ar')" class="btn" style="padding:6px 12px;font-size:11px;background:#eaf7ff;color:var(--blue)">AR Preview</a> `;
-        btns += `<a href="javascript:void(0)" onclick="downloadCertificate('${shareId}', 'ar')" class="btn" style="padding:6px 12px;font-size:11px;background:var(--blue);color:#fff">AR PDF</a>`;
+        btns += `<a href="javascript:void(0)" onclick="previewCertificate('${shareId}')" class="btn" style="padding:6px 12px;font-size:11px;background:#eaf7ff;color:var(--blue)">Preview</a> `;
+        btns += `<a href="javascript:void(0)" onclick="downloadCertificate('${shareId}')" class="btn" style="padding:6px 12px;font-size:11px;background:var(--blue);color:#fff">Download PDF</a>`;
       
       return `
         <div class="portalcard" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:12px;padding:18px">

@@ -309,3 +309,21 @@ Response: {"status": "error", "success": false, "code": 400, "message": "Missing
 2026-07-19 10:35:21 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
 Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
 
+2026-07-21 09:38:27 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-21 09:38:27 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-21 09:40:25 - Error 400 on http://cooperp.freeddns.org:8070/api/shareholder/verify_otp
+Response: {"success": "", "message": "Invalid OTP."}
+
+2026-07-21 09:40:30 - Error 400 on http://cooperp.freeddns.org:8070/api/shareholder/verify_otp
+Response: {"success": "", "message": "Invalid OTP."}
+
+2026-07-21 09:50:52 - Error 500 on http://cooperp.freeddns.org:8070/api/shareholder/certificate/preview?by_AJR=1
+Response: {"success": false, "error": "Record does not exist or has been deleted.\n(Record: partner.shares(3992,), User: 117)"}
+
+2026-07-21 09:50:56 - Error 500 on http://cooperp.freeddns.org:8070/api/shareholder/certificate/download?by_AJR=1
+Response: {"success": false, "error": "Record does not exist or has been deleted.\n(Record: partner.shares(3992,), User: 117)"}
+
