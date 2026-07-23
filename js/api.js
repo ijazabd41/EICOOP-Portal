@@ -74,7 +74,13 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
 
   // ── IMAGE HELPERS ─────────────────────────────────────────────
   // ALL image fields are PATHS — MUST prepend proxy/CDN base to display
-  const img        = p  => p ? IMG_BASE+p : '';
+  const img = p => {
+    if (!p) return '';
+    if (p.startsWith('http')) return p;
+    const cleanPath = p.replace(/^\/?proxy\.php/, '');
+    const base = IMG_BASE.endsWith('/') ? IMG_BASE.slice(0, -1) : IMG_BASE;
+    return base + (cleanPath.startsWith('/') ? '' : '/') + cleanPath;
+  };
   const prodImg    = id => `${IMG_BASE}/web/image/product.template/${id}/image_1024`;
   const catImg     = id => `${IMG_BASE}/web/image/product.public.category/${id}/image_1024`;
   const sliderImg  = id => `${IMG_BASE}/web/image/slider.image/${id}/image`;
@@ -182,11 +188,11 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
   // ── HTTP ──────────────────────────────────────────────────────
   function mkUrl(path, p={}) {
     // Build a full URL — PX is already absolute when needed (file:// or cross-origin)
-    let fullPath;
-    if (path.startsWith('http')) {
-      fullPath = path;
-    } else {
-      fullPath = PX + path;
+    let fullPath = path;
+    if (!path.startsWith('http')) {
+      const cleanPath = path.replace(/^\/?proxy\.php/, '');
+      const pxBase = PX.endsWith('/') ? PX.slice(0, -1) : PX;
+      fullPath = pxBase + (cleanPath.startsWith('/') ? '' : '/') + cleanPath;
     }
     const origin = (typeof location !== 'undefined' && location.origin !== 'null') ? location.origin : 'http://localhost';
     const u = fullPath.startsWith('http')

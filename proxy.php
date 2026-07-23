@@ -49,8 +49,14 @@ if ($pathInfo === '/api/config') {
     exit;
 }
 
-function isImage($p) {
-    return strpos($p, '/web/image/') !== false || strpos($p, '/web/binary/') !== false;
+function isBinaryPath($path) {
+    return strpos($path, '/web/image/') === 0
+        || strpos($path, '/web/binary/') === 0
+        || strpos($path, '/web/content/') === 0
+        || strpos(
+            $path,
+            '/api/ecommerce_chat/attachment/'
+        ) === 0;
 }
 
 // Fast 404 for non-Odoo static files to prevent proxy hanging
@@ -71,7 +77,7 @@ $queryString = str_replace(['%5B', '%5D'], ['[', ']'], $queryString);
 // CRITICAL: Do NOT add by_AJR to shareholder endpoints — it causes 401 on Odoo
 $isShareholderPath = strpos($pathInfo, '/api/shareholder/') === 0;
 
-if (!isImage($pathInfo) && !$isShareholderPath) {
+if (!isBinaryPath($pathInfo) && !$isShareholderPath) {
     if (strpos($queryString, 'by_AJR=') === false) {
         if (!empty($queryString)) {
             $queryString .= '&by_AJR=1';
@@ -105,8 +111,15 @@ $isCacheable = false;
 $cacheFile = '';
 $cacheTTL = 300; // 5 minutes cache
 
+$isAttachmentPath =
+    strpos($pathInfo, '/web/content/') === 0 ||
+    strpos(
+        $pathInfo,
+        '/api/ecommerce_chat/attachment/'
+    ) === 0;
+
 // Cache only specific GET endpoints for unauthenticated users
-if ($method === 'GET' && !isImage($pathInfo) && !$sessionToken) {
+if ($method === 'GET' && !isBinaryPath($pathInfo) && !$isAttachmentPath && !$sessionToken) {
     if (strpos($pathInfo, '/api/bcp-product-template') === 0 || 
         strpos($pathInfo, '/api/bcd-website-category') === 0 || 
         strpos($pathInfo, '/api/deal-day-slider') === 0 ||
