@@ -497,27 +497,30 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
       const d = await resp.json();
       const r = d.result || d.data || d; // Support JSONRPC, standard envelope, or flat response
       
-      if (!r?.uid && !r?.session_id) {
+      if (!r?.uid && !r?.session_id && !d?.uid && !d?.session_id) {
          return { ok: false, err: r?.message || d?.message || 'Invalid response from SSO endpoint' };
       }
       
-      let sessionId = d.__session_id || r.session_id || '';
+      let sessionId = d.session_id || r.session_id || d.__session_id || '';
       if (!sessionId) {
         const sidM = document.cookie.match(/session_id=([^;]+)/);
         sessionId = sidM ? sidM[1] : '';
       }
       
       const session = {
-        uid: r.uid || r.user_id, 
-        name: r.name || r.partner_name || 'User', 
-        username: r.username || r.email || r.login || '',
-        partner_id: r.partner_id, 
-        user_id: r.uid || r.user_id,
+        uid: d.uid || r.uid || r.user_id, 
+        name: d.name || r.name || r.partner_name || 'User', 
+        username: d.email || r.username || r.email || r.login || '',
+        partner_id: d.partner_id || r.partner_id, 
+        user_id: d.uid || r.uid || r.user_id,
         lang: r.user_context?.lang || r.lang || 'en_US', 
         tz: r.user_context?.tz || r.tz || 'Asia/Dubai',
         session_id: sessionId
       };
       sess(session);
+      localStorage.setItem('cd_session_id', sessionId);
+      localStorage.setItem('cd_user_id', String(session.uid));
+      localStorage.setItem('cd_user_name', session.name || '');
       return { ok: true, data: session };
     } catch(e) {
       return { ok: false, err: e.message };
@@ -582,7 +585,7 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
   }
 
   async function logout() {
-    try { await GET('/web/session/logout'); } catch(_){}
+    try { await POST('/api/logout'); } catch(_){}
     clearSess();
     clearCache();
   }
@@ -2158,11 +2161,11 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
 
   // ── SHAREHOLDER APIs ──────────────────────────────────────────
   const getShareholderFieldMap = () => GET('/api/shareholder/field_map');
-  const shareholderLookup = (num) => POST('/api/shareholder/lookup', { shareholder_number: num, partner_sequence: num });
-  const shareholderSendOtp = (num) => POST('/api/shareholder/send_otp', { shareholder_number: num });
-  const shareholderVerifyOtp = (num, otp) => POST('/api/shareholder/verify_otp', { shareholder_number: num, otp });
-  const getShareholderProfile = (num) => POST('/api/shareholder/profile', { shareholder_number: num });
-  const updateShareholderProfile = (num, data) => POST('/api/shareholder/update_profile', { shareholder_number: num, ...data });
+  const shareholderLookup = (num) => POST('/api/shareholder/lookup', { membership_no: num, partner_sequence: num });
+  const shareholderSendOtp = (num) => POST('/api/shareholder/send_otp', { membership_no: num });
+  const shareholderVerifyOtp = (num, otp) => POST('/api/shareholder/verify_otp', { membership_no: num, otp });
+  const getShareholderProfile = (num) => POST('/api/shareholder/profile', { membership_no: num });
+  const updateShareholderProfile = (num, data) => POST('/api/shareholder/update_profile', { membership_no: num, ...data });
   const getShareholderPurchases = (num, dateFrom, dateTo) => {
     let payload = { shareholder_number: num };
     if (dateFrom) payload.date_from = dateFrom;
@@ -2181,7 +2184,11 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
   const getShareholderCertificates = (num) => POST('/api/shareholder/certificates', { shareholder_number: num });
   const getShareholderRewards = (num) => POST('/api/shareholder/rewards', { shareholder_number: num });
   
+  const lookupRecipient = (membership_no) => POST('/api/shareholder/transfer/lookup_recipient', { membership_no: membership_no });
   const transferShares = (num, receiver, shares) => POST('/api/shareholder/transfer/request', { to_membership_no: receiver, number_of_shares: shares, reason: "Family transfer", source: "web" });
+  const verifyTransferSenderOtp = (transfer_id, otp) => POST('/api/shareholder/transfer/verify_sender_otp', { transfer_id, otp });
+  const verifyTransferReceiverOtp = (transfer_id, otp) => POST('/api/shareholder/transfer/verify_receiver_otp', { transfer_id, otp });
+  const getReceivedInvitations = (num) => POST('/api/shareholder/transfer/received', { shareholder_number: num });
   const sellShares = (num, shares, price) => POST('/api/shareholder/share-market/sell', { number_of_shares: shares, asking_price_per_share: price, source: "web" });
   const getShareListings = () => GET('/api/shareholder/share-market/list');
   const buyInterest = (num, listingId, offerPrice) => POST('/api/shareholder/share-market/interest', { listing_id: listingId, offer_price: offerPrice });
@@ -2197,7 +2204,7 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
     getShareholderFieldMap, shareholderLookup, shareholderSendOtp, shareholderVerifyOtp,
     getShareholderProfile, updateShareholderProfile, getShareholderPurchases,
     linkShareholderOrder, getShareholderCertificates, getShareholderRewards,
-    transferShares, sellShares, getShareListings, buyInterest,
+    lookupRecipient, transferShares, verifyTransferSenderOtp, verifyTransferReceiverOtp, getReceivedInvitations, sellShares, getShareListings, buyInterest,
     // Startup/Sliders
     getLogo, getHomeSliders, getDealOfDay, getBestSeller, getRecommended,
     getFeatured, getFreshPick, getBrands, getMobileAppPromo, getTrustElements, getAllDeals, getDealById,

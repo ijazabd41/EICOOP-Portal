@@ -101,6 +101,8 @@ async function confirmAndSendOtp() {
     const maskedPhone = phone.length > 4 ? '***-***-' + phone.slice(-4) : phone;
     document.getElementById('otpPhone').textContent = maskedPhone;
     
+    if (typeof startResendTimer === 'function') startResendTimer();
+    
     // Focus first OTP input
     const inputs = document.querySelectorAll('.otp-row input');
     inputs.forEach(input => input.value = '');
@@ -125,6 +127,55 @@ async function confirmAndSendOtp() {
       if(btn) {
           btn.disabled = false;
           btn.textContent = 'Yes, Send OTP →';
+      }
+  }
+}
+
+let resendTimer = null;
+let resendSeconds = 0;
+
+function startResendTimer() {
+    const btn = document.getElementById('btnResendOtp');
+    if (!btn) return;
+    
+    clearInterval(resendTimer);
+    resendSeconds = 90;
+    btn.disabled = true;
+    
+    resendTimer = setInterval(() => {
+        resendSeconds--;
+        if (resendSeconds <= 0) {
+            clearInterval(resendTimer);
+            btn.disabled = false;
+            btn.textContent = 'Resend OTP';
+        } else {
+            btn.textContent = `Resend OTP (${resendSeconds}s)`;
+        }
+    }, 1000);
+}
+
+async function resendOtp() {
+  const btn = document.getElementById('btnResendOtp');
+  if (btn && btn.disabled) return;
+  
+  if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+  }
+  
+  try {
+      await API.shareholderSendOtp(shNumber);
+      
+      const inputs = document.querySelectorAll('.otp-row input');
+      inputs.forEach(input => input.value = '');
+      if (inputs[0]) inputs[0].focus();
+      
+      startResendTimer();
+  } catch(e) {
+      alert('Failed to resend OTP: ' + e.message);
+      if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Resend OTP';
       }
   }
 }

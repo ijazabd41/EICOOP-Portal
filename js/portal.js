@@ -21,6 +21,7 @@ function switchTab(index, btnEl) {
   if (index === 10) loadShareholderRewards();
   if (index === 11) loadShareholderPurchases();
   if (index === 13) loadShareholderListings();
+  if (index === 15) loadReceivedInvitations();
 }
 
 async function loadPortalData() {
@@ -511,33 +512,229 @@ async function loadShareholderListings() {
   }
 }
 
-async function handleTransferShares(e) {
+async function handleLookupReceiver(e) {
   e.preventDefault();
   const shNum = localStorage.getItem('cd_shareholder_number');
-  if (!shNum) return alert('Not logged in as shareholder');
-  const receiver = document.getElementById('transferReceiver').value;
-  const qty = parseInt(document.getElementById('transferSharesQty').value, 10);
-  const btn = e.target.querySelector('button');
+  if (!shNum) return showToast('Not logged in as shareholder', true);
+  
+  const receiver = document.getElementById('transferReceiver').value.trim();
+  const btn = document.getElementById('btnLookupReceiver');
+
+  // Frontend validation
+  if (receiver === shNum) {
+      return showToast('Cannot transfer shares to your own membership number.', true);
+  }
+
   btn.disabled = true;
-  btn.textContent = 'Submitting...';
+  const originalText = btn.textContent;
+  
   try {
-      const res = await API.transferShares(shNum, receiver, qty);
-      const isSuccess = res && (res.success === true || res.success === "true" || res.success === 1 || res.success === "1" || res.status === 'success');
-      if (isSuccess) alert('Transfer request submitted successfully!');
-      else alert('Error submitting request: ' + (res?.message || res?.error || 'Unknown error'));
-      e.target.reset();
+      btn.textContent = 'Validating...';
+      const lookupRes = await API.lookupRecipient(receiver);
+      
+      const isApiSuccess = lookupRes && (lookupRes.success === true || lookupRes.success === "true" || lookupRes.success === 1 || lookupRes.success === "1");
+      const isValidRecipient = isApiSuccess && lookupRes.exists !== "" && lookupRes.exists !== false; 
+      
+      if (!isApiSuccess || (lookupRes.exists !== undefined && !isValidRecipient)) {
+          showToast(lookupRes?.message || 'Invalid recipient. Transfer aborted.', true);
+          document.getElementById('transferStep2').style.display = 'none';
+      } else {
+          showToast('Recipient validated successfully!');
+          
+          let detailsHtml = `Verified Recipient: ${receiver}`;
+          if (lookupRes.recipient) {
+              const r = lookupRes.recipient;
+              detailsHtml = `
+                  <div style="background:#f8f9fa; padding:15px; border-radius:8px; border:1px solid #e9ecef; color:#333; font-weight:normal;">
+                      <h4 style="margin:0 0 10px 0; color:green;">✅ Recipient Verified</h4>
+                      <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                          <span><strong>Name:</strong></span>
+                          <span>${r.name || 'N/A'}</span>
+                      </div>
+                      <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                          <span><strong>Mobile:</strong></span>
+                          <span>${r.mobile_masked || 'N/A'}</span>
+                      </div>
+                      <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                          <span><strong>Membership No:</strong></span>
+                          <span>${r.membership_no || receiver}</span>
+                      </div>
+                      <div style="display:flex; justify-content:space-between;">
+                          <span><strong>Status:</strong></span>
+                          <span style="text-transform:capitalize; color:${r.status === 'active' ? 'green' : 'orange'}">${r.status || 'N/A'}</span>
+                      </div>
+                  </div>
+              `;
+          }
+          
+          document.getElementById('receiverDetails').innerHTML = detailsHtml;
+          document.getElementById('transferReceiver').disabled = true;
+          document.getElementById('transferStep2').style.display = 'block';
+          btn.style.display = 'none';
+      }
   } catch(err) {
-      alert('Transfer failed: ' + err.message);
+      showToast('Lookup failed: ' + err.message, true);
   } finally {
       btn.disabled = false;
-      btn.textContent = 'Submit Transfer Request';
+      btn.textContent = originalText;
   }
 }
+
+let currentTransferId = null;
+
+async function handleTransferSubmit(e) {
+  e.preventDefault();
+  const shNum = localStorage.getItem('cd_shareholder_number');
+  if (!shNum) return showToast('Not logged in as shareholder', true);
+  
+  const receiver = document.getElementById('transferReceiver').value.trim();
+  const qty = parseInt(document.getElementById('transferSharesQty').value, 10);
+  const btn = document.getElementById('btnSubmitTransfer');
+
+  if (isNaN(qty) || qty <= 0) {
+      return showToast('Number of shares must be greater than zero.', true);
+  }
+
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  
+  try {
+      btn.textContent = 'Submitting...';
+      const res = await API.transferShares(shNum, receiver, qty);
+      const isSuccess = res && (res.success === true || res.success === "true" || res.success === 1 || res.success === "1" || res.status === 'success');
+      
+      if (isSuccess) {
+          showToast('Transfer request submitted! Please verify OTP.');
+          currentTransferId = res.transfer_id || res.id || res.reference || shNum;
+          
+          document.getElementById('transferStep2').style.display = 'none';
+          document.getElementById('transferStep3').style.display = 'block';
+          
+          // Setup OTP input traversal
+          const inputs = document.querySelectorAll('#senderOtpRow input');
+          inputs.forEach((input, index) => {
+            input.value = '';
+            input.addEventListener('keyup', function(e) {
+              if (e.key === 'Backspace') {
+                if (input.value === '' && index > 0) {
+                  inputs[index - 1].focus();
+                }
+              } else if (input.value.length === 1 && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+              }
+            });
+          });
+          if(inputs[0]) inputs[0].focus();
+      } else {
+          showToast('Error submitting request: ' + (res?.message || res?.error || 'Unknown error'), true);
+      }
+  } catch(err) {
+      showToast('Transfer failed: ' + err.message, true);
+  } finally {
+      btn.disabled = false;
+      btn.textContent = originalText;
+  }
+}
+
+async function handleTransferOtpSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnVerifySenderOtp');
+  const inputs = document.querySelectorAll('#senderOtpRow input');
+  let otp = '';
+  inputs.forEach(i => otp += i.value);
+
+  if (otp.length < 6) {
+    return showToast('Please enter the 6-digit OTP code', true);
+  }
+
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  
+  try {
+      btn.textContent = 'Verifying...';
+      const res = await API.verifyTransferSenderOtp(currentTransferId, otp);
+      const isSuccess = res && (res.success === true || res.success === "true" || res.success === 1 || res.success === "1" || res.status === 'success');
+      
+      if (isSuccess) {
+          showToast('Transfer successfully verified!');
+          document.getElementById('transferReceiver').disabled = false;
+          document.getElementById('lookupReceiverForm').reset();
+          document.getElementById('transferSharesForm').reset();
+          document.getElementById('transferStep3').style.display = 'none';
+          document.getElementById('btnLookupReceiver').style.display = 'inline-block';
+          currentTransferId = null;
+      } else {
+          showToast('Error verifying OTP: ' + (res?.message || res?.error || 'Invalid OTP'), true);
+      }
+  } catch(err) {
+      showToast('Verification failed: ' + err.message, true);
+  } finally {
+      btn.disabled = false;
+      btn.textContent = originalText;
+  }
+}
+
+async function loadReceivedInvitations() {
+  const shNum = localStorage.getItem('cd_shareholder_number');
+  if (!shNum) return;
+  const container = document.getElementById('receivedInvitationsContent');
+  container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">⏳ Loading Invitations...</div>';
+  try {
+    const res = await API.getReceivedInvitations(shNum);
+    let data = res?.data || res?.invitations || res?.result || [];
+    if(!Array.isArray(data)) data = [data];
+
+    if (!data || data.length === 0) {
+      container.innerHTML = '<p style="color:var(--muted)">No pending invitations received.</p>';
+      return;
+    }
+    
+    let html = '<div style="overflow-x:auto;"><table style="width:100%;min-width:600px;border-collapse:collapse;text-align:left;font-size:14px;">';
+    html += '<tr style="background:#f8f9fa;border-bottom:2px solid #eee"><th style="padding:12px 10px">Date</th><th style="padding:12px 10px">Sender</th><th style="padding:12px 10px">Shares</th><th style="padding:12px 10px">Status</th><th style="padding:12px 10px">Action</th></tr>';
+    
+    data.forEach(inv => {
+      html += `<tr>
+        <td style="padding:10px;border-bottom:1px solid #eee">${inv.date || '-'}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${inv.sender_name || inv.sender_membership_no || 'Unknown'}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${inv.number_of_shares || 0}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee"><span class="status">${inv.status || 'Pending'}</span></td>
+        <td style="padding:10px;border-bottom:1px solid #eee">
+          <button class="btn btn-primary" style="padding:5px 10px;font-size:12px;" onclick="promptReceiverOtp('${inv.id || inv.transfer_id || inv.reference}')">Accept</button>
+        </td>
+      </tr>`;
+    });
+    html += '</table></div>';
+    container.innerHTML = html;
+  } catch (e) {
+    container.innerHTML = `<div style="padding:20px;color:red;">Error loading invitations: ${e.message}</div>`;
+  }
+}
+
+window.promptReceiverOtp = async function(transferId) {
+  const otp = prompt("Please enter the 6-digit OTP sent to your registered mobile number to accept this transfer:");
+  if (!otp) return;
+  if (otp.length < 6) return showToast("Invalid OTP format", true);
+  
+  try {
+    const res = await API.verifyTransferReceiverOtp(transferId, otp);
+    const isSuccess = res && (res.success === true || res.success === "true" || res.success === 1 || res.success === "1" || res.status === 'success');
+    if (isSuccess) {
+      showToast('Transfer accepted successfully!');
+      loadReceivedInvitations();
+      loadDashboard();
+    } else {
+      showToast('Error accepting transfer: ' + (res?.message || res?.error || 'Invalid OTP'), true);
+    }
+  } catch(e) {
+    showToast('Failed to accept transfer: ' + e.message, true);
+  }
+};
+
 
 async function handleSellShares(e) {
   e.preventDefault();
   const shNum = localStorage.getItem('cd_shareholder_number');
-  if (!shNum) return alert('Not logged in as shareholder');
+  if (!shNum) return showToast('Not logged in as shareholder', true);
   const qty = parseInt(document.getElementById('sellSharesQty').value, 10);
   const price = parseFloat(document.getElementById('sellSharesPrice').value);
   const btn = e.target.querySelector('button');
@@ -546,11 +743,11 @@ async function handleSellShares(e) {
   try {
       const res = await API.sellShares(shNum, qty, price);
       const isSuccess = res && (res.success === true || res.success === "true" || res.success === 1 || res.success === "1" || res.status === 'success');
-      if (isSuccess) alert('Sell request submitted successfully!');
-      else alert('Error submitting request: ' + (res?.message || res?.error || 'Unknown error'));
+      if (isSuccess) showToast('Sell request submitted successfully!');
+      else showToast('Error submitting request: ' + (res?.message || res?.error || 'Unknown error'), true);
       e.target.reset();
   } catch(err) {
-      alert('Sell failed: ' + err.message);
+      showToast('Sell failed: ' + err.message, true);
   } finally {
       btn.disabled = false;
       btn.textContent = 'Submit Sell Request';
@@ -559,14 +756,26 @@ async function handleSellShares(e) {
 
 async function handleBuyInterest(listingId) {
   const shNum = localStorage.getItem('cd_shareholder_number');
-  if (!shNum) return alert('Not logged in as shareholder');
+  if (!shNum) return showToast('Not logged in as shareholder', true);
   const offerPrice = prompt("Enter your offer price per share (AED) for listing #" + listingId + ":");
   if (!offerPrice) return;
   try {
       const res = await API.buyInterest(shNum, listingId, parseFloat(offerPrice));
-      if (res && (res.success || res.status === 'success' || !res.error)) alert('Buy interest submitted successfully!');
-      else alert('Error submitting request: ' + (res.message || res.error || 'Unknown error'));
+      if (res && (res.success || res.status === 'success' || !res.error)) showToast('Buy interest submitted successfully!');
+      else showToast('Error submitting request: ' + (res.message || res.error || 'Unknown error'), true);
   } catch(err) {
-      alert('Buy request failed: ' + err.message);
+      showToast('Buy request failed: ' + err.message, true);
   }
+}
+
+function showToast(msg, isError = false) {
+  const t = document.createElement('div');
+  t.style.cssText = `position:fixed;top:20px;right:20px;background:${isError ? '#b5242e' : '#138a65'};color:#fff;padding:15px 25px;border-radius:12px;z-index:9999;box-shadow:0 10px 25px rgba(0,0,0,0.2);font-weight:700;transition:opacity 0.3s ease;opacity:0;`;
+  t.innerText = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity = '1'; }, 10);
+  setTimeout(() => { 
+      t.style.opacity = '0'; 
+      setTimeout(() => t.remove(), 300);
+  }, 4000);
 }
