@@ -327,3 +327,331 @@ Response: {"success": false, "error": "Record does not exist or has been deleted
 2026-07-21 09:50:56 - Error 500 on http://cooperp.freeddns.org:8070/api/shareholder/certificate/download?by_AJR=1
 Response: {"success": false, "error": "Record does not exist or has been deleted.\n(Record: partner.shares(3992,), User: 117)"}
 
+2026-07-23 03:24:03 - Error 404 on http://cooperp.freeddns.org:8070/web/content/61750
+Response: <!doctype html>
+<html lang=en>
+<title>404 Not Found</title>
+<h1>Not Found</h1>
+<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>
+
+
+2026-07-29 06:34:37 - Error 400 on http://cooperp.freeddns.org:8070/api/shareholder/transfer/request
+Response: {"success": "", "message": "Invalid recipient or share quantity."}
+
+2026-07-29 06:34:46 - Error 400 on http://cooperp.freeddns.org:8070/api/shareholder/transfer/request
+Response: {"success": "", "message": "Invalid recipient or share quantity."}
+
+2026-07-29 08:40:13 - Error 404 on http://cooperp.freeddns.org:8076/shareholder/transfer/lookup_recipient?by_AJR=1
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)" data-can-optimize-seo="True">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "4a4af113636f1a15d88f4c360bb556db013fbe01o1816850414",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": false, "is_internal_user": false, "is_website_user": false, "uid": 38, "registry_hash": "bf43925f07d05f699512c61685cab90b96cf36aca057640b6b0150a62fb635d4", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "server_version": "19.0", "server_version_info": [19, 0, 0, "final", 0, ""], "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+  
+
+2026-07-29 08:40:13 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-29 08:42:45 - Error 404 on http://cooperp.freeddns.org:8076/shareholder/transfer/lookup_recipient?by_AJR=1
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)" data-can-optimize-seo="True">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "5ce497d46f8d3204a80e4bd0e305acdc7b47b16ao1816850565",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": false, "is_internal_user": false, "is_website_user": false, "uid": 38, "registry_hash": "bf43925f07d05f699512c61685cab90b96cf36aca057640b6b0150a62fb635d4", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "server_version": "19.0", "server_version_info": [19, 0, 0, "final", 0, ""], "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+  
+
+2026-07-29 08:42:45 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-29 08:42:51 - Error 404 on http://cooperp.freeddns.org:8076/shareholder/transfer/lookup_recipient?by_AJR=1
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)" data-can-optimize-seo="True">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "b040d3c99833055ecc7e6267fbeaa0c371069deco1816850572",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": false, "is_internal_user": false, "is_website_user": false, "uid": 38, "registry_hash": "bf43925f07d05f699512c61685cab90b96cf36aca057640b6b0150a62fb635d4", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "server_version": "19.0", "server_version_info": [19, 0, 0, "final", 0, ""], "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+  
+
+2026-07-29 08:42:52 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-29 08:43:05 - Error 404 on http://cooperp.freeddns.org:8076/shareholder/transfer/lookup_recipient?by_AJR=1
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)" data-can-optimize-seo="True">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "ed8f63e16d2e8ad12164ea543441d1c6b643e36ao1816850585",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": false, "is_internal_user": false, "is_website_user": false, "uid": 38, "registry_hash": "bf43925f07d05f699512c61685cab90b96cf36aca057640b6b0150a62fb635d4", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "server_version": "19.0", "server_version_info": [19, 0, 0, "final", 0, ""], "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+  
+
+2026-07-29 08:43:05 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-29 08:46:26 - Error 404 on http://cooperp.freeddns.org:8076/shareholder/transfer/lookup_recipient
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)" data-can-optimize-seo="True">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "73afccc88841d8a5d4a5b365033e1d36e3ab23cdo1816850786",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": false, "is_internal_user": false, "is_website_user": false, "uid": 38, "registry_hash": "bf43925f07d05f699512c61685cab90b96cf36aca057640b6b0150a62fb635d4", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "server_version": "19.0", "server_version_info": [19, 0, 0, "final", 0, ""], "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+  
+
+2026-07-29 08:46:26 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-29 08:47:11 - Error 404 on http://cooperp.freeddns.org:8076/shareholder/transfer/lookup_recipient
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "506a9d678bdb085f2f0cbebd9b297e93364717edo1816850831",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": true, "is_internal_user": false, "is_website_user": true, "uid": null, "registry_hash": "bf43925f07d05f699512c61685cab90b96cf36aca057640b6b0150a62fb635d4", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+            }
+        </script>
+        <script type="text/javascript" defer="defer" src="/web/assets/1/72a7
+
+2026-07-29 08:47:53 - Error 401 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"success": "", "message": "Authenticated shareholder session required."}
+
+2026-07-29 09:05:12 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/verify_otp
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "8acf8583f81939643cffe1e1a4e928b74c1e2b70o1816851912",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": true, "is_internal_user": false, "is_website_user": true, "uid": null, "registry_hash": "bf43925f07d05f699512c61685cab90b96cf36aca057640b6b0150a62fb635d4", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+            }
+        </script>
+        <script type="text/javascript" defer="defer" src="/web/assets/1/72a7
+
+2026-07-29 09:05:44 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/verify
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "bf835fb15a17fe48fa505bc18d9bdb168bf66b13o1816851945",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": true, "is_internal_user": false, "is_website_user": true, "uid": null, "registry_hash": "bf43925f07d05f699512c61685cab90b96cf36aca057640b6b0150a62fb635d4", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+            }
+        </script>
+        <script type="text/javascript" defer="defer" src="/web/assets/1/72a7
+
+2026-07-29 09:05:55 - Error 401 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"success": "", "message": "Authenticated shareholder session required."}
+
+2026-07-29 09:08:37 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/verify_sender_otp
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "42baaff5a98501c89aa728b245c48094f498f7d8o1816852117",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": true, "is_internal_user": false, "is_website_user": true, "uid": null, "registry_hash": "bf43925f07d05f699512c61685cab90b96cf36aca057640b6b0150a62fb635d4", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+            }
+        </script>
+        <script type="text/javascript" defer="defer" src="/web/assets/1/72a7
+
+2026-07-29 17:06:31 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/received
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)" data-can-optimize-seo="True">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "8be3ae49cb646439301da8b6509394bceb13f3ffo1816880790",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": false, "is_internal_user": false, "is_website_user": false, "uid": 38, "registry_hash": "ace951e37c33b2e244c730ce27ec523a1d85cd0e46626eccddc58846142e9da8", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "server_version": "19.0", "server_version_info": [19, 0, 0, "final", 0, ""], "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+  
+
+2026-07-29 17:06:31 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-29 17:07:23 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/verify_sender_otp
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)" data-can-optimize-seo="True">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "d063c52f0b18392d2cdaf3821e6e4bbe86598299o1816880837",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": false, "is_internal_user": false, "is_website_user": false, "uid": 38, "registry_hash": "ace951e37c33b2e244c730ce27ec523a1d85cd0e46626eccddc58846142e9da8", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "server_version": "19.0", "server_version_info": [19, 0, 0, "final", 0, ""], "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+  
+
+2026-07-29 17:07:24 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-29 17:28:49 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/received
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)" data-can-optimize-seo="True">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=c276315"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "7e6fe39378d886907ec193647eb5ac9c2d7b3e79o1816882128",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": false, "is_internal_user": false, "is_website_user": false, "uid": 38, "registry_hash": "ace951e37c33b2e244c730ce27ec523a1d85cd0e46626eccddc58846142e9da8", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "server_version": "19.0", "server_version_info": [19, 0, 0, "final", 0, ""], "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+  
+
+2026-07-29 17:28:49 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
