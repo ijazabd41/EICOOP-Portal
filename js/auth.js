@@ -122,7 +122,7 @@ async function confirmAndSendOtp() {
       });
     });
   } catch(e) {
-      alert('Failed to send OTP: ' + e.message);
+      if (typeof window.showToast === 'function') window.showToast('Failed to send OTP: ' + e.message, true); else alert('Failed to send OTP: ' + e.message);
   } finally {
       if(btn) {
           btn.disabled = false;
@@ -172,7 +172,7 @@ async function resendOtp() {
       
       startResendTimer();
   } catch(e) {
-      alert('Failed to resend OTP: ' + e.message);
+      if (typeof window.showToast === 'function') window.showToast('Failed to resend OTP: ' + e.message, true); else alert('Failed to resend OTP: ' + e.message);
       if (btn) {
           btn.disabled = false;
           btn.textContent = 'Resend OTP';
@@ -188,7 +188,7 @@ async function enterPortal() {
   const btn = document.querySelector('#step2 .btn-primary');
 
   if (otp.length < 6) {
-    alert('Please enter the 6-digit OTP code');
+    if (typeof window.showToast === 'function') window.showToast('Please enter the 6-digit OTP code', true); else alert('Please enter the 6-digit OTP code');
     return;
   }
 
@@ -230,12 +230,18 @@ async function enterPortal() {
       if (window.loadPortalData) {
         window.loadPortalData();
       }
+      
+      try {
+        await API.registerShareholderPush('dummy-device-token-1234', 'web', 'Browser', '1.0');
+      } catch (e) {
+        console.warn('Push registration failed:', e);
+      }
 
     } else {
       throw new Error(r.error || r.message || 'Invalid OTP code');
     }
   } catch (e) {
-    alert(e.message || 'OTP verification failed');
+    if (typeof window.showToast === 'function') window.showToast(e.message || 'OTP verification failed', true); else alert(e.message || 'OTP verification failed');
   } finally {
     if (btn) {
       btn.disabled = false;

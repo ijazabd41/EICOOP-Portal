@@ -2161,11 +2161,11 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
 
   // ── SHAREHOLDER APIs ──────────────────────────────────────────
   const getShareholderFieldMap = () => GET('/api/shareholder/field_map');
-  const shareholderLookup = (num) => POST('/api/shareholder/lookup', { membership_no: num, partner_sequence: num });
-  const shareholderSendOtp = (num) => POST('/api/shareholder/send_otp', { membership_no: num });
-  const shareholderVerifyOtp = (num, otp) => POST('/api/shareholder/verify_otp', { membership_no: num, otp });
-  const getShareholderProfile = (num) => POST('/api/shareholder/profile', { membership_no: num });
-  const updateShareholderProfile = (num, data) => POST('/api/shareholder/update_profile', { membership_no: num, ...data });
+  const shareholderLookup = (num) => POST('/api/shareholder/lookup', { shareholder_number: num });
+  const shareholderSendOtp = (num) => POST('/api/shareholder/send_otp', { shareholder_number: num });
+  const shareholderVerifyOtp = (num, otp) => POST('/api/shareholder/verify_otp', { shareholder_number: num, otp });
+  const getShareholderProfile = () => GET('/api/shareholder/profile');
+  const updateShareholderProfile = (data) => POST('/api/shareholder/update_profile', data);
   const getShareholderPurchases = (num, dateFrom, dateTo) => {
     let payload = { shareholder_number: num };
     if (dateFrom) payload.date_from = dateFrom;
@@ -2184,14 +2184,31 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
   const getShareholderCertificates = (num) => POST('/api/shareholder/certificates', { shareholder_number: num });
   const getShareholderRewards = (num) => POST('/api/shareholder/rewards', { shareholder_number: num });
   
-  const lookupRecipient = (membership_no) => POST('/api/shareholder/transfer/lookup_recipient', { membership_no: membership_no });
-  const transferShares = (num, receiver, shares) => POST('/api/shareholder/transfer/request', { to_membership_no: receiver, number_of_shares: shares, reason: "Family transfer", source: "web" });
-  const verifyTransferSenderOtp = (transfer_id, otp) => POST('/api/shareholder/transfer/verify_sender_otp', { transfer_id, otp });
-  const verifyTransferReceiverOtp = (transfer_id, otp) => POST('/api/shareholder/transfer/verify_receiver_otp', { transfer_id, otp });
-  const getReceivedInvitations = (num) => POST('/api/shareholder/transfer/received', { shareholder_number: num });
+  const lookupRecipient = (membership_no) => POST('/api/shareholder/transfer/lookup_recipient', { recipient_membership_no: membership_no });
+  const transferShares = (num, receiver, shares) => POST('/api/shareholder/transfer/request', { recipient_membership_no: receiver, number_of_shares: shares, source: "web" });
+  const verifyTransferSenderOtp = (transfer_reference, otp) => POST('/api/shareholder/transfer/verify_sender_otp', { transfer_reference, otp });
+  const verifyTransferReceiverOtp = (transfer_reference, otp) => POST('/api/shareholder/transfer/verify_receiver_otp', { transfer_reference, otp });
+  const getReceivedInvitations = () => GET('/api/shareholder/invitations');
   const sellShares = (num, shares, price) => POST('/api/shareholder/share-market/sell', { number_of_shares: shares, asking_price_per_share: price, source: "web" });
   const getShareListings = () => GET('/api/shareholder/share-market/list');
   const buyInterest = (num, listingId, offerPrice) => POST('/api/shareholder/share-market/interest', { listing_id: listingId, offer_price: offerPrice });
+  const getTransferHistory = () => GET('/api/shareholder/transfer/history');
+  const inviteShareholder = (data) => POST('/api/shareholder/registration/invite', data);
+  const submitRegistration = (data) => POST('/api/shareholder/registration/submit', data);
+
+  // Additional Shareholder APIs
+  const getShareholderPreferences = () => GET('/api/shareholder/preferences');
+  const updateShareholderPreferences = (data) => POST('/api/shareholder/preferences/update', data);
+  const getShareholderNotifications = (page = 1, limit = 50, unreadOnly = false) => GET(`/api/shareholder/notifications?page=${page}&limit=${limit}&unread_only=${unreadOnly}`);
+  const markNotificationsRead = (ids = [], markAll = false) => {
+    const payload = {};
+    if (markAll) payload.mark_all = true;
+    else if (ids && ids.length > 0) payload.notification_ids = ids;
+    return POST('/api/shareholder/notifications/read', payload);
+  };
+  const getShareholderDashboard = () => GET('/api/shareholder/dashboard');
+  const registerShareholderPush = (token, platform, deviceName, appVersion) => POST('/api/shareholder/push/register', { device_token: token, platform, device_name: deviceName, app_version: appVersion });
+  const unregisterShareholderPush = (token) => POST('/api/shareholder/push/unregister', { device_token: token });
 
   return {
     build: API_BUILD,
@@ -2204,7 +2221,8 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
     getShareholderFieldMap, shareholderLookup, shareholderSendOtp, shareholderVerifyOtp,
     getShareholderProfile, updateShareholderProfile, getShareholderPurchases,
     linkShareholderOrder, getShareholderCertificates, getShareholderRewards,
-    lookupRecipient, transferShares, verifyTransferSenderOtp, verifyTransferReceiverOtp, getReceivedInvitations, sellShares, getShareListings, buyInterest,
+    lookupRecipient, transferShares, verifyTransferSenderOtp, verifyTransferReceiverOtp, getReceivedInvitations, getTransferHistory, inviteShareholder, submitRegistration, sellShares, getShareListings, buyInterest,
+    getShareholderPreferences, updateShareholderPreferences, getShareholderNotifications, markNotificationsRead, getShareholderDashboard, registerShareholderPush, unregisterShareholderPush,
     // Startup/Sliders
     getLogo, getHomeSliders, getDealOfDay, getBestSeller, getRecommended,
     getFeatured, getFreshPick, getBrands, getMobileAppPromo, getTrustElements, getAllDeals, getDealById,

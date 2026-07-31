@@ -655,3 +655,168 @@ Response: <!DOCTYPE html>
 2026-07-29 17:28:49 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
 Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
 
+2026-07-30 13:28:06 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/verify_sender_otp
+Response: {"success": "", "error_code": "TRANSFER_NOT_FOUND", "message": "Transfer not found."}
+
+2026-07-30 13:28:06 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-30 13:29:15 - Error 404 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/verify_sender_otp
+Response: {"success": "", "error_code": "TRANSFER_NOT_FOUND", "message": "Transfer not found."}
+
+2026-07-30 13:29:16 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-30 14:09:30 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"success": "", "error_code": "INSUFFICIENT_SHARES", "message": "Insufficient shares for this transfer.", "available_shares": "2000.0", "requested_shares": "3311.0"}
+
+2026-07-30 14:09:30 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-30 14:43:21 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: {"success": "", "error_code": "REQUIRED_FIELDS", "message": "Name and mobile are required."}
+
+2026-07-30 14:43:21 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-30 14:45:03 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-30 14:45:03 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-30 14:54:01 - Error 401 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: {"success": "", "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-07-30 14:59:38 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-30 14:59:38 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-30 15:00:56 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-30 15:00:57 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-30 15:03:12 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-30 15:03:12 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-30 15:03:31 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-30 15:03:31 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-31 09:40:18 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-31 09:40:18 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-31 09:47:42 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-31 09:47:42 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-31 10:01:58 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-31 10:01:58 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-31 10:06:41 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-31 10:06:41 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-31 10:29:04 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-31 10:29:04 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-31 10:30:44 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-31 10:30:46 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-31 10:31:08 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-07-31 10:31:08 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-31 10:46:10 - Error 409 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: {"success": "", "error_code": "ACTIVE_INVITATION_EXISTS", "message": "An active invitation already exists for this mobile number.", "registration_reference": "REG2026-00001", "expires_at": "2026-08-07 10:38:46", "remaining_invites_today": "2"}
+
+2026-07-31 10:46:10 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+

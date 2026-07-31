@@ -36,16 +36,26 @@
   <img src="assets/eic-logo.png" class="logo" alt="EICOOP">
   <h1>Shareholder Application</h1>
   <p>Apply to join the Emirati Industries Cooperative shareholder registry and access exclusive benefits.</p>
+  <div id="reg-progress"></div>
+
+  <div style="background:#eef3f6; border:1px solid #dbe7ef; border-radius:14px; padding:18px; margin-bottom:25px; text-align:left; font-size:13px; line-height:1.6;">
+    <strong style="color:var(--navy); font-size:14px;">📝 Before you apply:</strong>
+    <ul style="margin:8px 0 0; padding-left:20px; color:var(--muted);">
+      <li>You must be a UAE National or resident.</li>
+      <li>Your name must match your Emirates ID exactly.</li>
+      <li>Applications are reviewed by the board and take <strong>3-5 business days</strong> to process.</li>
+    </ul>
+  </div>
 
   <div id="msg" class="alert"></div>
 
   <div class="field">
     <label>FULL NAME (AS PER EMIRATES ID)</label>
-    <input type="text" id="regName" placeholder="Enter your full name">
+    <input type="text" id="regName" placeholder="Must exactly match your Emirates ID">
   </div>
   <div class="field">
     <label>EMAIL ADDRESS</label>
-    <input type="email" id="regEmail" placeholder="Enter your email address">
+    <input type="email" id="regEmail" placeholder="e.g. name@example.com (for status updates)">
   </div>
   <div class="field">
     <label>MOBILE NUMBER (UAE)</label>
@@ -75,7 +85,16 @@
 <script src="js/api-cache.js"></script>
 <script src="js/error-logger.js"></script>
 <script src="js/api.js"></script>
+<script src="js/step-progress.js"></script>
 <script>
+let regProgress;
+document.addEventListener('DOMContentLoaded', () => {
+  regProgress = new StepProgress('reg-progress', [
+    { title: 'Submit Application', description: 'Fill and submit form' },
+    { title: 'Board Review', description: 'Takes 3-5 business days' },
+    { title: 'Registry Activation', description: 'Ready to login' }
+  ], 1);
+});
 async function submitRegistration() {
   const name = document.getElementById('regName').value.trim();
   const email = document.getElementById('regEmail').value.trim();
@@ -103,16 +122,22 @@ async function submitRegistration() {
   msg.style.display = 'none';
 
   try {
-    // We reuse the standard register endpoint but append "[SHAREHOLDER APP]" to the name 
-    // or trigger an action in Odoo so the backend knows this is a Shareholder application
-    const res = await API.register(name + ' [SHAREHOLDER APP]', email, pass, phone);
-    
-    // Automatically log them in so we can update their profile with the 'shares' field if needed
+    const shares = document.getElementById('regShares').value;
+    const payload = {
+      name: name,
+      email: email,
+      mobile: phone,
+      password: pass,
+      proposed_shares: shares
+    };
+    const res = await API.submitRegistration(payload);
     // But since this is just an application, we might just show a success message
     
     msg.className = 'alert alert-ok';
     msg.innerHTML = '<b>Application Submitted Successfully!</b><br>Our shareholder registry team will review your application and contact you soon.';
     msg.style.display = 'block';
+    
+    if (regProgress) regProgress.setStep(2);
     
     // Clear form
     document.getElementById('regName').value = '';
