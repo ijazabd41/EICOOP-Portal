@@ -385,15 +385,30 @@ async function loadShareholderCertificates() {
         const shareId = cert.share_id || cert.id || '1';
         const shares = cert.number_of_shares || cert.num_shares || 0;
         const val = cert.total_value || cert.total_share_value || 0;
-        let btns = '';
-        btns += `<a href="javascript:void(0)" onclick="previewCertificate('${shareId}')" class="btn" style="padding:6px 12px;font-size:11px;background:#eaf7ff;color:var(--blue)">Preview</a> `;
-        btns += `<a href="javascript:void(0)" onclick="downloadCertificate('${shareId}')" class="btn" style="padding:6px 12px;font-size:11px;background:var(--blue);color:#fff">Download PDF</a>`;
-      
+        const issueDate = cert.issue_date || cert.date || 'N/A';
+        const status = cert.status || 'Active';
+        
       return `
-        <div class="portalcard" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-top:12px;padding:18px">
-          <div><div style="font-weight:800;font-size:16px;">Certificate #${certNum}</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:4px;">Shares: ${parseFloat(shares).toLocaleString()} | Value: AED ${parseFloat(val).toLocaleString()}</div></div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">${btns}</div>
+        <div class="portalcard" style="display:flex; flex-direction:column; gap:15px; margin-top:15px; padding:20px; border-left: 4px solid var(--gold); border-radius:12px; background:linear-gradient(to right, #fff, #fefdfa);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:15px;">
+            <div style="flex:1; min-width:200px; max-width:100%; overflow:hidden;">
+              <div style="font-size:12px; font-weight:800; color:var(--gold); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Official Document</div>
+              <div style="font-weight:800; font-size:20px; color:var(--navy); word-wrap:break-word;">Certificate #${certNum}</div>
+              <div style="font-size:14px; color:var(--muted); margin-top:8px;">
+                <strong>Date:</strong> <span dir="auto">${issueDate}</span><br>
+                <strong>Status:</strong> <span style="color:${status.toLowerCase() === 'active' ? 'green' : 'orange'}; text-transform:capitalize;">${status}</span>
+              </div>
+            </div>
+            <div style="background:#fff; padding:15px; border-radius:8px; border:1px solid #f0e6d2; min-width:140px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.02);">
+              <div style="font-size:11px; color:var(--muted); font-weight:800; text-transform:uppercase;">Registered Shares</div>
+              <div style="font-size:24px; font-weight:800; color:var(--blue); margin:5px 0;">${parseFloat(shares).toLocaleString()}</div>
+              <div style="font-size:12px; color:var(--green); font-weight:600;">Value: AED ${parseFloat(val).toLocaleString()}</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; border-top:1px solid #f0e6d2; padding-top:15px;">
+            <button onclick="previewCertificate('${shareId}')" class="btn btn-white" style="flex:1; padding:10px; border:1px solid var(--blue); color:var(--blue);">👁️ Preview</button>
+            <button onclick="downloadCertificate('${shareId}')" class="btn btn-primary" style="flex:1; padding:10px; background:var(--blue);">📥 Download PDF</button>
+          </div>
         </div>`;
     }).join('');
   } catch(e) { c.innerHTML = '<div style="padding:20px;color:var(--red);">❌ '+e.message+'</div>'; }
@@ -675,7 +690,7 @@ async function handleTransferSubmit(e) {
       
       if (isSuccess) {
           showToast('Transfer request submitted! Please verify OTP.');
-          currentTransferId = res.transfer?.reference || res.transfer_reference || res.reference || res.transfer?.id || res.transfer_id || res.id || shNum;
+          currentTransferId = res.transfer_reference || res.transfer?.reference || res.transfer?.id || res.id || shNum;
           if (window.transferProgress) window.transferProgress.setStep(4);
           
           document.getElementById('transferStep2').style.display = 'none';
@@ -724,22 +739,26 @@ async function handleTransferOtpSubmit(e) {
   try {
       btn.textContent = 'Verifying...';
       const res = await API.verifyTransferSenderOtp(currentTransferId, otp);
-      const isSuccess = res && (res.success === true || res.success === "true" || res.success === 1 || res.success === "1" || res.status === 'success');
+      const isSuccess = res && (res.success === true || res.success === "true" || res.success === 1 || res.success === "1" || res.status === 'success' || res.next_action === 'WAIT_RECEIVER_APPROVAL' || res.next_action_code === 'WAIT_RECEIVER_APPROVAL');
       
       if (isSuccess) {
-          showToast('Transfer successfully verified!');
+          showToast('Sender successfully verified! Waiting for receiver approval.');
           document.getElementById('transferReceiver').disabled = false;
           document.getElementById('lookupReceiverForm').reset();
           document.getElementById('transferSharesForm').reset();
           document.getElementById('transferStep3').style.display = 'none';
           document.getElementById('btnLookupReceiver').style.display = 'inline-block';
-          currentTransferId = null;
+          
           if (window.transferProgress) {
             window.transferProgress.setStep(5);
             setTimeout(() => {
               if (window.transferProgress) window.transferProgress.setStep(1);
             }, 3000);
           }
+          
+          // Switch to Status tab to track it!
+          switchTab(21);
+          viewTransferStatus(currentTransferId);
       } else {
           showToast('Error verifying OTP: ' + (res?.message || res?.error || 'Invalid OTP'), true);
       }
@@ -929,7 +948,7 @@ function showSellError(msg) {
 async function handleBuyInterest(listingId) {
   const shNum = localStorage.getItem('cd_shareholder_number');
   if (!shNum) return showToast('Not logged in as shareholder', true);
-  const offerPrice = prompt("Enter your offer price per share (AED) for listing #" + listingId + ":");
+  const offerPrice = await customPrompt('Submit Offer', `Enter your offer price per share (AED) for listing #${listingId}:`, 'Price (AED)');
   if (!offerPrice) return;
   try {
       const res = await API.buyInterest(shNum, listingId, parseFloat(offerPrice));
@@ -1457,4 +1476,517 @@ window.copyInviteUrl = function(btn) {
       btn.style.color = '';
     }, 2000);
   });
+};
+
+// ====== NEW TRANSFER WORKFLOW (v19.0.2.0.8) ====== //
+
+let statusPollInterval = null;
+
+async function loadPendingTransfers() {
+  const container = document.getElementById('pendingTransfersContent');
+  if (!container) return;
+  container.innerHTML = 'Loading pending transfers...';
+  
+  try {
+    const res = await API.getTransferHistory();
+    const transfers = res.transfers || [];
+    const pending = transfers.filter(t => 
+      t.from_membership_no === localStorage.getItem('cd_shareholder_number') && 
+      !['done', 'rejected', 'cancelled', 'expired'].includes((t.status_code || t.state || '').toLowerCase())
+    );
+    
+    if (pending.length === 0) {
+      container.innerHTML = '<div style="color:var(--muted);padding:20px;text-align:center;">No pending transfers.</div>';
+      return;
+    }
+    
+    let html = '';
+    pending.forEach(t => {
+      const isCancellable = ['sender_otp', 'receiver_approval', 'receiver_otp'].includes((t.status_code || '').toLowerCase());
+      html += `
+        <div style="border:1px solid var(--line); border-radius:12px; padding:15px; margin-bottom:15px; background:#fff; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <b style="font-size:16px;">Ref: ${t.reference || t.id}</b><br>
+            <small style="color:var(--muted);">To: ${t.to_membership_no}</small><br>
+            <span class="status" style="margin-top:5px; display:inline-block;">${t.status_label || t.state || 'Pending'}</span>
+          </div>
+          <div>
+            <div style="font-size:20px; font-weight:800; color:var(--blue); margin-bottom:8px; text-align:right;">${t.number_of_shares} Shares</div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-primary" style="padding:8px 12px; font-size:12px;" onclick="switchTab(21); viewTransferStatus('${t.reference || t.id}')">View Status</button>
+              ${isCancellable ? `<button class="btn btn-white" style="padding:8px 12px; font-size:12px; color:red; border:1px solid red;" onclick="cancelTransferRequest('${t.reference || t.id}')">Cancel</button>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  } catch (e) {
+    container.innerHTML = '<div style="color:red;">Error loading pending transfers: ' + e.message + '</div>';
+  }
+}
+
+async function loadIncomingTransfers() {
+  const container = document.getElementById('incomingTransfersContent');
+  if (!container) return;
+  container.innerHTML = 'Loading incoming requests...';
+  
+  try {
+    const res = await API.getTransferHistory();
+    const transfers = res.transfers || [];
+    const incoming = transfers.filter(t => {
+      const loggedInUser = localStorage.getItem('cd_shareholder_number');
+      const loggedInUserUid = localStorage.getItem('cd_user_id');
+      const isReceiver = t.to_membership_no === loggedInUser || 
+                         String(t.to_partner_id) === loggedInUser || 
+                         String(t.to_partner_id) === loggedInUserUid ||
+                         (t.to_partner_id && typeof t.to_partner_id === 'object' && String(t.to_partner_id.id) === loggedInUserUid);
+                         
+      const state = (t.state || (t.status && typeof t.status === 'string' ? t.status : t.status?.code) || t.status_code || '').toLowerCase();
+      return isReceiver && ['receiver_approval', 'receiver_otp'].includes(state);
+    });
+    
+    if (incoming.length === 0) {
+      container.innerHTML = '<div style="color:var(--muted);padding:20px;text-align:center;">No incoming transfer requests requiring your action.</div>';
+      return;
+    }
+    
+    let html = '';
+    incoming.forEach(t => {
+      const state = (t.state || (t.status && typeof t.status === 'string' ? t.status : t.status?.code) || t.status_code || '').toLowerCase();
+      const safeRef = (t.reference || t.id).replace(/\//g, '-');
+      
+      let actionButtonsHtml = '';
+      if (state === 'receiver_approval') {
+        actionButtonsHtml = `
+          <div style="background:#fff3cd; color:#856404; padding:12px 15px; border-radius:8px; font-size:13px; border:1px solid #ffeeba; display:flex; gap:10px; align-items:center;">
+            <span style="font-size:18px;">⚠️</span>
+            <span>By accepting, you agree to receive these shares. An OTP will be sent to your registered mobile number for final authorization.</span>
+          </div>
+          <div style="display:flex; gap:12px; margin-top:5px; flex-wrap:wrap;">
+            <button class="btn btn-primary" style="flex:1; padding:14px; font-size:14px; background:var(--green); border-color:var(--green); box-shadow:0 4px 12px rgba(40, 167, 69, 0.2);" onclick="acceptIncomingTransfer('${t.reference || t.id}')">✅ Accept Transfer</button>
+            <button class="btn btn-white" style="flex:1; padding:14px; font-size:14px; color:#dc3545; border:1px solid #dc3545; background:#fff;" onclick="rejectIncomingTransfer('${t.reference || t.id}')">❌ Reject Transfer</button>
+          </div>
+        `;
+      } else if (state === 'receiver_otp') {
+        actionButtonsHtml = `
+          <div style="background:#fff3cd; color:#856404; padding:12px 15px; border-radius:8px; font-size:13px; border:1px solid #ffeeba; display:flex; gap:10px; align-items:center;">
+            <span style="font-size:18px;">⚠️</span>
+            <span>This transfer is awaiting OTP verification. Please enter the 6-digit code sent to your registered mobile number.</span>
+          </div>
+          <div style="padding: 20px; text-align: center; background: #fff; border: 1px solid var(--line); border-radius: 16px; margin-top: 5px;">
+            <h4 style="margin: 0 0 15px 0; color: var(--navy); font-weight:800;">Verify OTP for ${t.reference || t.id}</h4>
+            <div class="field" style="max-width: 350px; margin: 0 auto 20px;">
+              <div class="otp-row" id="otp-row-${safeRef}">
+                <input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1">
+              </div>
+            </div>
+            <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+              <button class="btn btn-primary" style="padding:10px 20px; font-size:13px; background:var(--blue);" onclick="submitIncomingReceiverOtp('${t.reference || t.id}')">Verify & Complete</button>
+              <button class="btn btn-white" style="padding:10px 20px; font-size:13px; border:1px solid var(--line);" onclick="resendIncomingReceiverOtp('${t.reference || t.id}')">Resend OTP</button>
+              <button class="btn btn-white" style="padding:10px 20px; font-size:13px; color:#dc3545; border:1px solid #dc3545;" onclick="rejectIncomingTransfer('${t.reference || t.id}')">Reject</button>
+            </div>
+          </div>
+        `;
+      }
+
+      html += `
+        <div class="portalcard" style="border-left: 4px solid var(--orange); margin-bottom: 20px; padding: 25px; display:flex; flex-direction:column; gap:15px; background:linear-gradient(to right, #fff, #fefdfa);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:15px;">
+            <div>
+              <div style="font-size:12px; font-weight:800; color:var(--orange); text-transform:uppercase; letter-spacing:1px; margin-bottom:5px;">Action Required</div>
+              <div style="font-weight:800; font-size:22px; color:var(--navy);">Incoming Transfer Request</div>
+              <div style="font-size:14px; color:var(--muted); margin-top:8px;">
+                <strong>From:</strong> <span style="color:var(--navy); font-weight:600;">${t.from_name || t.from_membership_no}</span><br>
+                <strong>Reference:</strong> ${t.reference || t.id}
+              </div>
+            </div>
+            <div style="background:#fff; padding:15px 25px; border-radius:12px; border:1px solid #f0e6d2; text-align:center; box-shadow:0 2px 10px rgba(0,0,0,0.03);">
+              <div style="font-size:11px; color:var(--muted); font-weight:800; text-transform:uppercase;">Shares to Receive</div>
+              <div style="font-size:32px; font-weight:800; color:var(--blue); margin:5px 0;">${parseFloat(t.number_of_shares).toLocaleString()}</div>
+            </div>
+          </div>
+          <div id="action-area-${safeRef}" style="display:flex; flex-direction:column; gap:15px;">
+            ${actionButtonsHtml}
+          </div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+    
+    // Attach traversal to all inline OTP rows
+    container.querySelectorAll('.otp-row').forEach(row => {
+      const inputs = row.querySelectorAll('input');
+      inputs.forEach((input, index) => {
+        input.value = '';
+        input.addEventListener('keyup', function(e) {
+          if (e.key === 'Backspace') {
+            if (input.value === '' && index > 0) inputs[index - 1].focus();
+          } else if (input.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        });
+      });
+    });
+  } catch (e) {
+    container.innerHTML = '<div style="color:red; padding:20px;">Error loading incoming transfers: ' + e.message + '</div>';
+  }
+}
+
+window.customConfirm = function(title, message) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.style = `
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(8, 15, 30, 0.6); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 99999; opacity: 0; transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    `;
+    const box = document.createElement('div');
+    box.style = `
+      background: #fff; padding: 32px; border-radius: 24px; width: 90%; max-width: 440px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+      transform: translateY(20px) scale(0.95); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-align: center; font-family: inherit;
+    `;
+    box.innerHTML = `
+      <div style="width: 64px; height: 64px; background: #fffbeb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; border: 1px solid #fef3c7;">
+        <span style="font-size: 28px;">⚠️</span>
+      </div>
+      <h3 style="margin-top:0; color: #0f172a; font-size: 20px; font-weight:800; margin-bottom:12px; letter-spacing:-0.5px;">${title}</h3>
+      <p style="color: #64748b; font-size: 14.5px; line-height: 1.6; margin-bottom: 28px; padding: 0 10px;">${message}</p>
+      <div style="display: flex; gap: 12px;">
+        <button id="customConfirmCancel" class="btn btn-white" style="flex:1; border: 1px solid #e2e8f0; padding: 12px 18px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px;">Cancel</button>
+        <button id="customConfirmOk" class="btn btn-primary" style="flex:1; padding: 12px 18px; border-radius: 12px; font-weight: 600; cursor: pointer; background: var(--blue); border-color: var(--blue); color: #fff; transition: all 0.2s; font-size: 14px; box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);">Yes, Proceed</button>
+      </div>
+    `;
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+    
+    // Add button hovers
+    const cancelBtn = overlay.querySelector('#customConfirmCancel');
+    const okBtn = overlay.querySelector('#customConfirmOk');
+    cancelBtn.onmouseenter = () => cancelBtn.style.background = '#f8fafc';
+    cancelBtn.onmouseleave = () => cancelBtn.style.background = '#fff';
+    okBtn.onmouseenter = () => okBtn.style.transform = 'translateY(-1px)';
+    okBtn.onmouseleave = () => okBtn.style.transform = 'none';
+
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+      box.style.transform = 'translateY(0) scale(1)';
+    }, 10);
+    
+    const cleanup = (val) => {
+      overlay.style.opacity = '0';
+      box.style.transform = 'translateY(20px) scale(0.95)';
+      setTimeout(() => {
+        document.body.removeChild(overlay);
+        resolve(val);
+      }, 200);
+    };
+    
+    cancelBtn.onclick = () => cleanup(false);
+    okBtn.onclick = () => cleanup(true);
+  });
+};
+
+window.customPrompt = function(title, message, placeholder = '') {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.style = `
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(8, 15, 30, 0.6); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 99999; opacity: 0; transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    `;
+    const box = document.createElement('div');
+    box.style = `
+      background: #fff; padding: 32px; border-radius: 24px; width: 90%; max-width: 440px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+      transform: translateY(20px) scale(0.95); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: inherit;
+    `;
+    box.innerHTML = `
+      <div style="width: 56px; height: 56px; background: #fef2f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 1px solid #fee2e2;">
+        <span style="font-size: 24px;">💬</span>
+      </div>
+      <h3 style="margin-top:0; color: #0f172a; font-size: 20px; font-weight:800; margin-bottom:8px; letter-spacing:-0.5px;">${title}</h3>
+      <p style="color: #64748b; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">${message}</p>
+      <input type="text" id="customPromptInput" placeholder="${placeholder}" style="width: 100%; padding: 14px; border: 1px solid #cbd5e1; border-radius: 12px; margin-bottom: 24px; font-size: 14.5px; outline: none; transition: border-color 0.2s;" />
+      <div style="display: flex; gap: 12px; justify-content: flex-end;">
+        <button id="customPromptCancel" class="btn btn-white" style="border: 1px solid #e2e8f0; padding: 10px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px;">Cancel</button>
+        <button id="customPromptOk" class="btn btn-primary" style="padding: 10px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; background: var(--blue); border-color: var(--blue); color: #fff; transition: all 0.2s; font-size: 14px; box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);">Submit</button>
+      </div>
+    `;
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+    
+    const input = overlay.querySelector('#customPromptInput');
+    const cancelBtn = overlay.querySelector('#customPromptCancel');
+    const okBtn = overlay.querySelector('#customPromptOk');
+    
+    input.onfocus = () => input.style.borderColor = 'var(--blue)';
+    input.onblur = () => input.style.borderColor = '#cbd5e1';
+    cancelBtn.onmouseenter = () => cancelBtn.style.background = '#f8fafc';
+    cancelBtn.onmouseleave = () => cancelBtn.style.background = '#fff';
+    okBtn.onmouseenter = () => okBtn.style.transform = 'translateY(-1px)';
+    okBtn.onmouseleave = () => okBtn.style.transform = 'none';
+
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+      box.style.transform = 'translateY(0) scale(1)';
+      input.focus();
+    }, 10);
+    
+    const cleanup = (val) => {
+      overlay.style.opacity = '0';
+      box.style.transform = 'translateY(20px) scale(0.95)';
+      setTimeout(() => {
+        document.body.removeChild(overlay);
+        resolve(val);
+      }, 200);
+    };
+    
+    cancelBtn.onclick = () => cleanup(null);
+    okBtn.onclick = () => cleanup(input.value);
+    input.onkeyup = (e) => {
+      if (e.key === 'Enter') cleanup(input.value);
+    };
+  });
+};
+
+async function acceptIncomingTransfer(reference) {
+  if (!await customConfirm('Accept Transfer', 'Are you sure you want to accept this share transfer? This will generate an OTP for final verification.')) return;
+  try {
+    showToast('Accepting transfer...');
+    const res = await API.acceptTransfer(reference);
+    if (res.success || res.status === 'success' || res.next_action === 'VERIFY_RECEIVER_OTP' || res.next_action_code === 'VERIFY_RECEIVER_OTP') {
+      showToast('Transfer accepted. Please verify OTP to complete.');
+      
+      const safeRef = reference.replace(/\//g, '-');
+      const actionArea = document.getElementById(`action-area-${safeRef}`);
+      if (actionArea) {
+        actionArea.innerHTML = `
+          <div style="background:#fff3cd; color:#856404; padding:12px 15px; border-radius:8px; font-size:13px; border:1px solid #ffeeba; display:flex; gap:10px; align-items:center;">
+            <span style="font-size:18px;">⚠️</span>
+            <span>This transfer is awaiting OTP verification. Please enter the 6-digit code sent to your registered mobile number.</span>
+          </div>
+          <div style="padding: 20px; text-align: center; background: #fff; border: 1px solid var(--line); border-radius: 16px; margin-top: 5px;">
+            <h4 style="margin: 0 0 15px 0; color: var(--navy); font-weight:800;">Verify OTP for ${reference}</h4>
+            <div class="field" style="max-width: 350px; margin: 0 auto 20px;">
+              <div class="otp-row" id="otp-row-${safeRef}">
+                <input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1">
+              </div>
+            </div>
+            <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+              <button class="btn btn-primary" style="padding:10px 20px; font-size:13px; background:var(--blue);" onclick="submitIncomingReceiverOtp('${reference}')">Verify & Complete</button>
+              <button class="btn btn-white" style="padding:10px 20px; font-size:13px; border:1px solid var(--line);" onclick="resendIncomingReceiverOtp('${reference}')">Resend OTP</button>
+              <button class="btn btn-white" style="padding:10px 20px; font-size:13px; color:#dc3545; border:1px solid #dc3545;" onclick="rejectIncomingTransfer('${reference}')">Reject</button>
+            </div>
+          </div>
+        `;
+        
+        // Attach keyup listeners to the new inputs
+        const inputs = actionArea.querySelectorAll(`#otp-row-${safeRef} input`);
+        inputs.forEach((input, index) => {
+          input.value = '';
+          input.addEventListener('keyup', function(e) {
+            if (e.key === 'Backspace') {
+              if (input.value === '' && index > 0) inputs[index - 1].focus();
+            } else if (input.value.length === 1 && index < inputs.length - 1) {
+              inputs[index + 1].focus();
+            }
+          });
+        });
+        if (inputs[0]) inputs[0].focus();
+      } else {
+        loadIncomingTransfers();
+      }
+    } else {
+      showToast('Error accepting transfer: ' + (res.message || res.error), true);
+    }
+  } catch (e) {
+    showToast('Error: ' + e.message, true);
+  }
+}
+
+async function rejectIncomingTransfer(reference) {
+  const reason = await customPrompt('Reject Transfer', 'Please enter a reason for rejecting this transfer (optional):', 'Reason for rejection');
+  if (reason === null) return;
+  try {
+    showToast('Rejecting transfer...');
+    const res = await API.rejectTransfer(reference, reason);
+    if (res.success || res.status === 'success') {
+      showToast('Transfer rejected successfully.');
+      loadIncomingTransfers();
+    } else {
+      showToast('Error rejecting transfer: ' + (res.message || res.error), true);
+    }
+  } catch (e) {
+    showToast('Error: ' + e.message, true);
+  }
+}
+
+window.submitIncomingReceiverOtp = async function(reference) {
+  const safeRef = reference.replace(/\//g, '-');
+  const inputs = document.querySelectorAll(`#otp-row-${safeRef} input`);
+  let otp = '';
+  inputs.forEach(i => otp += i.value);
+  if (otp.length < 6) return showToast('Please enter the full 6-digit OTP', true);
+  
+  try {
+    showToast('Verifying OTP...');
+    const res = await API.verifyTransferReceiverOtp(reference, otp);
+    if (res.success || res.status === 'success' || res.next_action === 'COMPLETE_TRANSFER' || res.next_action_code === 'COMPLETE_TRANSFER' || res.next_action === 'COMPLETED' || res.next_action_code === 'COMPLETED') {
+      showToast('Transfer completed successfully!');
+      loadIncomingTransfers();
+      loadDashboard();
+    } else {
+      showToast('Error verifying OTP: ' + (res.message || res.error), true);
+    }
+  } catch (e) {
+    showToast('Error: ' + e.message, true);
+  }
+}
+
+window.resendIncomingReceiverOtp = async function(reference) {
+  try {
+    showToast('Resending OTP...');
+    const res = await API.acceptTransfer(reference);
+    if (res.success || res.status === 'success' || res.next_action === 'VERIFY_RECEIVER_OTP' || res.next_action_code === 'VERIFY_RECEIVER_OTP') {
+      showToast('OTP resent successfully!');
+      const safeRef = reference.replace(/\//g, '-');
+      const row = document.getElementById(`otp-row-${safeRef}`);
+      if (row) {
+        const inputs = row.querySelectorAll('input');
+        inputs.forEach(inp => inp.value = '');
+        if (inputs[0]) inputs[0].focus();
+      }
+    } else {
+      showToast('Error resending OTP: ' + (res.message || res.error), true);
+    }
+  } catch (e) {
+    showToast('Error: ' + e.message, true);
+  }
+}
+
+async function cancelTransferRequest(reference) {
+  const reason = await customPrompt('Cancel Transfer', 'Please enter a reason for cancelling this transfer (optional):', 'Reason for cancellation');
+  if (reason === null) return;
+  try {
+    showToast('Cancelling transfer...');
+    const res = await API.cancelTransfer(reference, reason);
+    if (res.success || res.status === 'success') {
+      showToast('Transfer cancelled successfully.');
+      loadPendingTransfers();
+    } else {
+      showToast('Error cancelling transfer: ' + (res.message || res.error), true);
+    }
+  } catch (e) {
+    showToast('Error: ' + e.message, true);
+  }
+}
+
+async function viewTransferStatus(reference) {
+  document.getElementById('statusPageTitle').textContent = `📊 Transfer Status: ${reference}`;
+  document.getElementById('currentTransferState').textContent = 'Loading...';
+  document.getElementById('transferTimeline').innerHTML = '';
+  
+  if (statusPollInterval) {
+    clearInterval(statusPollInterval);
+    statusPollInterval = null;
+  }
+  
+  const fetchStatus = async () => {
+    try {
+      const res = await API.getTransferStatus(reference);
+      
+      const transferData = res.transfer || res;
+      const statusObj = transferData.status || {};
+      
+      const pBar = document.getElementById('statusProgressBar');
+      const pText = document.getElementById('statusProgressPercentage');
+      const progress = statusObj.progress || transferData.progress || 0;
+      pBar.style.width = progress + '%';
+      pText.textContent = progress + '%';
+      
+      const formatNextAction = (code) => {
+        if (!code) return '';
+        const mapping = {
+          'sender_otp': 'Awaiting Sender OTP Verification',
+          'receiver_approval': 'Awaiting Receiver Approval',
+          'wait_receiver_approval': 'Awaiting Receiver Approval',
+          'receiver_otp': 'Awaiting Receiver OTP Verification',
+          'verify_receiver_otp': 'Awaiting Receiver OTP Verification',
+          'complete_transfer': 'Completing Share Transfer...',
+          'completed': 'Transfer Completed',
+          'closed': 'Closed',
+          'closed_rejected': 'Closed (Rejected)',
+          'closed_cancelled': 'Closed (Cancelled)',
+          'closed_expired': 'Closed (Expired)',
+          'rejected': 'Rejected',
+          'cancelled': 'Cancelled',
+          'expired': 'Expired'
+        };
+        const normalized = String(code).toLowerCase().trim().replace(/\s+/g, '_');
+        return mapping[normalized] || normalized.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      };
+      
+      document.getElementById('currentTransferState').textContent = statusObj.label || transferData.status_label || transferData.state || transferData.status || 'Processing';
+      
+      const nextActionRaw = statusObj.next_action || transferData.next_action_label || transferData.next_action_code || transferData.next_action || '';
+      document.getElementById('estimatedNextStep').textContent = formatNextAction(nextActionRaw);
+      
+      let timelineHtml = '';
+      if (transferData.timeline && Array.isArray(transferData.timeline)) {
+        transferData.timeline.forEach((item, idx) => {
+          const isDone = item.completed === 'true' || item.completed === true || item.date || item.at;
+          const isRejected = item.status === 'rejected' || item.terminal_state === 'rejected';
+          const color = isRejected ? 'var(--red)' : (isDone ? 'var(--green)' : 'var(--muted)');
+          const icon = isRejected ? '❌' : (isDone ? '✓' : (idx === transferData.timeline.findIndex(x => (!x.completed || x.completed === 'false') && !x.date && !x.at) ? '⏳' : '⬜'));
+          timelineHtml += `
+            <div style="display:flex; gap:15px; margin-bottom:15px;">
+              <div style="color:${color}; font-size:18px;">${icon}</div>
+              <div>
+                <b style="color:${isRejected ? 'var(--red)' : 'var(--navy)'};">${item.label || item.state || item.action}</b>
+                <div style="font-size:12px; color:var(--muted);">${item.date || item.at || 'Pending'}</div>
+              </div>
+            </div>
+          `;
+        });
+      }
+      document.getElementById('transferTimeline').innerHTML = timelineHtml;
+      
+      const rawStatus = transferData.status_code || statusObj.code || transferData.state || (typeof transferData.status === 'string' ? transferData.status : '') || '';
+      const isTerminal = statusObj.is_terminal === 'true' || statusObj.is_terminal === true || ['done', 'rejected', 'cancelled', 'expired'].includes(String(rawStatus).toLowerCase());
+      if (isTerminal && statusPollInterval) {
+        clearInterval(statusPollInterval);
+        statusPollInterval = null;
+      }
+    } catch (e) {
+      document.getElementById('currentTransferState').textContent = 'Error fetching status: ' + e.message;
+      if (statusPollInterval) clearInterval(statusPollInterval);
+    }
+  };
+  
+  await fetchStatus();
+  statusPollInterval = setInterval(fetchStatus, 10000);
+}
+
+const originalLoadDashboard = loadDashboard;
+loadDashboard = async function() {
+  await originalLoadDashboard();
+  if (document.getElementById('tab-19') && !document.getElementById('tab-19').classList.contains('hidden')) loadPendingTransfers();
+  if (document.getElementById('tab-20') && !document.getElementById('tab-20').classList.contains('hidden')) loadIncomingTransfers();
+};
+
+const originalSwitchTab = switchTab;
+switchTab = function(index, btnEl) {
+  originalSwitchTab(index, btnEl);
+  if (index === 19) loadPendingTransfers();
+  if (index === 20) loadIncomingTransfers();
+  if (index !== 21 && statusPollInterval) {
+    clearInterval(statusPollInterval);
+    statusPollInterval = null;
+  }
 };

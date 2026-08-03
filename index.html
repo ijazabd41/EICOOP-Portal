@@ -57,7 +57,7 @@
 <footer class="footer"><div class="wrap"><div class="footgrid"><div><img src="assets/eicoop-logo.png" style="height:90px;width:auto;margin-bottom:15px;"><p>A modern cooperative retail platform supporting Emirati industries, shareholder families and community well-being.</p></div><div><h4>Explore</h4><p><a href="#about">About Emirati Industries Cooperative</a><br><a href="#experience">Retail Experience</a><br><a href="#impact">Shareholder Community</a><br><a href="#news">News</a><br><a href="#contact">Contact Us</a><br><a href="#portal-preview">Shareholder Portal</a></p></div><div><h4>Location</h4><p>Dubai — Nad Al Hamar<br>United Arab Emirates</p></div></div><div class="copyright"><span>© 2026 Emirati Industries Cooperative</span><span>Concept preview · Shareholder access only</span></div></div></footer>
 </div>
 <div id="loginOverlay" class="overlay hidden"><div class="login"><div class="login-visual"><img class="bg" src="assets/retail7.jpeg?v=2"><div class="login-message"><img src="assets/eic-logo.png" style="height:120px;width:auto;margin-bottom:20px;"><h2>Welcome, shareholder.</h2><p>Access your membership, purchases, rewards and cooperative services through one secure portal.</p></div></div><div class="login-form"><button class="close" onclick="closeLogin()">✕</button><div id="step1"><div class="label">Secure member access</div><h2>Shareholder Login</h2><p>Enter your shareholder or membership number to continue. Non-shareholder login has been removed.</p><div class="field"><label style="display:flex;justify-content:space-between;align-items:center;">SHAREHOLDER OR MEMBERSHIP NUMBER <span style="font-weight:500;color:var(--blue);font-size:11px;text-transform:none;cursor:help;" title="You can find this on your physical share certificate, welcome email, or SMS from EICOOP.">Where is this?</span></label><input id="memberInput" value="" placeholder="e.g. EIC-123-2024"></div><div id="lookupError" style="color:var(--red);font-size:12px;font-weight:600;margin-bottom:10px;display:none;"></div><button class="btn btn-primary full" onclick="showOtp()">Lookup Shareholder →</button><div class="secure">🔒 Secure connection to the EICOOP shareholder registry</div></div><div id="stepVerify" class="hidden"><div class="label">Account lookup</div><h2>Verify Account</h2><p>Is this your shareholder account?</p><div class="portalcard" style="margin-bottom:20px;background:#f9fafb;border:1px solid var(--line);padding:20px;text-align:center;"><div style="font-weight:800;font-size:18px;color:var(--navy)" id="lookupName"></div><div style="font-size:13px;color:var(--muted);margin-top:6px;" id="lookupPhone"></div></div><button class="btn btn-primary full" id="btnSendOtp" onclick="confirmAndSendOtp()">Yes, Send OTP →</button><button class="btn btn-white full" style="margin-top:10px;border:1px solid var(--line)" onclick="backToLookup()">Cancel</button></div><div id="step2" class="step2 hidden"><div class="label">Identity verification</div><h2>Enter your OTP</h2><p>We sent a six-digit verification code to the registered mobile number <b id="otpPhone"></b>.</p><div class="field"><label>ONE-TIME PASSWORD</label><div class="otp-row"><input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1"><input value="" maxlength="1"></div></div><button class="btn btn-primary full" onclick="enterPortal()">Verify & Continue →</button><button id="btnResendOtp" class="btn btn-white full" style="margin-top:10px;border:1px solid var(--line)" onclick="resendOtp()">Resend OTP</button><button class="btn btn-white full" style="margin-top:10px;border:1px solid var(--line)" onclick="backToLookup()">Back</button></div></div></div></div>
-<div id="portal" class="hidden"><div class="portalbar"><div style="display:flex;align-items:center;gap:15px"><button class="menu-toggle" onclick="document.querySelector('.side').classList.toggle('open')">☰</button><img src="assets/eicoop-logo.png" style="height:50px;width:auto;"></div><div style="display:flex;align-items:center;gap:15px;"><span class="portal-badge" style="color:var(--muted);margin-right:0px">Shareholder Portal</span><div style="position:relative;cursor:pointer;" onclick="switchTab(16)"><span style="font-size:22px;">🔔</span><span id="top-notification-dot" style="display:none;position:absolute;top:0;right:-2px;width:10px;height:10px;background:red;border-radius:50%;border:2px solid white;"></span></div><button class="signout" onclick="logout()">Sign Out</button></div></div><div class="portallayout"><aside class="side"><div class="sideprofile"><h3 class="user-name">Shareholder</h3><small class="user-email"></small></div><div class="menu"><button class="active" onclick="switchTab(0, this)">▦ Dashboard</button><button onclick="switchTab(1, this)">👤 My Profile</button><button onclick="switchTab(2, this)">💳 Membership</button><div style="font-size:11px;font-weight:800;color:var(--orange);margin:15px 14px 5px;text-transform:uppercase;letter-spacing:0.5px;">Shareholder Details</div><button onclick="switchTab(9, this)">📜 Certificates</button><button onclick="switchTab(18, this)">🕒 Transfer History</button><button onclick="switchTab(15, this)">📥 Invitations</button><button onclick="switchTab(10, this)">🎁 Rewards</button><button onclick="switchTab(11, this)">🛍️ Purchases</button><div style="font-size:11px;font-weight:800;color:var(--orange);margin:15px 14px 5px;text-transform:uppercase;letter-spacing:0.5px;">Account</div><button onclick="switchTab(3, this)">🛒 My Orders</button><button onclick="switchTab(4, this)">🧾 My Invoices</button><button onclick="switchTab(5, this)">♡ My Wishlist</button><button onclick="switchTab(6, this)">★ Loyalty & Rewards</button><button onclick="switchTab(7, this)">📍 My Address</button><button onclick="switchTab(16, this)">🔔 Notifications</button><button onclick="switchTab(17, this)">⚙️ Preferences</button></div></aside><main class="portalmain">
+<div id="portal" class="hidden"><div class="portalbar"><div style="display:flex;align-items:center;gap:15px"><button class="menu-toggle" onclick="document.querySelector('.side').classList.toggle('open')">☰</button><img src="assets/eicoop-logo.png" style="height:50px;width:auto;"></div><div style="display:flex;align-items:center;gap:15px;"><span class="portal-badge" style="color:var(--muted);margin-right:0px">Shareholder Portal</span><div style="position:relative;cursor:pointer;" onclick="switchTab(16)"><span style="font-size:22px;">🔔</span><span id="top-notification-dot" style="display:none;position:absolute;top:0;right:-2px;width:10px;height:10px;background:red;border-radius:50%;border:2px solid white;"></span></div><button class="signout" onclick="logout()">Sign Out</button></div></div><div class="portallayout"><aside class="side"><div class="sideprofile"><h3 class="user-name">Shareholder</h3><small class="user-email"></small></div><div class="menu"><button class="active" onclick="switchTab(0, this)">▦ Dashboard</button><button onclick="switchTab(1, this)">👤 My Profile</button><button onclick="switchTab(2, this)">💳 Membership</button><div style="font-size:11px;font-weight:800;color:var(--orange);margin:15px 14px 5px;text-transform:uppercase;letter-spacing:0.5px;">Shareholder Details</div><button onclick="switchTab(9, this)">📜 Certificates</button><button onclick="switchTab(18, this)">🕒 Transfer History</button><button onclick="switchTab(19, this)">⏳ Pending Transfers</button><button onclick="switchTab(20, this)">📥 Incoming Transfers</button><button onclick="switchTab(15, this)">📥 Invitations</button><button onclick="switchTab(10, this)">🎁 Rewards</button><button onclick="switchTab(11, this)">🛍️ Purchases</button><div style="font-size:11px;font-weight:800;color:var(--orange);margin:15px 14px 5px;text-transform:uppercase;letter-spacing:0.5px;">Account</div><button onclick="switchTab(3, this)">🛒 My Orders</button><button onclick="switchTab(4, this)">🧾 My Invoices</button><button onclick="switchTab(5, this)">♡ My Wishlist</button><button onclick="switchTab(6, this)">★ Loyalty & Rewards</button><button onclick="switchTab(7, this)">📍 My Address</button><button onclick="switchTab(16, this)">🔔 Notifications</button><button onclick="switchTab(17, this)">⚙️ Preferences</button></div></aside><main class="portalmain">
   
   <div id="tab-0" class="portal-tab">
     <div class="portalmetrics"><div class="pmetric"><b id="metric-orders">-</b><small>Orders</small></div><div class="pmetric"><b id="metric-shares">-</b><small>Shares</small></div><div class="pmetric"><b id="metric-invoices">-</b><small>Invoices</small></div><div class="pmetric"><b>-</b><small>Loyalty Points</small></div></div><section class="welcome"><div><h2 style="margin:0 0 7px">Welcome back, <span class="user-name">Shareholder</span> 👋</h2><p style="margin:0;color:var(--muted)">Your membership and cooperative activity at a glance.</p></div><button class="btn btn-primary" onclick="window.location.href='/shop.html'">Continue Shopping →</button></section>
@@ -310,6 +310,56 @@
       <div id="transferHistoryContent">Loading transfer history...</div>
     </div>
   </div>
+
+  <div id="tab-19" class="portal-tab hidden">
+    <h2 style="margin-top:0">⏳ Pending Transfers</h2>
+    <div style="background:#f5f9fc; color:var(--navy); padding:15px; border-radius:8px; border:1px solid #dbe7ef; margin-bottom:20px; font-size:14px; line-height:1.5;">
+      <strong>ℹ️ Sent Requests:</strong> Monitor the status of share transfers you have initiated. You may cancel requests before the receiver validates their OTP.
+    </div>
+    <div class="portalcard">
+      <div id="pendingTransfersContent">Loading pending transfers...</div>
+    </div>
+  </div>
+
+  <div id="tab-20" class="portal-tab hidden">
+    <h2 style="margin-top:0">📥 Incoming Transfers</h2>
+    <div style="background:#f5f9fc; color:var(--navy); padding:15px; border-radius:8px; border:1px solid #dbe7ef; margin-bottom:20px; font-size:14px; line-height:1.5;">
+      <strong>ℹ️ Transfer Requests:</strong> Accept or reject incoming share transfers. Accepting a transfer generates a one-time password (OTP) sent to your mobile for final verification.
+    </div>
+    <div class="portalcard">
+      <div id="incomingTransfersContent">Loading incoming requests...</div>
+    </div>
+  </div>
+
+  <div id="tab-21" class="portal-tab hidden">
+    <h2 style="margin-top:0" id="statusPageTitle">📊 Transfer Status</h2>
+    <div style="background:#f5f9fc; color:var(--navy); padding:15px; border-radius:8px; border:1px solid #dbe7ef; margin-bottom:20px; font-size:14px; line-height:1.5;">
+      <strong>ℹ️ Live Tracking:</strong> Follow the progress of a transfer request.
+    </div>
+    <div class="portalcard" style="text-align: center;">
+      <div id="transferStatusProgress" style="width: 100%; max-width: 600px; margin: 0 auto; margin-bottom: 25px;">
+        <div style="background: #eef3f6; border-radius: 999px; height: 12px; overflow: hidden; margin-bottom: 10px;">
+          <div id="statusProgressBar" style="background: linear-gradient(90deg, var(--blue), var(--deep)); width: 0%; height: 100%; transition: width 0.5s ease-out;"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:var(--muted)">
+          <span>INITIATED</span>
+          <span id="statusProgressPercentage" style="color:var(--navy);">0%</span>
+          <span>COMPLETED</span>
+        </div>
+      </div>
+      <h3 id="currentTransferState" style="color:var(--deep); font-size:24px; margin-bottom:5px;">Loading...</h3>
+      <p id="estimatedNextStep" style="color:var(--orange); font-weight:800; margin-top:0; font-size:13px;"></p>
+      
+      <div id="transferTimeline" style="text-align: left; margin-top: 30px; border-top: 1px solid var(--line); padding-top: 20px;">
+        <!-- Timeline items will be injected here -->
+      </div>
+      
+      <div style="margin-top: 25px;" id="transferStatusActions">
+        <button class="btn btn-white" onclick="switchTab(19)">Back to Pending</button>
+      </div>
+    </div>
+  </div>
+
 
 </main></div></div>
 

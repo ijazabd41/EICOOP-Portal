@@ -820,3 +820,188 @@ Response: {"success": "", "error_code": "ACTIVE_INVITATION_EXISTS", "message": "
 2026-07-31 10:46:10 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
 Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
 
+2026-07-31 20:15:40 - Error 404 on http://cooperp.freeddns.org:8070/api/shareholder/lookup
+Response: {"success": "", "message": "Shareholder number not found.", "can_login": ""}
+
+2026-07-31 20:17:43 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/verify_otp
+Response: {"error":"Proxy cURL Error: Connection timed out after 5008 milliseconds"}
+
+2026-07-31 20:17:43 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-31 20:18:02 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/verify_otp
+Response: {"success": "", "message": "Invalid OTP."}
+
+2026-07-31 20:18:08 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-07-31 20:18:18 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/verify_otp
+Response: {"success": "", "message": "Invalid OTP."}
+
+2026-07-31 20:18:19 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 05:44:33 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-01 05:44:33 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 05:44:49 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-01 05:44:49 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 05:47:55 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/history
+Response: {"error":"Proxy cURL Error: Empty reply from server"}
+
+2026-08-01 05:47:56 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 05:50:04 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/send_otp
+Response: {"error":"Proxy cURL Error: Connection timed out after 5012 milliseconds"}
+
+2026-08-01 05:52:01 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/verify_sender_otp
+Response: {"success": "", "error_code": "OTP_INVALID", "message": "Invalid OTP."}
+
+2026-08-01 05:52:01 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 06:09:00 - Error 500 on http://cooperp.freeddns.org:8076/api/order?by_AJR=1&limit=10&offset=0&Offset=0&domain=[(%27partner_id%27,%27%3D%27,4931)]
+Response: {"error":"Proxy cURL Error: Resolving timed out after 5010 milliseconds"}
+
+2026-08-01 06:09:09 - Error 500 on http://cooperp.freeddns.org:8076/api/invoice?by_AJR=1&limit=10&offset=0&Offset=0&domain=[(%27partner_id%27,%27%3D%27,4931)]
+Response: {"error":"Proxy cURL Error: Connection timed out after 5015 milliseconds"}
+
+2026-08-01 06:09:37 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 06:09:38 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 06:09:57 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"error":"Proxy cURL Error: Resolving timed out after 5008 milliseconds"}
+
+2026-08-01 06:10:05 - Error 500 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"error":"Proxy cURL Error: Connection timed out after 5002 milliseconds"}
+
+2026-08-01 06:10:14 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"error":"Proxy cURL Error: Empty reply from server"}
+
+2026-08-01 06:10:17 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 06:12:12 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/verify_receiver_otp
+Response: {"error":"Proxy cURL Error: Operation timed out after 30001 milliseconds with 1400 out of 2020 bytes received"}
+
+2026-08-01 06:12:20 - Error 409 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/verify_receiver_otp
+Response: {"success": "", "error_code": "INVALID_TRANSFER_STATE", "message": "Receiver OTP is not expected for this transfer.", "transfer": {"id": "29", "reference": "SHT/00029", "transfer_reference": "SHT/00029", "from_membership_no": "5551", "from_name": "Abdullah", "to_membership_no": "5555", "to_name": "Abdullah 5555", "number_of_shares": "543.0", "state": "done", "status": {"code": "done", "label": "Transferred", "next_action": "completed", "next_action_code": "COMPLETED", "current_user_role": "receiver", "progress": "100", "is_terminal": "true"}, "status_label": "Transferred", "progress": "100", "next_action": "completed", "next_action_code": "COMPLETED", "current_user_role": "receiver", "date": "2026-08-01", "created_at": "2026-08-01 06:10:51", "expires_at": "2026-08-03 06:10:51", "sender_otp_verified": "true", "receiver_approval_state": "accepted", "receiver_otp_verified": "true", "sender_otp_sent_at": "2026-08-01 06:10:51", "sender_verified_at": "2026-08-01 06:11:04", "receiver_approval_at": "2026-08-01 06:11:26", "receiver_otp_sent_at": "2026-08-01 06:11:26", "receiver_verified_at": "2026-08-01 06:11:42", "approved_at": "", "operator": "Nuha Abbas", "completed_at": "2026-08-01 06:11:42", "cancelled_at": "", "cancellable": "", "timeline": [{"code": "validated", "label": "Validated", "completed": "true", "at": "2026-08-01 06:10:51"}, {"code": "created", "label": "Request Created", "completed": "true", "at": "2026-08-01 06:10:51"}, {"code": "sender_otp", "label": "Sender OTP Verified", "completed": "true", "at": "2026-08-01 06:11:04"}, {"code": "receiver_approval", "label": "Receiver Approval", "completed": "true", "status": "accepted", "at": "2026-08-01 06:11:26"}, {"code": "receiver_otp", "label": "Receiver OTP Verified", "completed": "true", "at": "2026-08-01 06:11:42"}, {"code": "completed", "label": "Completed", "completed": "true", "terminal": "true", "terminal_state": "done", "at": "2026-08-01 06:11:42"}]}}
+
+2026-08-01 06:12:20 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 06:15:19 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/status/SHT%2F00030
+Response: {"error":"Proxy cURL Error: Connection timed out after 5003 milliseconds"}
+
+2026-08-01 06:15:21 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 06:15:26 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/verify_receiver_otp
+Response: {"success": "", "error_code": "OTP_INVALID", "message": "Invalid OTP."}
+
+2026-08-01 06:15:27 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 06:23:03 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-01 06:23:05 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 06:24:45 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-01 06:24:49 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 06:30:55 - Error 409 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: {"success": "", "error_code": "ACTIVE_INVITATION_EXISTS", "message": "An active invitation already exists for this mobile number.", "registration_reference": "REG2026-00001", "expires_at": "2026-08-07 10:38:46", "remaining_invites_today": "3"}
+
+2026-08-01 06:30:55 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 06:31:10 - Error 500 on http://cooperp.freeddns.org:8076/api/shareholder/registration/invite
+Response: {"error":"Proxy cURL Error: Connection timed out after 5014 milliseconds"}
+
+2026-08-01 06:31:12 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 10:21:39 - Error 401 on http://cooperp.freeddns.org:8076/api/shareholder/dashboard
+Response: {"success": "", "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-01 10:21:40 - Error 401 on http://cooperp.freeddns.org:8076/api/shareholder/notifications?page=1&limit=1&unread_only=true
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-01 10:21:40 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 10:21:40 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 10:21:40 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 10:21:40 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 10:22:58 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"success": "", "error_code": "INSUFFICIENT_SHARES", "message": "Insufficient available shares for this transfer.", "total_shares": "2064.0", "reserved_shares": "1801.0", "available_shares": "263.0", "requested_shares": "12345.0"}
+
+2026-08-01 10:22:59 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 10:23:04 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"success": "", "error_code": "INSUFFICIENT_SHARES", "message": "Insufficient available shares for this transfer.", "total_shares": "2064.0", "reserved_shares": "1801.0", "available_shares": "263.0", "requested_shares": "2000.0"}
+
+2026-08-01 10:23:04 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 10:23:10 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"success": "", "error_code": "INSUFFICIENT_SHARES", "message": "Insufficient available shares for this transfer.", "total_shares": "2064.0", "reserved_shares": "1801.0", "available_shares": "263.0", "requested_shares": "999.0"}
+
+2026-08-01 10:23:11 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 10:23:17 - Error 400 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/request
+Response: {"success": "", "error_code": "INSUFFICIENT_SHARES", "message": "Insufficient available shares for this transfer.", "total_shares": "2064.0", "reserved_shares": "1801.0", "available_shares": "263.0", "requested_shares": "500.0"}
+
+2026-08-01 10:23:17 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-01 10:24:40 - Error 401 on http://cooperp.freeddns.org:8076/api/shareholder/transfer/status/SHT%2F00033
+Response: {"success": "", "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-01 10:24:40 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+

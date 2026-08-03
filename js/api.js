@@ -281,6 +281,12 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
   function normalizeApiErrorMessage(msg) {
     if (!msg) return msg;
     const s = String(msg);
+    if (/Fatal error/i.test(s) && /Maximum execution time/i.test(s)) {
+      return 'The request timed out on the server. Please try again in a few moments.';
+    }
+    if (/Fatal error/i.test(s) || /Parse error/i.test(s) || /database.*error/i.test(s) || /<br\s*\/?>/i.test(s) || /xdebug/i.test(s)) {
+      return 'An internal server error occurred. Please try again later.';
+    }
     if (/not allowed to access/i.test(s) && /sale\.order|Sales Order/i.test(s)) {
       return 'Your login does not have permission to manage shop orders. The store administrator must assign your user the Portal role (or Sales / Own Documents) in Odoo, then you should sign out and sign in again.';
     }
@@ -424,7 +430,12 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
       const r = await fetch(url, opts);
       const ms = Math.round(performance.now() - t0);
       if (!r.ok) return extractError(r, path, method, ms);
-      const d = await r.json();
+      let d;
+      try {
+        d = await r.json();
+      } catch (jsonErr) {
+        return extractError(r, path, method, ms);
+      }
       if (!d || d.success === 0 || d.success === false || d.success === "" || d.error) {
         let msg = 'API error';
         if (d && d.error && d.error.data && d.error.data.message) {
@@ -2188,7 +2199,13 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
   const transferShares = (num, receiver, shares) => POST('/api/shareholder/transfer/request', { recipient_membership_no: receiver, number_of_shares: shares, source: "web" });
   const verifyTransferSenderOtp = (transfer_reference, otp) => POST('/api/shareholder/transfer/verify_sender_otp', { transfer_reference, otp });
   const verifyTransferReceiverOtp = (transfer_reference, otp) => POST('/api/shareholder/transfer/verify_receiver_otp', { transfer_reference, otp });
+  const acceptTransfer = (transfer_reference) => POST('/api/shareholder/transfer/accept', { transfer_reference });
+  const rejectTransfer = (transfer_reference, reason) => POST('/api/shareholder/transfer/reject', { transfer_reference, reason });
+  const respondTransfer = (transfer_reference, decision, reason) => POST('/api/shareholder/transfer/respond', { transfer_reference, decision, reason });
+  const getTransferStatus = (transfer_reference) => GET(`/api/shareholder/transfer/status/${encodeURIComponent(transfer_reference)}`);
+  const cancelTransfer = (transfer_reference, reason) => POST('/api/shareholder/transfer/cancel', { transfer_reference, reason });
   const getReceivedInvitations = () => GET('/api/shareholder/invitations');
+  const getInvitationStatus = () => GET('/api/shareholder/invitation/status');
   const sellShares = (num, shares, price) => POST('/api/shareholder/share-market/sell', { number_of_shares: shares, asking_price_per_share: price, source: "web" });
   const getShareListings = () => GET('/api/shareholder/share-market/list');
   const buyInterest = (num, listingId, offerPrice) => POST('/api/shareholder/share-market/interest', { listing_id: listingId, offer_price: offerPrice });
@@ -2221,7 +2238,7 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
     getShareholderFieldMap, shareholderLookup, shareholderSendOtp, shareholderVerifyOtp,
     getShareholderProfile, updateShareholderProfile, getShareholderPurchases,
     linkShareholderOrder, getShareholderCertificates, getShareholderRewards,
-    lookupRecipient, transferShares, verifyTransferSenderOtp, verifyTransferReceiverOtp, getReceivedInvitations, getTransferHistory, inviteShareholder, submitRegistration, sellShares, getShareListings, buyInterest,
+    lookupRecipient, transferShares, verifyTransferSenderOtp, verifyTransferReceiverOtp, acceptTransfer, rejectTransfer, respondTransfer, getTransferStatus, cancelTransfer, getReceivedInvitations, getInvitationStatus, getTransferHistory, inviteShareholder, submitRegistration, sellShares, getShareListings, buyInterest,
     getShareholderPreferences, updateShareholderPreferences, getShareholderNotifications, markNotificationsRead, getShareholderDashboard, registerShareholderPush, unregisterShareholderPush,
     // Startup/Sliders
     getLogo, getHomeSliders, getDealOfDay, getBestSeller, getRecommended,
