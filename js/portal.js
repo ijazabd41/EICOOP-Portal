@@ -7,7 +7,10 @@ function switchTab(index, btnEl) {
   if (btnEl) {
     btnEl.classList.add('active');
   } else {
-    const foundBtn = Array.from(document.querySelectorAll('.menu button')).find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(`switchTab(${index}`));
+    let searchIndex = index;
+    if ([8, 15, 18, 19, 20, 21].includes(index)) searchIndex = 18;
+    const foundBtn = Array.from(document.querySelectorAll('.menu button')).find(b => 
+b.getAttribute('onclick') && b.getAttribute('onclick').includes(`switchTab(${searchIndex}`));
     if (foundBtn) foundBtn.classList.add('active');
   }
   
@@ -124,6 +127,22 @@ async function loadDashboard() {
     else if (prof && prof.shares) shares = prof.shares;
     document.getElementById('metric-shares').textContent = shares;
 
+    // UAT v19.0.2.0.8: Update notification badge with count from dashboard
+    if (dash) {
+      const unread = parseInt(dash.unread_notification_count || 0, 10);
+      const dot = document.getElementById('top-notification-dot');
+      if (dot) {
+        if (unread > 0) {
+          dot.style.display = 'flex';
+          dot.style.cssText = 'display:flex;align-items:center;justify-content:center;position:absolute;top:-4px;right:-6px;min-width:18px;height:18px;background:#e53935;border-radius:50%;border:2px solid white;font-size:10px;font-weight:800;color:#fff;line-height:1;padding:0 3px;';
+          dot.textContent = unread > 99 ? '99+' : String(unread);
+        } else {
+          dot.style.display = 'none';
+          dot.textContent = '';
+        }
+      }
+    }
+
     // Load recent orders
     const recentOrders = orders.slice(0, 5);
     const ordersContainer = document.getElementById('recent-orders-list');
@@ -149,10 +168,112 @@ async function loadDashboard() {
         }).join('');
       }
     }
+
+    // UAT v19.0.2.0.8 (Phase 2): Render pending INCOMING share transfers on dashboard
+    const incomingSection = document.getElementById('dash-incoming-transfers-section');
+    const incomingTransfers = (dash && (dash.incoming_transfer_list || dash.pending_incoming_share_transfers)) || [];
+    const incomingCount = (dash && dash.pending_incoming_transfers) !== undefined ? dash.pending_incoming_transfers : incomingTransfers.length;
+    if (incomingSection) {
+      if (incomingCount > 0 || incomingTransfers.length > 0) {
+        incomingSection.style.display = 'block';
+        incomingSection.innerHTML = `
+          <section class="portalcard" style="border-left:4px solid var(--orange); background:linear-gradient(to right, #fff, #fefdfa); margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+              <h3 style="margin:0; color:var(--navy); display:flex; align-items:center; gap:10px;">
+                📥 Incoming Share Transfers
+                <span style="background:#e53935; color:#fff; font-size:11px; font-weight:800; padding:3px 8px; border-radius:20px;">${incomingCount}</span>
+              </h3>
+              <button class="btn btn-primary" style="padding:8px 18px; font-size:13px;" onclick="switchTab(20)">View All →</button>
+            </div>
+            ${incomingTransfers.map(t => `
+              <div style="background:#fff; border:1px solid #f0e6d2; border-radius:14px; padding:18px 20px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                <div>
+                  <div style="font-size:11px; font-weight:800; color:var(--orange); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">${t.requires_action ? 'Action Required' : 'Waiting'}</div>
+                  <div style="font-weight:700; font-size:15px; color:var(--navy);">From: ${t.sender_name || t.from || 'Sender'}</div>
+                  <div style="font-size:12px; color:var(--muted); margin-top:3px;">Ref: ${t.transfer_reference || t.reference || '-'} &bull; ${(typeof t.status === 'object' && t.status !== null ? (t.status.label || t.status.code) : t.status) || t.status_label || 'Waiting Approval'}</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="text-align:center;">
+                    <div style="font-size:22px; font-weight:800; color:var(--blue);">${parseFloat(t.shares || 0).toLocaleString()}</div>
+                    <div style="font-size:10px; color:var(--muted); font-weight:700; text-transform:uppercase;">Shares</div>
+                  </div>
+                  <button class="btn btn-primary" style="padding:10px 16px; font-size:13px;" onclick="switchTab(20)">Review →</button>
+                </div>
+              </div>
+            `).join('')}
+          </section>`;
+      } else {
+        incomingSection.style.display = 'none';
+        incomingSection.innerHTML = '';
+      }
+    }
+
+    // UAT v19.0.2.0.8 (Phase 2): Render pending OUTGOING share transfers on dashboard
+    const outgoingSection = document.getElementById('dash-outgoing-transfers-section');
+    const outgoingTransfers = (dash && (dash.outgoing_transfer_list || dash.pending_outgoing_share_transfers)) || [];
+    const outgoingCount = (dash && dash.pending_outgoing_transfers) !== undefined ? dash.pending_outgoing_transfers : outgoingTransfers.length;
+    if (outgoingSection) {
+      if (outgoingCount > 0 || outgoingTransfers.length > 0) {
+        outgoingSection.style.display = 'block';
+        outgoingSection.innerHTML = `
+          <section class="portalcard" style="border-left:4px solid var(--blue); margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+              <h3 style="margin:0; color:var(--navy); display:flex; align-items:center; gap:10px;">
+                ⏳ Pending Outgoing Transfers
+                <span style="background:var(--blue); color:#fff; font-size:11px; font-weight:800; padding:3px 8px; border-radius:20px;">${outgoingCount}</span>
+              </h3>
+              <button class="btn btn-white" style="padding:8px 18px; font-size:13px; border:1px solid var(--line);" onclick="switchTab(19)">View All →</button>
+            </div>
+            ${outgoingTransfers.map(t => `
+              <div style="background:#f8fafc; border:1px solid var(--line); border-radius:12px; padding:14px 18px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <div>
+                  <div style="font-weight:700; font-size:14px; color:var(--navy);">To: ${t.receiver_name || t.to || t.to_name || 'Recipient'}</div>
+                  <div style="font-size:12px; color:var(--muted); margin-top:3px;">Ref: ${t.transfer_reference || t.reference || '-'} &bull; ${(typeof t.status === 'object' && t.status !== null ? (t.status.label || t.status.code) : t.status) || t.status_label || t.state || 'Pending'}</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="text-align:center;">
+                    <div style="font-size:18px; font-weight:800; color:var(--blue);">${parseFloat(t.shares || t.number_of_shares || 0).toLocaleString()}</div>
+                    <div style="font-size:10px; color:var(--muted); font-weight:700; text-transform:uppercase;">Shares</div>
+                  </div>
+                  <button class="btn btn-white" style="padding:8px 12px; font-size:12px; border:1px solid var(--line);" onclick="switchTab(21); viewTransferStatus('${t.transfer_reference || t.reference || ''}')">Track</button>
+                </div>
+              </div>
+            `).join('')}
+          </section>`;
+      } else {
+        outgoingSection.style.display = 'none';
+        outgoingSection.innerHTML = '';
+      }
+    }
+
+    // UAT v19.0.2.0.8: Render pending invitations on dashboard
+    const invitationsSection = document.getElementById('dash-pending-invitations-section');
+    const pendingInvitations = (dash && dash.pending_invitations) || [];
+    const invitationCount = parseInt((dash && dash.pending_invitation_count) || pendingInvitations.length, 10);
+    if (invitationsSection) {
+      if (invitationCount > 0) {
+        invitationsSection.style.display = 'block';
+        invitationsSection.innerHTML = `
+          <section class="portalcard" style="border-left:4px solid var(--gold); margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <h3 style="margin:0; color:var(--navy); display:flex; align-items:center; gap:10px;">
+                ✉️ Pending Invitations
+                <span style="background:var(--gold,#f59e0b); color:#7c3f00; font-size:11px; font-weight:800; padding:3px 8px; border-radius:20px;">${invitationCount}</span>
+              </h3>
+              <button class="btn btn-white" style="padding:8px 18px; font-size:13px; border:1px solid var(--line);" onclick="switchTab(15)">Manage →</button>
+            </div>
+          </section>`;
+      } else {
+        invitationsSection.style.display = 'none';
+        invitationsSection.innerHTML = '';
+      }
+    }
+
   } catch (e) {
     console.error("Dashboard error:", e);
   }
 }
+
 
 async function loadProfile() {
   const container = document.getElementById('profile-content');
@@ -603,7 +724,8 @@ async function handleLookupReceiver(e) {
       const res = await API.lookupRecipient(num);
       const errorCode = res.error_code || res.error;
     
-      if (errorCode === "RECIPIENT_NOT_FOUND" && (res.can_invite === "true" || res.can_invite === true)) {
+      // UAT v19.0.2.0.8: RECIPIENT_NOT_FOUND with can_invite = true
+      if ((errorCode === "RECIPIENT_NOT_FOUND" || res.exists === false || res.exists === "false") && (res.can_invite === "true" || res.can_invite === true)) {
         document.getElementById('lookupReceiverRes').innerHTML = `
           <div style="background:#fef2f2;color:#991b1b;padding:24px;border:1px solid #fee2e2;border-radius:14px;text-align:center;margin-top:15px;">
             <div style="font-size:36px;margin-bottom:12px;">🔍</div>
@@ -617,6 +739,16 @@ async function handleLookupReceiver(e) {
         return;
       }
 
+      // UAT v19.0.2.0.8: exists but can_transfer = false (ineligible)
+      if (res.exists === true || res.exists === "true") {
+        if (res.can_transfer === false || res.can_transfer === "false") {
+          const msg = res.message || 'This recipient is not eligible to receive shares at this time.';
+          document.getElementById('lookupReceiverRes').innerHTML = `<div style="color:#b45309;padding:14px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;">⚠️ ${msg}</div>`;
+          document.getElementById('lookupReceiverRes').style.display = 'block';
+          return;
+        }
+      }
+
       if (errorCode || res.success === "false" || res.success === false) {
         const msg = res.message || errorCode || "Unknown error";
         document.getElementById('lookupReceiverRes').innerHTML = '<div style="color:var(--red);padding:10px;background:#fff1f1;border:1px solid #ffcdcd;border-radius:8px;">Error: ' + msg + '</div>';
@@ -628,31 +760,43 @@ async function handleLookupReceiver(e) {
       showToast('Recipient validated successfully!');
       if (window.transferProgress) window.transferProgress.setStep(2);
       
-      let detailsHtml = `Verified Recipient: ${num}`;
-      if (res.recipient) {
-          const r = res.recipient;
-          detailsHtml = `
-              <div style="background:#f8f9fa; padding:15px; border-radius:8px; border:1px solid #e9ecef; color:#333; font-weight:normal;">
-                  <h4 style="margin:0 0 10px 0; color:green;">✅ Recipient Verified</h4>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                      <span><strong>Name:</strong></span>
-                      <span>${r.name || 'N/A'}</span>
-                  </div>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                      <span><strong>Mobile:</strong></span>
-                      <span>${r.mobile_masked || 'N/A'}</span>
-                  </div>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
-                      <span><strong>Membership No:</strong></span>
-                      <span>${r.membership_no || num}</span>
-                  </div>
-                  <div style="display:flex; justify-content:space-between;">
-                      <span><strong>Status:</strong></span>
-                      <span style="text-transform:capitalize; color:${r.status === 'active' ? 'green' : 'orange'}">${r.status || 'N/A'}</span>
-                  </div>
-              </div>
-          `;
-      }
+      // UAT v19.0.2.0.8: Read from res.shareholder first, fall back to res.recipient
+      const sh = res.shareholder || res.recipient || {};
+      const englishName  = sh.name || sh.english_name || 'N/A';
+      const arabicName   = sh.name_ar || sh.arabic_name || '';
+      const membershipNo = sh.membership_no || sh.membership_number || num;
+      const status       = sh.status || sh.shareholder_status || 'N/A';
+      const isActive     = (status.toLowerCase() === 'active');
+      const eligible     = (sh.eligible_to_receive !== undefined) ? sh.eligible_to_receive : sh.eligible_to_receive_shares;
+      const isEligible   = eligible === true || eligible === 'true';
+      const photoUrl     = sh.photo_url || sh.shareholder_photo || sh.photo || '';
+      
+      const photoHtml = photoUrl
+        ? `<img src="${photoUrl}" alt="${englishName}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #e2e8f0;flex-shrink:0;" onerror="this.style.display='none'">`
+        : `<div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--deep));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;flex-shrink:0;">${(englishName[0]||'?').toUpperCase()}</div>`;
+
+      const detailsHtml = `
+        <div style="background:#f0fdf4; padding:20px; border-radius:14px; border:1px solid #bbf7d0; color:#166534;">
+          <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
+            ${photoHtml}
+            <div>
+              <div style="font-weight:800; font-size:17px; color:var(--navy);">${englishName}</div>
+              ${arabicName ? `<div style="font-size:14px; color:var(--muted); direction:rtl; text-align:right;">${arabicName}</div>` : ''}
+              <div style="font-size:12px; color:var(--muted); margin-top:3px;">${membershipNo}</div>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px;">
+            <div style="background:#fff; border-radius:10px; padding:10px 14px; border:1px solid #d1fae5;">
+              <div style="font-size:10px; color:var(--muted); font-weight:700; text-transform:uppercase; margin-bottom:3px;">Status</div>
+              <div style="font-weight:700; color:${isActive ? '#047857' : '#b45309'}; text-transform:capitalize;">${isActive ? '✅' : '⚠️'} ${status}</div>
+            </div>
+            <div style="background:#fff; border-radius:10px; padding:10px 14px; border:1px solid #d1fae5;">
+              <div style="font-size:10px; color:var(--muted); font-weight:700; text-transform:uppercase; margin-bottom:3px;">Eligible</div>
+              <div style="font-weight:700; color:${isEligible ? '#047857' : '#b45309'};">${isEligible ? '✅ Yes' : '❌ No'}</div>
+            </div>
+          </div>
+        </div>
+      `;
       
       document.getElementById('receiverDetails').innerHTML = detailsHtml;
       document.getElementById('transferReceiver').disabled = true;
@@ -664,6 +808,7 @@ async function handleLookupReceiver(e) {
       btn.disabled = false;
   }
 }
+
 
 let currentTransferId = null;
 
@@ -1312,26 +1457,56 @@ async function loadShareholderPreferences() {
     const res = await API.getShareholderPreferences();
     const prefs = res.preferences || {};
     
-    container.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom: 20px;">
-        <label style="display:flex;align-items:center;gap:10px;font-size:14px;">
-          <input type="checkbox" id="pref_marketing" ${prefs.marketing ? 'checked' : ''} style="width:18px;height:18px;">
-          Marketing & Promotions
-        </label>
-        <label style="display:flex;align-items:center;gap:10px;font-size:14px;">
-          <input type="checkbox" id="pref_dividends" ${prefs.dividends ? 'checked' : ''} style="width:18px;height:18px;">
-          Dividend Updates
-        </label>
-        <label style="display:flex;align-items:center;gap:10px;font-size:14px;">
-          <input type="checkbox" id="pref_board" ${prefs.board_elections ? 'checked' : ''} style="width:18px;height:18px;">
-          Board Elections
-        </label>
-        <label style="display:flex;align-items:center;gap:10px;font-size:14px;">
-          <input type="checkbox" id="pref_news" ${prefs.cooperative_news ? 'checked' : ''} style="width:18px;height:18px;">
-          Cooperative News
-        </label>
+    // Helper to safely get nested values or fallback to false
+    const getPref = (category, channel) => {
+      if (prefs[category] && typeof prefs[category] === 'object') return prefs[category][channel] ? 'checked' : '';
+      return ''; // Default unchecked if format doesn't match
+    };
+
+    const categories = [
+      { id: 'share_notifications', label: 'Share Notifications' },
+      { id: 'dividend_notifications', label: 'Dividend Notifications' },
+      { id: 'transfer_notifications', label: 'Transfer Notifications' },
+      { id: 'agm_notifications', label: 'AGM Notifications' },
+      { id: 'news_notifications', label: 'News Notifications' },
+      { id: 'marketing_notifications', label: 'Marketing Notifications' }
+    ];
+    const channels = [
+      { id: 'sms', label: 'SMS' },
+      { id: 'email', label: 'Email' },
+      { id: 'push', label: 'Push Notification' },
+      { id: 'whatsapp', label: 'WhatsApp' }
+    ];
+
+    let html = `
+      <div style="overflow-x:auto; margin-bottom:20px; border:1px solid var(--line); border-radius:8px;">
+        <table style="width:100%; border-collapse:collapse; min-width:600px;">
+          <thead>
+            <tr style="background:var(--slate); border-bottom:1px solid var(--line);">
+              <th style="padding:12px; text-align:left; font-size:13px; color:var(--muted);">Notification Type</th>
+              ${channels.map(c => `<th style="padding:12px; text-align:center; font-size:13px; color:var(--muted);">${c.label}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+    `;
+
+    categories.forEach((cat, idx) => {
+      html += `<tr style="border-bottom:1px solid var(--line); background:${idx % 2 === 0 ? '#fff' : '#fafafa'};">
+                 <td style="padding:12px; font-size:14px; color:var(--navy); font-weight:600;">${cat.label}</td>`;
+      channels.forEach(chan => {
+        html += `<td style="padding:12px; text-align:center;">
+                   <input type="checkbox" id="pref_${cat.id}_${chan.id}" ${getPref(cat.id, chan.id)} style="width:18px;height:18px;cursor:pointer;">
+                 </td>`;
+      });
+      html += `</tr>`;
+    });
+
+    html += `
+          </tbody>
+        </table>
       </div>
     `;
+    container.innerHTML = html;
   } catch (e) {
     container.innerHTML = '<div style="color:red;padding:20px;">Error loading preferences: ' + e.message + '</div>';
   }
@@ -1343,12 +1518,18 @@ window.handlePreferencesUpdate = async function(e) {
   btn.disabled = true;
   btn.textContent = 'Saving...';
   try {
-    const payload = {
-      marketing: document.getElementById('pref_marketing').checked,
-      dividends: document.getElementById('pref_dividends').checked,
-      board_elections: document.getElementById('pref_board').checked,
-      cooperative_news: document.getElementById('pref_news').checked
-    };
+    const categories = ['share_notifications', 'dividend_notifications', 'transfer_notifications', 'agm_notifications', 'news_notifications', 'marketing_notifications'];
+    const channels = ['sms', 'email', 'push', 'whatsapp'];
+    
+    const payload = {};
+    categories.forEach(cat => {
+      payload[cat] = {};
+      channels.forEach(chan => {
+        const el = document.getElementById(`pref_${cat}_${chan}`);
+        payload[cat][chan] = el ? el.checked : false;
+      });
+    });
+
     const res = await API.updateShareholderPreferences(payload);
     if (res.success || res.status === 'success') {
       showToast('Preferences saved successfully!');
@@ -1502,7 +1683,8 @@ async function loadPendingTransfers() {
     
     let html = '';
     pending.forEach(t => {
-      const isCancellable = ['sender_otp', 'receiver_approval', 'receiver_otp'].includes((t.status_code || '').toLowerCase());
+      // UAT v19.0.2.0.8: Use backend's cancellable field; cancel is only allowed at receiver_approval stage
+      const isCancellable = t.cancellable === true || t.cancellable === "true";
       html += `
         <div style="border:1px solid var(--line); border-radius:12px; padding:15px; margin-bottom:15px; background:#fff; display:flex; justify-content:space-between; align-items:center;">
           <div>
@@ -1759,7 +1941,8 @@ async function acceptIncomingTransfer(reference) {
   if (!await customConfirm('Accept Transfer', 'Are you sure you want to accept this share transfer? This will generate an OTP for final verification.')) return;
   try {
     showToast('Accepting transfer...');
-    const res = await API.acceptTransfer(reference);
+    // UAT v19.0.2.0.8: Use primary receiver_action endpoint with action='accept'
+    const res = await API.receiverAction(reference, 'accept');
     if (res.success || res.status === 'success' || res.next_action === 'VERIFY_RECEIVER_OTP' || res.next_action_code === 'VERIFY_RECEIVER_OTP') {
       showToast('Transfer accepted. Please verify OTP to complete.');
       
@@ -1815,8 +1998,9 @@ async function rejectIncomingTransfer(reference) {
   if (reason === null) return;
   try {
     showToast('Rejecting transfer...');
-    const res = await API.rejectTransfer(reference, reason);
-    if (res.success || res.status === 'success') {
+    // UAT v19.0.2.0.8: Use primary receiver_action endpoint with action='reject'
+    const res = await API.receiverAction(reference, 'reject', reason || '');
+    if (res.success || res.status === 'success' || res.next_action === 'CLOSED' || res.next_action_code === 'CLOSED') {
       showToast('Transfer rejected successfully.');
       loadIncomingTransfers();
     } else {
@@ -1852,9 +2036,11 @@ window.submitIncomingReceiverOtp = async function(reference) {
 window.resendIncomingReceiverOtp = async function(reference) {
   try {
     showToast('Resending OTP...');
-    const res = await API.acceptTransfer(reference);
-    if (res.success || res.status === 'success' || res.next_action === 'VERIFY_RECEIVER_OTP' || res.next_action_code === 'VERIFY_RECEIVER_OTP') {
-      showToast('OTP resent successfully!');
+    // UAT v19.0.2.0.8: Use dedicated resend_receiver_otp endpoint (NOT acceptTransfer)
+    const res = await API.resendReceiverOtp(reference);
+    if (res.success || res.status === 'success' || res.status === 'receiver_otp') {
+      const remaining = res.remaining_resends !== undefined ? ` (${res.remaining_resends} remaining)` : '';
+      showToast(`OTP resent successfully!${remaining}`);
       const safeRef = reference.replace(/\//g, '-');
       const row = document.getElementById(`otp-row-${safeRef}`);
       if (row) {
@@ -1948,7 +2134,7 @@ async function viewTransferStatus(reference) {
             <div style="display:flex; gap:15px; margin-bottom:15px;">
               <div style="color:${color}; font-size:18px;">${icon}</div>
               <div>
-                <b style="color:${isRejected ? 'var(--red)' : 'var(--navy)'};">${item.label || item.state || item.action}</b>
+                <b style="color:${isRejected ? 'var(--red)' : 'var(--navy)'};">${item.step || item.label || item.state || item.action || 'Unknown Step'}</b>
                 <div style="font-size:12px; color:var(--muted);">${item.date || item.at || 'Pending'}</div>
               </div>
             </div>

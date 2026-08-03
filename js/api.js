@@ -2202,6 +2202,11 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
   const acceptTransfer = (transfer_reference) => POST('/api/shareholder/transfer/accept', { transfer_reference });
   const rejectTransfer = (transfer_reference, reason) => POST('/api/shareholder/transfer/reject', { transfer_reference, reason });
   const respondTransfer = (transfer_reference, decision, reason) => POST('/api/shareholder/transfer/respond', { transfer_reference, decision, reason });
+  // UAT v19.0.2.0.8: Primary receiver decision endpoint (replaces separate /accept + /reject).
+  // action must be 'accept' or 'reject'. Accept triggers receiver OTP; reject closes without OTP.
+  const receiverAction = (transfer_reference, action, reason = '') => POST('/api/shareholder/transfer/receiver_action', { transfer_reference, action, reason });
+  // UAT v19.0.2.0.8: Proper OTP resend (expires previous OTP, generates a new one).
+  const resendReceiverOtp = (transfer_reference) => POST('/api/shareholder/transfer/resend_receiver_otp', { transfer_reference });
   const getTransferStatus = (transfer_reference) => GET(`/api/shareholder/transfer/status/${encodeURIComponent(transfer_reference)}`);
   const cancelTransfer = (transfer_reference, reason) => POST('/api/shareholder/transfer/cancel', { transfer_reference, reason });
   const getReceivedInvitations = () => GET('/api/shareholder/invitations');
@@ -2238,7 +2243,7 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
     getShareholderFieldMap, shareholderLookup, shareholderSendOtp, shareholderVerifyOtp,
     getShareholderProfile, updateShareholderProfile, getShareholderPurchases,
     linkShareholderOrder, getShareholderCertificates, getShareholderRewards,
-    lookupRecipient, transferShares, verifyTransferSenderOtp, verifyTransferReceiverOtp, acceptTransfer, rejectTransfer, respondTransfer, getTransferStatus, cancelTransfer, getReceivedInvitations, getInvitationStatus, getTransferHistory, inviteShareholder, submitRegistration, sellShares, getShareListings, buyInterest,
+    lookupRecipient, transferShares, verifyTransferSenderOtp, verifyTransferReceiverOtp, acceptTransfer, rejectTransfer, respondTransfer, receiverAction, resendReceiverOtp, getTransferStatus, cancelTransfer, getReceivedInvitations, getInvitationStatus, getTransferHistory, inviteShareholder, submitRegistration, sellShares, getShareListings, buyInterest,
     getShareholderPreferences, updateShareholderPreferences, getShareholderNotifications, markNotificationsRead, getShareholderDashboard, registerShareholderPush, unregisterShareholderPush,
     // Startup/Sliders
     getLogo, getHomeSliders, getDealOfDay, getBestSeller, getRecommended,
