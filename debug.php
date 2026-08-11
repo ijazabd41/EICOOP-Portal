@@ -42,11 +42,13 @@ if ($errno === 0) {
     echo "  Error #$errno: $error\n";
 }
 
-echo "\n=== $_SERVER['REQUEST_URI'] ===\n";
-echo $_SERVER['REQUEST_URI'] . "\n";
+$requestUri = $_SERVER['REQUEST_URI'];
+echo "\n=== REQUEST_URI ===\n";
+echo $requestUri . "\n";
 
+$pathInfo = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : 'NOT SET';
 echo "\n=== PATH_INFO ===\n";
-echo (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : 'NOT SET') . "\n";
+echo $pathInfo . "\n";
 
 echo "</pre>";
 echo "<b>DELETE THIS FILE after diagnosis!</b>";
