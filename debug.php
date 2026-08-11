@@ -55,4 +55,3 @@ echo (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : 'NOT SET') . "\n";
 
 echo '</pre>';
 echo '<b>DELETE THIS FILE after diagnosis!</b>';
-?>
