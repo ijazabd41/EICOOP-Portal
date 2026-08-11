@@ -1,0 +1,26 @@
+Options -Indexes
+DirectoryIndex index.html index.php
+
+# ── PHP Proxy Routing ─────────────────────────────────────────────
+# Route /api/* requests through proxy.php
+RewriteEngine On
+
+# Allow direct access to proxy.php itself
+RewriteRule ^proxy\.php$ - [L]
+
+# Route /api/* through proxy.php
+RewriteRule ^(api/.*)$ proxy.php/$1 [QSA,L]
+
+# Route /web/* through proxy.php (for images)
+RewriteRule ^(web/.*)$ proxy.php/$1 [QSA,L]
+
+# ── CORS Preflight (OPTIONS) ──────────────────────────────────────
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Session-Token"
+
+# ── Prevent access to sensitive files ────────────────────────────
+<FilesMatch "^(config\.php|config\.example\.php|proxy_error\.log|\.git)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
