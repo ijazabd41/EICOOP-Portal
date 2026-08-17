@@ -1,0 +1,14 @@
+Target: http://coopdiscerp923492dj2j.ddnsgeek.com:8076/web/session/authenticate
+Method: POST
+Headers:
+Array
+(
+    [0] => User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+    [1] => Accept: application/json
+    [2] => Content-Type: application/json
+    [3] => Accept-Language: en-US,en;q=0.9
+    [4] => Connection: keep-alive
+)
+
+Body:
+{"jsonrpc":"2.0","params":{"db":"staging-apr17","login":"shareop@eicop.ae","password":"dds@123"}}

@@ -1032,13 +1032,18 @@ async function handleSellShares(e) {
         // Render persistent success message card
         const cardContainer = document.querySelector('#tab-12 .portalcard');
         if (cardContainer) {
+          const isApproval = res.approval_required === 'true' || res.approval_required === true || res.state === 'submitted';
+          const title = isApproval ? 'Request Submitted for Approval' : 'Share Listing Published!';
+          const msg = res.message || `Your offer to sell <strong>${qty.toLocaleString()} shares</strong> at <strong>${price.toFixed(2)} AED</strong> per share has been successfully processed.`;
+          
           cardContainer.innerHTML = `
             <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:18px; padding:28px; text-align:center; color:#166534; box-shadow:0 8px 20px rgba(0,0,0,0.03);">
               <div style="font-size:44px; margin-bottom:12px;">✅</div>
-              <h3 style="margin-top:0; margin-bottom:8px; color:#15803d; font-size:20px;">Share Listing Published!</h3>
+              <h3 style="margin-top:0; margin-bottom:8px; color:#15803d; font-size:20px;">${title}</h3>
               <p style="margin:0 0 20px; font-size:13.5px; line-height:1.6; color:#166534;">
-                Your offer to sell <strong>${qty.toLocaleString()} shares</strong> at <strong>${price.toFixed(2)} AED</strong> per share has been successfully published. Other members can now view and accept this listing in the marketplace directory.
+                ${msg}
               </p>
+              ${res.reference ? `<p style="font-size:12px; margin-top:-10px; margin-bottom:20px; opacity:0.8;">Reference: <b>${res.reference}</b></p>` : ''}
               <button class="btn btn-primary" onclick="resetSellSharesForm()" style="background:#15803d; border-color:#15803d; color:#fff; padding:10px 24px;">Create Another Listing</button>
             </div>
           `;
@@ -2090,11 +2095,24 @@ async function viewTransferStatus(reference) {
       const transferData = res.transfer || res;
       const statusObj = transferData.status || {};
       
-      const pBar = document.getElementById('statusProgressBar');
-      const pText = document.getElementById('statusProgressPercentage');
-      const progress = statusObj.progress || transferData.progress || 0;
-      pBar.style.width = progress + '%';
-      pText.textContent = progress + '%';
+      if (!window.statusStepProgress) {
+        window.statusStepProgress = new StepProgress('transferStatusProgress', [
+          { title: 'Sender', description: 'Initiation & OTP' },
+          { title: 'Operations', description: 'Operations Review' },
+          { title: 'Receiver', description: 'Acceptance & OTP' },
+          { title: 'Chairman', description: 'Final Approval' },
+          { title: 'Completed', description: 'Transfer Done' }
+        ], 1);
+      }
+      
+      const rawState = String(statusObj.code || transferData.state || '').toLowerCase();
+      let step = 1;
+      if (['operator', 'waiting_operations', 'submitted'].includes(rawState)) step = 2;
+      else if (['receiver_approval', 'waiting_receiver_approval', 'receiver_otp', 'verify_receiver_otp'].includes(rawState)) step = 3;
+      else if (['approved', 'waiting_chairman', 'chairman'].includes(rawState)) step = 4;
+      else if (['done', 'completed', 'closed', 'rejected', 'cancelled', 'expired'].includes(rawState)) step = 5;
+      
+      window.statusStepProgress.setStep(step);
       
       const formatNextAction = (code) => {
         if (!code) return '';
@@ -2104,6 +2122,11 @@ async function viewTransferStatus(reference) {
           'wait_receiver_approval': 'Awaiting Receiver Approval',
           'receiver_otp': 'Awaiting Receiver OTP Verification',
           'verify_receiver_otp': 'Awaiting Receiver OTP Verification',
+          'wait_backend_review': 'Awaiting Operations Review',
+          'wait_operations_review': 'Awaiting Operations Review',
+          'operator': 'Awaiting Operations Review',
+          'wait_chairman_approval': 'Awaiting Chairman Approval',
+          'chairman_approval': 'Awaiting Chairman Approval',
           'complete_transfer': 'Completing Share Transfer...',
           'completed': 'Transfer Completed',
           'closed': 'Closed',

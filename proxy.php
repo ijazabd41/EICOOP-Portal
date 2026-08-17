@@ -77,7 +77,7 @@ $queryString = str_replace(['%5B', '%5D'], ['[', ']'], $queryString);
 // CRITICAL: Do NOT add by_AJR to shareholder endpoints — it causes 401 on Odoo
 $isShareholderPath = strpos($pathInfo, '/api/shareholder/') === 0;
 
-if (!isBinaryPath($pathInfo) && !$isShareholderPath) {
+if (!isBinaryPath($pathInfo) && !$isShareholderPath && strpos($pathInfo, '/web/session/authenticate') === false) {
     if (strpos($queryString, 'by_AJR=') === false) {
         if (!empty($queryString)) {
             $queryString .= '&by_AJR=1';
@@ -175,13 +175,18 @@ if ($method === 'POST' || $method === 'PUT' || $method === 'PATCH') {
 $headers = [];
 foreach (getallheaders() as $name => $value) {
     $lowerName = strtolower($name);
-    if ($lowerName !== 'host' && $lowerName !== 'content-length' && $lowerName !== 'connection' && $lowerName !== 'x-session-token' && $lowerName !== 'accept-encoding') {
+    if ($lowerName !== 'host' && $lowerName !== 'content-length' && $lowerName !== 'connection' && $lowerName !== 'x-session-token' && $lowerName !== 'accept-encoding' && $lowerName !== 'origin' && $lowerName !== 'referer' && strpos($lowerName, 'sec-') !== 0) {
         if ($isMultipart && $lowerName === 'content-type') {
             continue; // Let cURL generate Content-Type with correct boundary
         }
-        if ($lowerName === 'cookie' && $sessionToken) {
-            $value .= '; session_id=' . $sessionToken;
-            $sessionToken = ''; // prevent adding it twice
+        if ($lowerName === 'cookie') {
+            if ($pathInfo === '/web/session/authenticate') {
+                continue; // Do not forward stale cookies on fresh login
+            }
+            if ($sessionToken) {
+                $value .= '; session_id=' . $sessionToken;
+                $sessionToken = ''; // prevent adding it twice
+            }
         }
         $headers[] = "$name: $value";
     }
@@ -196,6 +201,10 @@ if ($isShareholderPath) {
 }
 
 $headers[] = "Connection: keep-alive";
+
+if ($pathInfo === '/web/session/authenticate') {
+    file_put_contents(__DIR__ . '/proxy_debug.log', "Target: $targetUrl\nMethod: $method\nHeaders:\n" . print_r($headers, true) . "\nBody:\n" . $input . "\n");
+}
 
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_ENCODING, ""); // Auto-handle gzip/deflate

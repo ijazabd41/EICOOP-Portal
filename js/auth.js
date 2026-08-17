@@ -262,6 +262,70 @@ function logout() {
   window.scrollTo(0,0);
 }
 
+function openManagementLogin() {
+  document.getElementById('managementLoginOverlay').classList.remove('hidden');
+  document.body.classList.add('modal-open');
+}
+
+function closeManagementLogin() {
+  document.getElementById('managementLoginOverlay').classList.add('hidden');
+  document.body.classList.remove('modal-open');
+}
+
+async function loginManagement() {
+  const email = document.getElementById('mgrEmail').value.trim();
+  const password = document.getElementById('mgrPassword').value.trim();
+  const err = document.getElementById('mgrError');
+  const btn = document.getElementById('btnMgrLogin');
+  
+  if (err) err.style.display = 'none';
+  if (!email || !password) {
+    if (err) { err.textContent = 'Please enter email and password'; err.style.display = 'block'; }
+    return;
+  }
+  
+  if (btn) { btn.disabled = true; btn.textContent = 'Authenticating...'; }
+  
+  try {
+    const confRes = await fetch('/proxy.php/api/config');
+    let conf = { db: 'production' };
+    try { conf = await confRes.json(); } catch(e) {}
+
+    const r = await fetch('/proxy.php/web/session/authenticate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        params: { db: conf.db, login: email, password: password }
+      })
+    });
+    
+    let j = {};
+    try { j = await r.json(); } catch(e) {}
+    
+    if (j.error) throw new Error(j.error.data?.message || j.error.message || 'Authentication failed');
+    const sessId = r.headers.get('X-Set-Session-Token') || (j.result && j.result.session_id);
+    if (!j.result || !sessId) throw new Error('Invalid credentials');
+    
+    const roleCode = j.result.cd_mobile_role?.role_code;
+    if (roleCode !== 'shareholder_operation_manager' && roleCode !== 'shareholder_chairman') {
+      throw new Error('Access Denied: You do not have the required Operations role.');
+    }
+    
+    localStorage.setItem('cd_session_id', sessId);
+    localStorage.setItem('cd_user_id', String(j.result.uid));
+    
+    if (btn) { btn.disabled = false; btn.textContent = 'Login to Operations →'; }
+    closeManagementLogin();
+    window.location.href = 'ops.html';
+    
+  } catch(e) {
+    if (err) { err.textContent = '❌ ' + e.message; err.style.display = 'block'; }
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Login to Operations →'; }
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (API.loggedIn() && localStorage.getItem('cd_shareholder_number')) {
     shNumber = localStorage.getItem('cd_shareholder_number');

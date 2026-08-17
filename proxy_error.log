@@ -1047,3 +1047,301 @@ Response: {"success": "", "error_code": "ACTIVE_INVITATION_EXISTS", "message": "
 2026-08-03 11:42:11 - Error 400 on http://cooperp.freeddns.org:8076/api/v1/error-log/push?by_AJR=1
 Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
 
+2026-08-14 13:47:33 - Error 405 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/web/session/authenticate
+Response: <!doctype html>
+<html lang=en>
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+
+2026-08-14 14:02:04 - Error 405 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/bootstrap
+Response: <!doctype html>
+<html lang=en>
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+
+2026-08-14 17:28:01 - Error 409 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/receiver_action
+Response: {"success": "", "error_code": "INVALID_TRANSFER_STATE", "message": "This transfer is not waiting for receiver approval.", "transfer": {"id": "12", "reference": "SHT/00012", "transfer_reference": "SHT/00012", "from_membership_no": "5551", "from_name": "Abdullah", "from": "Abdullah", "to_membership_no": "5555", "to_name": "Abdullah 5555", "to": "Abdullah 5555", "number_of_shares": "55.0", "shares": "55.0", "state": "receiver_otp", "status": {"code": "receiver_otp", "label": "Receiver OTP Pending", "next_action": "verify_receiver_otp", "next_action_code": "VERIFY_RECEIVER_OTP", "current_user_role": "receiver", "progress": "75", "is_terminal": ""}, "status_label": "Receiver OTP Pending", "progress": "75", "next_action": "verify_receiver_otp", "next_action_code": "VERIFY_RECEIVER_OTP", "current_user_role": "receiver", "date": "2026-07-30", "created_at": "2026-07-30 13:33:36", "expires_at": "", "sender_otp_verified": "true", "receiver_approval_state": "pending", "receiver_otp_verified": "", "sender_otp_sent_at": "", "sender_verified_at": "2026-07-30 13:33:50", "receiver_approval_at": "", "receiver_otp_sent_at": "", "receiver_otp_resend_count": "0", "receiver_otp_last_resent_at": "", "can_resend_receiver_otp": "", "receiver_action_endpoint": "/api/shareholder/transfer/receiver_action", "resend_receiver_otp_endpoint": "/api/shareholder/transfer/resend_receiver_otp", "receiver_verified_at": "", "approved_at": "", "operator": "Nuha Abbas", "completed_at": "", "cancelled_at": "", "cancellable": "", "review_required": "", "available_actions": ["verify_receiver_otp", "resend_receiver_otp"], "timeline": [{"code": "validated", "label": "Validated", "completed": "true", "at": "2026-07-30 13:33:36"}, {"code": "created", "label": "Request Created", "completed": "true", "at": "2026-07-30 13:33:36"}, {"code": "sender_otp", "label": "Sender OTP Verified", "completed": "true", "at": "2026-07-30 13:33:50"}, {"code": "receiver_approval", "label": "Receiver Approval", "completed": "", "stat
+
+2026-08-14 17:28:01 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-14 17:29:11 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/dashboard
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)" data-can-optimize-seo="True">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=685493f"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "6d3dd72aace032d90cf425e06521c243bfc2bd7co1818264550",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": false, "is_internal_user": true, "is_website_user": false, "uid": 249, "registry_hash": "8213301a55ebaca6c9caeaa270c222ecd15be389ac4e910939909fc5901566c6", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "server_version": "19.0", "server_version_info": [19, 0, 0, "final", 0, ""], "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+  
+
+2026-08-14 17:29:14 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/transfers
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)" data-can-optimize-seo="True">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=685493f"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "d0c7a4482c961c8804ca4337feb8ef6ff9c5285ao1818264552",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": false, "is_internal_user": true, "is_website_user": false, "uid": 249, "registry_hash": "8213301a55ebaca6c9caeaa270c222ecd15be389ac4e910939909fc5901566c6", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "server_version": "19.0", "server_version_info": [19, 0, 0, "final", 0, ""], "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+  
+
+2026-08-14 18:15:42 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/transfers
+Response: <!DOCTYPE html>
+<html lang="en-US" data-website-id="1" data-main-object="ir.ui.view(262,)" data-can-optimize-seo="True">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Page Not Found | COOP DISCOUNTS</title>
+        <link type="image/x-icon" rel="shortcut icon" href="/web/image/website/1/favicon?unique=685493f"/>
+        <link rel="preload" href="/web/static/src/libs/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" as="font" crossorigin=""/>
+        <link type="text/css" rel="stylesheet" href="/web/assets/1/551b068/web.assets_frontend.min.css"/>
+        <script id="web.layout.odooscript" type="text/javascript">
+            var odoo = {
+                csrf_token: "bfd4c325f03ebbc744d1bc2630d0046c6cdf2801o1818267341",
+                debug: "",
+            };
+        </script>
+        <script type="text/javascript">
+            odoo.__session_info__ = {"is_admin": false, "is_system": false, "is_public": false, "is_internal_user": true, "is_website_user": false, "uid": 249, "registry_hash": "8213301a55ebaca6c9caeaa270c222ecd15be389ac4e910939909fc5901566c6", "is_frontend": true, "profile_session": null, "profile_collectors": null, "profile_params": null, "show_effect": true, "currencies": {"129": {"name": "AED", "symbol": "AED", "position": "after", "digits": [69, 2]}, "1": {"name": "USD", "symbol": "$", "position": "before", "digits": [69, 2]}}, "quick_login": true, "bundle_params": {"lang": "en_US", "website_id": 1}, "test_mode": false, "server_version": "19.0", "server_version_info": [19, 0, 0, "final", 0, ""], "websocket_worker_version": "19.0-2", "translationURL": "/website/translations", "geoip_country_code": null, "geoip_phone_code": null, "lang_url_code": "en", "add_to_cart_action": "stay"};
+            if (!/(^|;\s)tz=/.test(document.cookie)) {
+                const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                document.cookie = `tz=${userTZ}; path=/`;
+  
+
+2026-08-14 18:16:11 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/certificate
+Response: {"success": "", "message": "Shareholder not found."}
+
+2026-08-14 18:16:16 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/notifications
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-14 19:20:44 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/invitations
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-14 19:20:50 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/certificate
+Response: {"success": "", "message": "Shareholder not found."}
+
+2026-08-14 19:45:13 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/health
+Response: {"error":"Proxy cURL Error: Empty reply from server"}
+
+2026-08-14 19:46:12 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/health
+Response: {"error":"Proxy cURL Error: Empty reply from server"}
+
+2026-08-14 19:46:15 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/dashboard
+Response: {"error":"Proxy cURL Error: Empty reply from server"}
+
+2026-08-14 20:41:03 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/shareholders
+Response: {"error":"Proxy cURL Error: Unsupported HTTP\/1 subversion in response"}
+
+2026-08-14 20:41:10 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/applications
+Response: {"error":"Proxy cURL Error: Unsupported HTTP\/1 subversion in response"}
+
+2026-08-14 20:41:12 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/certificates
+Response: {"success": "", "message": "Shareholder not found."}
+
+2026-08-14 20:41:14 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/rewards
+Response: {"success": "", "message": "Shareholder not found."}
+
+2026-08-14 20:41:16 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/notifications
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-14 20:41:17 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/audit
+Response: {"error":"Proxy cURL Error: Unsupported HTTP\/1 subversion in response"}
+
+2026-08-14 20:41:20 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/audit
+Response: {"error":"Proxy cURL Error: Unsupported HTTP\/1 subversion in response"}
+
+2026-08-14 20:42:53 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/invitations
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-14 20:43:05 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/invitations
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-14 20:43:19 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/certificate
+Response: {"error":"Proxy cURL Error: Empty reply from server"}
+
+2026-08-14 20:43:23 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/notifications
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-15 10:21:37 - Error 409 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/transfers/57/chairman
+Response: {"success": false, "code": "INVALID_STATE", "message": "Transfer must be Backend Approval Pending."}
+
+2026-08-15 10:22:55 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/request
+Response: {"success": "", "error_code": "INSUFFICIENT_SHARES", "message": "Insufficient available shares for this transfer.", "total_shares": "1595.0", "reserved_shares": "1544.0", "available_shares": "51.0", "requested_shares": "1234.0"}
+
+2026-08-15 10:22:55 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-15 10:23:00 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/request
+Response: {"success": "", "error_code": "INSUFFICIENT_SHARES", "message": "Insufficient available shares for this transfer.", "total_shares": "1595.0", "reserved_shares": "1544.0", "available_shares": "51.0", "requested_shares": "234.0"}
+
+2026-08-15 10:23:01 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-15 10:23:58 - Error 409 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/transfers/58/chairman
+Response: {"success": false, "code": "INVALID_STATE", "message": "Transfer must be Backend Approval Pending."}
+
+2026-08-15 10:25:59 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/verify_receiver_otp
+Response: {"success": "", "error_code": "OTP_INVALID", "message": "Invalid OTP."}
+
+2026-08-15 10:26:00 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-15 13:47:49 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/website/news?limit=6&lang=en_US&by_AJR=1
+Response: {"error":"Proxy cURL Error: Connection timed out after 5007 milliseconds"}
+
+2026-08-15 13:47:54 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/order?by_AJR=1&limit=10&offset=0&Offset=0&domain=[(%27partner_id%27,%27%3D%27,4897)]
+Response: {"error":"Proxy cURL Error: Connection timed out after 5006 milliseconds"}
+
+2026-08-15 13:47:59 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/invoice?by_AJR=1&limit=10&offset=0&Offset=0&domain=[(%27partner_id%27,%27%3D%27,4897)]
+Response: {"error":"Proxy cURL Error: Connection timed out after 5011 milliseconds"}
+
+2026-08-15 13:48:04 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/contacts/4897?by_AJR=1
+Response: {"error":"Proxy cURL Error: Connection timed out after 5003 milliseconds"}
+
+2026-08-15 13:48:09 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/dashboard
+Response: {"error":"Proxy cURL Error: Connection timed out after 5013 milliseconds"}
+
+2026-08-15 13:48:14 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/notifications?page=1&limit=1&unread_only=true
+Response: {"error":"Proxy cURL Error: Connection timed out after 5013 milliseconds"}
+
+2026-08-15 13:48:19 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"error":"Proxy cURL Error: Connection timed out after 5028 milliseconds"}
+
+2026-08-15 13:48:24 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"error":"Proxy cURL Error: Connection timed out after 5004 milliseconds"}
+
+2026-08-15 13:48:29 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"error":"Proxy cURL Error: Connection timed out after 5005 milliseconds"}
+
+2026-08-15 13:48:35 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"error":"Proxy cURL Error: Connection timed out after 5006 milliseconds"}
+
+2026-08-15 13:48:40 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"error":"Proxy cURL Error: Connection timed out after 5026 milliseconds"}
+
+2026-08-15 15:45:49 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/website/news?limit=6&lang=en_US&by_AJR=1
+Response: {"error":"Proxy cURL Error: Connection timed out after 5006 milliseconds"}
+
+2026-08-15 15:46:20 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/lookup
+Response: {"error":"Proxy cURL Error: Connection timed out after 5005 milliseconds"}
+
+2026-08-15 16:51:57 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/dashboard
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-15 16:52:00 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/history
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-15 16:52:00 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-15 16:52:00 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-15 16:52:17 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/request
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-15 16:52:17 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-15 16:52:25 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/request
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-15 16:52:27 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-15 16:55:25 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/request
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-15 16:55:28 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-15 17:54:12 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/transfers
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-17 10:54:47 - Error 409 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/transfers/58/review
+Response: {"success": false, "code": "CHAIRMAN_APPROVAL_REQUIRED", "message": "This transfer was created with automatic completion disabled. Chairman final approval is required after receiver OTP."}
+
+2026-08-17 10:58:32 - Error 409 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/transfers/62/chairman
+Response: {"success": false, "code": "OPERATIONS_REVIEW_REQUIRED", "message": "Operations Manager approval is mandatory before the receiver is invited."}
+
+2026-08-17 10:59:09 - Error 409 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/transfers/62/chairman
+Response: {"success": false, "code": "OPERATIONS_REVIEW_REQUIRED", "message": "Operations Manager approval is mandatory before the receiver is invited."}
+
+2026-08-17 12:14:15 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/verify_receiver_otp
+Response: {"success": "", "error_code": "OTP_INVALID", "message": "Invalid OTP."}
+
+2026-08-17 12:14:15 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:16:32 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/request
+Response: {"success": "", "error_code": "INSUFFICIENT_SHARES", "message": "Insufficient available shares for this transfer.", "total_shares": "1539.0", "reserved_shares": "1320.0", "available_shares": "219.0", "requested_shares": "1500.0"}
+
+2026-08-17 12:16:32 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:16:39 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/request
+Response: {"success": "", "error_code": "INSUFFICIENT_SHARES", "message": "Insufficient available shares for this transfer.", "total_shares": "1539.0", "reserved_shares": "1320.0", "available_shares": "219.0", "requested_shares": "1000.0"}
+
+2026-08-17 12:16:39 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
