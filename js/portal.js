@@ -85,6 +85,8 @@ b.getAttribute('onclick') && b.getAttribute('onclick').includes(`switchTab(${sea
   if (index === 16) loadShareholderNotifications();
   if (index === 17) loadShareholderPreferences();
   if (index === 18) loadTransferHistory();
+  if (index === 22) loadMyListings();
+  if (index === 23) loadMyOffers();
 }
 
 async function loadPortalData() {
@@ -266,6 +268,74 @@ async function loadDashboard() {
       } else {
         invitationsSection.style.display = 'none';
         invitationsSection.innerHTML = '';
+      }
+    }
+
+    // Shareholder Marketplace Dashboard Summary
+    const marketplaceSection = document.getElementById('dash-marketplace-section');
+    if (marketplaceSection) {
+      // Additive marketplace fields from dash API
+      const mktShares = dash && dash.shares_available_for_sale ? dash.shares_available_for_sale : 0;
+      const mktNewListings = dash && dash.new_listings_count ? dash.new_listings_count : 0;
+      const mktMyListings = dash && dash.my_active_listings ? dash.my_active_listings : 0;
+      const mktMyOffers = dash && dash.my_submitted_offers ? dash.my_submitted_offers : 0;
+      const mktNewOffers = dash && dash.new_offers_received ? dash.new_offers_received : 0;
+      
+      // Only show if there's any marketplace activity or listings available
+      if (mktShares > 0 || mktNewListings > 0 || mktMyListings > 0 || mktMyOffers > 0 || mktNewOffers > 0) {
+        marketplaceSection.style.display = 'block';
+        marketplaceSection.innerHTML = `
+          <section class="portalcard" style="border-left:4px solid #4CAF50; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+              <h3 style="margin:0; color:var(--navy); display:flex; align-items:center; gap:10px;">
+                🏪 Share Marketplace
+                ${mktNewOffers > 0 ? `<span style="background:#e53935; color:#fff; font-size:11px; font-weight:800; padding:3px 8px; border-radius:20px;">${mktNewOffers} New Offers</span>` : ''}
+              </h3>
+              <div>
+                <button class="btn btn-primary" style="padding:8px 15px; font-size:12px;" onclick="switchTab(13)">Browse Listings →</button>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px;">
+              <div style="background:#f5f9fc; padding:15px; border-radius:8px; text-align:center; cursor:pointer;" onclick="switchTab(13)">
+                <div style="font-size:24px; font-weight:800; color:var(--blue);">${parseFloat(mktShares).toLocaleString()}</div>
+                <div style="font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">Available Shares</div>
+              </div>
+              <div style="background:#f5f9fc; padding:15px; border-radius:8px; text-align:center; cursor:pointer;" onclick="switchTab(13)">
+                <div style="font-size:24px; font-weight:800; color:var(--blue);">${mktNewListings}</div>
+                <div style="font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">New Listings</div>
+              </div>
+              <div style="background:#f5f9fc; padding:15px; border-radius:8px; text-align:center; cursor:pointer;" onclick="switchTab(22)">
+                <div style="font-size:24px; font-weight:800; color:${mktMyListings > 0 ? 'var(--orange)' : 'var(--navy)'};">${mktMyListings}</div>
+                <div style="font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">My Active Listings</div>
+              </div>
+              <div style="background:#f5f9fc; padding:15px; border-radius:8px; text-align:center; cursor:pointer;" onclick="switchTab(23)">
+                <div style="font-size:24px; font-weight:800; color:${mktMyOffers > 0 ? 'var(--gold)' : 'var(--navy)'};">${mktMyOffers}</div>
+                <div style="font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">My Submitted Offers</div>
+              </div>
+            </div>
+          </section>`;
+      } else {
+        marketplaceSection.style.display = 'none';
+        marketplaceSection.innerHTML = '';
+      }
+    }
+
+    // Add red dot to Transfers Hub menu item if there are pending transfers
+    const totalPendingTransfers = incomingCount + outgoingCount;
+    const transferHubBtn = document.querySelector('button[onclick="switchTab(18, this)"]');
+    if (transferHubBtn) {
+      let dot = transferHubBtn.querySelector('.transfer-dot');
+      if (!dot) {
+        transferHubBtn.style.display = 'flex';
+        transferHubBtn.style.alignItems = 'center';
+        transferHubBtn.style.justifyContent = 'space-between';
+        transferHubBtn.innerHTML = `<span>🔄 Transfers Hub</span><span class="transfer-dot" style="display:none;background:#e53935;border-radius:50%;width:8px;height:8px;"></span>`;
+        dot = transferHubBtn.querySelector('.transfer-dot');
+      }
+      if (totalPendingTransfers > 0) {
+        dot.style.display = 'inline-block';
+      } else {
+        dot.style.display = 'none';
       }
     }
 
@@ -671,8 +741,8 @@ async function loadShareholderListings() {
   container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">⏳ Loading Listings...</div>';
   
   try {
-    const res = await API.getShareListings();
-    const listings = res.data || res.listings || [];
+    const res = await API.getMarketplaceListings();
+    const listings = res.listings || res.data || [];
     if (listings.length === 0) {
       container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted);background:#f9fafb;border-radius:12px;border:1px dashed #dbe7ef;"><b>No active listings</b><br><br>There are currently no shares listed for sale by other members. Check back later!</div>';
       return;
@@ -680,7 +750,8 @@ async function loadShareholderListings() {
     
     let html = '<div style="overflow-x:auto;"><table style="width:100%;min-width:600px;border-collapse:collapse;font-size:14px;">';
     html += '<tr style="background:#f5f5f5;text-align:left;">' +
-            '<th style="padding:10px;border-bottom:2px solid #ddd">Listing ID</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Reference</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Seller</th>' +
             '<th style="padding:10px;border-bottom:2px solid #ddd">Shares</th>' +
             '<th style="padding:10px;border-bottom:2px solid #ddd">Price/Share</th>' +
             '<th style="padding:10px;border-bottom:2px solid #ddd">Total</th>' +
@@ -688,14 +759,23 @@ async function loadShareholderListings() {
             '</tr>';
             
     listings.forEach(l => {
-      const total = (parseFloat(l.shares || 0) * parseFloat(l.price_per_share || 0)).toFixed(2);
+      const shares = parseFloat(l.number_of_shares || l.shares || 0);
+      const price = parseFloat(l.asking_price_per_share || l.price_per_share || 0);
+      const total = parseFloat(l.total_asking_amount || (shares * price)).toFixed(2);
+      const seller = l.seller_name || l.seller || 'N/A';
+      const ref = l.reference || l.id || l.listing_id || 'N/A';
+      const stateBadge = l.state === 'published' 
+        ? `<button class="btn btn-primary" style="padding:5px 10px;border-radius:3px;font-size:12px" onclick="promptSubmitOffer('${l.id}', ${price})">Make Offer</button>`
+        : `<span style="font-size:11px;color:var(--orange);font-weight:700;text-transform:uppercase;">${l.state.replace('_', ' ')}</span>`;
+      
       html += `<tr>
-        <td style="padding:10px;border-bottom:1px solid #eee">${l.id || l.listing_id || 'N/A'}</td>
-        <td style="padding:10px;border-bottom:1px solid #eee">${l.shares || 0}</td>
-        <td style="padding:10px;border-bottom:1px solid #eee">${parseFloat(l.price_per_share || 0).toFixed(2)} AED</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${ref}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${seller}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${shares.toLocaleString()}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${price.toFixed(2)} AED</td>
         <td style="padding:10px;border-bottom:1px solid #eee"><strong>${total} AED</strong></td>
         <td style="padding:10px;border-bottom:1px solid #eee">
-          <button class="btn btn-primary" style="padding:5px 10px;border-radius:3px;font-size:12px" onclick="handleBuyInterest(${l.id || l.listing_id})">Buy</button>
+          ${stateBadge}
         </td>
       </tr>`;
     });
@@ -703,6 +783,203 @@ async function loadShareholderListings() {
     container.innerHTML = html;
   } catch (e) {
     container.innerHTML = `<div style="padding:20px;color:red;">Error: ${e.message}</div>`;
+  }
+}
+
+async function loadMyListings() {
+  const container = document.getElementById('myListingsContent');
+  if (!container) return;
+  container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">⏳ Loading Your Listings...</div>';
+  
+  try {
+    const res = await API.getMyListings();
+    const listings = res.listings || res.data || [];
+    if (listings.length === 0) {
+      container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted);background:#f9fafb;border-radius:12px;border:1px dashed #dbe7ef;"><b>No active listings</b><br><br>You have not listed any shares for sale.</div>';
+      return;
+    }
+    
+    let html = '<div style="overflow-x:auto;"><table style="width:100%;min-width:600px;border-collapse:collapse;font-size:14px;">';
+    html += '<tr style="background:#f5f5f5;text-align:left;">' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Reference</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Shares</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Price/Share</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Total</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Status</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Actions</th>' +
+            '</tr>';
+            
+    listings.forEach(l => {
+      const shares = parseFloat(l.number_of_shares || 0);
+      const price = parseFloat(l.asking_price_per_share || 0);
+      const total = parseFloat(l.total_asking_amount || (shares * price)).toFixed(2);
+      
+      html += `<tr>
+        <td style="padding:10px;border-bottom:1px solid #eee">${l.reference || l.id}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${shares.toLocaleString()}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${price.toFixed(2)} AED</td>
+        <td style="padding:10px;border-bottom:1px solid #eee"><strong>${total} AED</strong></td>
+        <td style="padding:10px;border-bottom:1px solid #eee"><span style="text-transform:capitalize;font-weight:bold;color:${l.state === 'published' ? 'var(--blue)' : 'var(--muted)'}">${l.state}</span></td>
+        <td style="padding:10px;border-bottom:1px solid #eee">
+          <button class="btn btn-white" style="padding:5px 10px;font-size:12px;border:1px solid var(--line);" onclick="viewListingOffers('${l.id}')">View Offers</button>
+        </td>
+      </tr>`;
+    });
+    html += '</table></div>';
+    container.innerHTML = html;
+  } catch (e) {
+    container.innerHTML = `<div style="padding:20px;color:red;">Error: ${e.message}</div>`;
+  }
+}
+
+window.viewListingOffers = async function(listingId) {
+  const container = document.getElementById('myListingsContent');
+  if (!container) return;
+  container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">⏳ Loading Offers for Listing...</div>';
+  
+  try {
+    const res = await API.getListingOffers(listingId);
+    const offers = res.offers || res.data || [];
+    
+    let html = `<div style="margin-bottom:15px;"><button class="btn btn-white" style="padding:5px 10px;font-size:12px;border:1px solid var(--line);" onclick="loadMyListings()">← Back to My Listings</button></div>`;
+    
+    if (offers.length === 0) {
+      html += '<div style="padding:40px;text-align:center;color:var(--muted);background:#f9fafb;border-radius:12px;border:1px dashed #dbe7ef;"><b>No offers yet</b><br><br>There are currently no offers from buyers for this listing.</div>';
+      container.innerHTML = html;
+      return;
+    }
+    
+    html += '<div style="overflow-x:auto;"><table style="width:100%;min-width:600px;border-collapse:collapse;font-size:14px;">';
+    html += '<tr style="background:#f5f5f5;text-align:left;">' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Buyer</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Shares Requested</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Offer Price/Share</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Total Offer</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Status</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Action</th>' +
+            '</tr>';
+            
+    offers.forEach(o => {
+      const shares = parseFloat(o.number_of_shares || 0);
+      const price = parseFloat(o.offer_price_per_share || 0);
+      const total = parseFloat(o.total_offer_amount || (shares * price)).toFixed(2);
+      const buyer = o.buyer_name || o.buyer || 'N/A';
+      
+      html += `<tr>
+        <td style="padding:10px;border-bottom:1px solid #eee">${buyer}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${shares.toLocaleString()}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${price.toFixed(2)} AED</td>
+        <td style="padding:10px;border-bottom:1px solid #eee"><strong>${total} AED</strong></td>
+        <td style="padding:10px;border-bottom:1px solid #eee"><span style="text-transform:capitalize;font-weight:bold;">${o.state}</span></td>
+        <td style="padding:10px;border-bottom:1px solid #eee">
+          ${o.state === 'pending' || o.state === 'submitted' ? `
+            <button class="btn btn-primary" style="padding:5px 10px;border-radius:3px;font-size:12px;margin-right:5px;" onclick="handleAcceptOffer('${o.id}', '${listingId}')">Accept</button>
+            <button class="btn btn-white" style="padding:5px 10px;border-radius:3px;font-size:12px;border:1px solid var(--red);color:var(--red);" onclick="handleRejectOffer('${o.id}', '${listingId}')">Reject</button>
+          ` : `-`}
+        </td>
+      </tr>`;
+    });
+    html += '</table></div>';
+    container.innerHTML = html;
+  } catch (e) {
+    container.innerHTML = `<div style="margin-bottom:15px;"><button class="btn btn-white" style="padding:5px 10px;font-size:12px;border:1px solid var(--line);" onclick="loadMyListings()">← Back to My Listings</button></div><div style="padding:20px;color:red;">Error: ${e.message}</div>`;
+  }
+}
+
+window.handleAcceptOffer = async function(offerId, listingId) {
+  if (!await customConfirm("Accept Offer", "Are you sure you want to ACCEPT this offer?")) return;
+  try {
+    const res = await API.acceptBuyerOffer(offerId, "");
+    if (res.error) throw new Error(res.error);
+    showToast("Offer accepted successfully!");
+    viewListingOffers(listingId); // Reload
+  } catch (e) {
+    showToast("Failed to accept offer: " + e.message, true);
+  }
+}
+
+window.handleRejectOffer = async function(offerId, listingId) {
+  if (!await customConfirm("Reject Offer", "Are you sure you want to REJECT this offer?")) return;
+  try {
+    const res = await API.rejectBuyerOffer(offerId, "");
+    if (res.error) throw new Error(res.error);
+    showToast("Offer rejected successfully!");
+    viewListingOffers(listingId); // Reload
+  } catch (e) {
+    showToast("Failed to reject offer: " + e.message, true);
+  }
+}
+
+async function loadMyOffers() {
+  const container = document.getElementById('myOffersContent');
+  if (!container) return;
+  container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">⏳ Loading Your Offers...</div>';
+  
+  try {
+    const res = await API.getMyOffers();
+    const offers = res.offers || res.data || [];
+    if (offers.length === 0) {
+      container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted);background:#f9fafb;border-radius:12px;border:1px dashed #dbe7ef;"><b>No offers submitted</b><br><br>You have not submitted any offers for share listings.</div>';
+      return;
+    }
+    
+    let html = '<div style="overflow-x:auto;"><table style="width:100%;min-width:600px;border-collapse:collapse;font-size:14px;">';
+    html += '<tr style="background:#f5f5f5;text-align:left;">' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Listing Ref</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Shares Requested</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Offer Price/Share</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Total Offer</th>' +
+            '<th style="padding:10px;border-bottom:2px solid #ddd">Status</th>' +
+            '</tr>';
+            
+    offers.forEach(o => {
+      const shares = parseFloat(o.number_of_shares || 0);
+      const price = parseFloat(o.offer_price_per_share || 0);
+      const total = parseFloat(o.total_offer_amount || (shares * price)).toFixed(2);
+      
+      html += `<tr>
+        <td style="padding:10px;border-bottom:1px solid #eee">${o.listing_reference || o.listing_id}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${shares.toLocaleString()}</td>
+        <td style="padding:10px;border-bottom:1px solid #eee">${price.toFixed(2)} AED</td>
+        <td style="padding:10px;border-bottom:1px solid #eee"><strong>${total} AED</strong></td>
+        <td style="padding:10px;border-bottom:1px solid #eee"><span style="text-transform:capitalize;font-weight:bold;">${o.state}</span></td>
+      </tr>`;
+    });
+    html += '</table></div>';
+    container.innerHTML = html;
+  } catch (e) {
+    container.innerHTML = `<div style="padding:20px;color:red;">Error: ${e.message}</div>`;
+  }
+}
+
+async function promptSubmitOffer(listingId, defaultPrice) {
+  const result = await customMultiPrompt('Submit Offer', `Enter your offer details for listing #${listingId}:`, [
+    { id: 'offerPrice', label: 'Offer price per share (AED)', type: 'number', placeholder: 'e.g. 100', value: defaultPrice || '' },
+    { id: 'offerShares', label: 'Number of shares you want to buy', type: 'number', placeholder: 'e.g. 50' },
+    { id: 'offerNote', label: 'Note for the seller (Optional)', type: 'text', placeholder: 'Optional note' }
+  ]);
+  
+  if (!result) return; // User cancelled
+  
+  const price = result.offerPrice;
+  const shares = result.offerShares;
+  const note = result.offerNote || '';
+  
+  if (!price || !shares) return showToast('Please enter price and shares.', true);
+  
+  try {
+    const res = await API.submitBuyerOffer(listingId, {
+      offer_price_per_share: parseFloat(price),
+      number_of_shares: parseFloat(shares),
+      note: note,
+      source: "web"
+    });
+    
+    if (res.error_code || res.error) throw new Error(res.message || res.error_code || res.error);
+    showToast("Offer submitted successfully!");
+    switchTab(23); // Go to My Offers
+  } catch (e) {
+    showToast("Failed to submit offer: " + e.message, true);
   }
 }
 
@@ -1877,6 +2154,86 @@ window.customConfirm = function(title, message) {
   });
 };
 
+
+window.customMultiPrompt = function(title, message, fields) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.style = `
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(8, 15, 30, 0.6); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 99999; opacity: 0; transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    `;
+    const box = document.createElement('div');
+    box.style = `
+      background: #fff; padding: 32px; border-radius: 24px; width: 90%; max-width: 440px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+      transform: translateY(20px) scale(0.95); transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: inherit;
+    `;
+    let fieldsHtml = fields.map(f => `
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 8px;">${f.label}</label>
+        <input type="${f.type || 'text'}" id="${f.id}" placeholder="${f.placeholder || ''}" value="${f.value || ''}" style="width: 100%; padding: 14px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 14.5px; outline: none; transition: border-color 0.2s; box-sizing: border-box;" />
+      </div>
+    `).join('');
+
+    box.innerHTML = `
+      <div style="width: 56px; height: 56px; background: #fef2f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border: 1px solid #fee2e2;">
+        <span style="font-size: 24px;">💬</span>
+      </div>
+      <h3 style="margin-top:0; color: #0f172a; font-size: 20px; font-weight:800; margin-bottom:8px; letter-spacing:-0.5px;">${title}</h3>
+      <p style="color: #64748b; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">${message}</p>
+      ${fieldsHtml}
+      <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px;">
+        <button id="customPromptCancel" class="btn btn-white" style="border: 1px solid #e2e8f0; padding: 10px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px;">Cancel</button>
+        <button id="customPromptOk" class="btn btn-primary" style="padding: 10px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; background: var(--blue); border-color: var(--blue); color: #fff; transition: all 0.2s; font-size: 14px; box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);">Submit</button>
+      </div>
+    `;
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+    
+    const cancelBtn = overlay.querySelector('#customPromptCancel');
+    const okBtn = overlay.querySelector('#customPromptOk');
+    
+    fields.forEach((f, i) => {
+      const input = overlay.querySelector('#' + f.id);
+      input.onfocus = () => input.style.borderColor = 'var(--blue)';
+      input.onblur = () => input.style.borderColor = '#cbd5e1';
+      if (i === 0) {
+        setTimeout(() => input.focus(), 15);
+      }
+    });
+
+    cancelBtn.onmouseenter = () => cancelBtn.style.background = '#f8fafc';
+    cancelBtn.onmouseleave = () => cancelBtn.style.background = '#fff';
+    okBtn.onmouseenter = () => okBtn.style.transform = 'translateY(-1px)';
+    okBtn.onmouseleave = () => okBtn.style.transform = 'none';
+
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+      box.style.transform = 'translateY(0) scale(1)';
+    }, 10);
+    
+    const cleanup = (isOk) => {
+      overlay.style.opacity = '0';
+      box.style.transform = 'translateY(20px) scale(0.95)';
+      setTimeout(() => {
+        document.body.removeChild(overlay);
+        if (!isOk) resolve(null);
+        else {
+          const vals = {};
+          fields.forEach(f => vals[f.id] = overlay.querySelector('#' + f.id).value);
+          resolve(vals);
+        }
+      }, 200);
+    };
+    
+    cancelBtn.onclick = () => cleanup(false);
+    okBtn.onclick = () => cleanup(true);
+  });
+};
+
 window.customPrompt = function(title, message, placeholder = '') {
   return new Promise((resolve) => {
     const overlay = document.createElement('div');
@@ -2197,5 +2554,49 @@ switchTab = function(index, btnEl) {
   if (index !== 21 && statusPollInterval) {
     clearInterval(statusPollInterval);
     statusPollInterval = null;
+  }
+};
+
+window.resetSellSharesForm = function() {
+  const form = document.getElementById('sellSharesForm');
+  if (form) form.reset();
+  const btn = form ? form.querySelector('button[type="submit"]') : null;
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = 'Create Share Listing';
+  }
+};
+
+window.handleSellShares = async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('button[type="submit"]');
+  const qty = parseInt(document.getElementById('sellSharesQty').value, 10);
+  const price = parseFloat(document.getElementById('sellSharesPrice').value);
+  
+  if (isNaN(qty) || qty <= 0 || isNaN(price) || price <= 0) {
+    return showToast("Please enter valid positive numbers for shares and price.", true);
+  }
+  
+  btn.disabled = true;
+  btn.textContent = "Creating Listing...";
+  
+  try {
+    const res = await API.createSellListing({
+      number_of_shares: qty,
+      asking_price_per_share: price
+    });
+    
+    if (res.error) throw new Error(res.error);
+    
+    showToast("Share listing created successfully!");
+    if (window.sellProgress) window.sellProgress.setStep(2);
+    setTimeout(() => {
+      switchTab(22); // Go to My Listings
+    }, 1500);
+  } catch (err) {
+    showToast("Failed to create listing: " + err.message, true);
+    btn.disabled = false;
+    btn.textContent = 'Create Share Listing';
   }
 };

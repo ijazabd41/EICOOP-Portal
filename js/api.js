@@ -2215,6 +2215,29 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
   const getShareListings = () => GET('/api/shareholder/share-market/list');
   const buyInterest = (num, listingId, offerPrice) => POST('/api/shareholder/share-market/interest', { listing_id: listingId, offer_price: offerPrice });
   const getTransferHistory = () => GET('/api/shareholder/transfer/history');
+  
+  // --- New Marketplace APIs ---
+  const getMarketplaceDashboard = () => GET('/api/shareholder/marketplace/dashboard');
+  const getMarketplaceListings = () => GET('/api/shareholder/marketplace/listings');
+  const createSellListing = (data) => POST('/api/shareholder/marketplace/listings', data);
+  const getListingDetail = (id) => GET(`/api/shareholder/marketplace/listings/${id}`);
+  const submitBuyerOffer = (id, data) => POST(`/api/shareholder/marketplace/listings/${id}/offers`, data);
+  const getMyListings = () => GET('/api/shareholder/marketplace/my-listings');
+  const getListingOffers = (id) => GET(`/api/shareholder/marketplace/my-listings/${id}/offers`);
+  const acceptBuyerOffer = (offerId, note) => POST(`/api/shareholder/marketplace/offers/${offerId}/accept`, { note });
+  const rejectBuyerOffer = (offerId, note) => POST(`/api/shareholder/marketplace/offers/${offerId}/reject`, { note });
+  const getMyOffers = () => GET('/api/shareholder/marketplace/my-offers');
+  
+  // --- Operations Marketplace APIs ---
+  const getOpsMarketplaceDashboard = () => GET('/api/shareholder/ops/marketplace/dashboard');
+  const getOpsMarketplaceListings = () => GET('/api/shareholder/ops/marketplace/listings');
+  const getOpsListingDetail = (id) => GET(`/api/shareholder/ops/marketplace/listings/${id}`);
+  const reviewListing = (id, data) => POST(`/api/shareholder/ops/marketplace/listings/${id}/review`, data);
+  const reviewAcceptedOffer = (id, data) => POST(`/api/shareholder/ops/marketplace/listings/${id}/accepted-offer/review`, data);
+  const createInvoices = (id) => POST(`/api/shareholder/ops/marketplace/listings/${id}/create-invoices`);
+  const completeTransaction = (id) => POST(`/api/shareholder/ops/marketplace/listings/${id}/complete`);
+  const getOpsMarketplaceConfig = () => GET('/api/shareholder/ops/marketplace/config');
+  const updateOpsMarketplaceConfig = (data) => POST('/api/shareholder/ops/marketplace/config', data);
   const inviteShareholder = (data) => POST('/api/shareholder/registration/invite', data);
   const submitRegistration = (data) => POST('/api/shareholder/registration/submit', data);
 
@@ -2244,6 +2267,8 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
     getShareholderProfile, updateShareholderProfile, getShareholderPurchases,
     linkShareholderOrder, getShareholderCertificates, getShareholderRewards,
     lookupRecipient, transferShares, verifyTransferSenderOtp, verifyTransferReceiverOtp, acceptTransfer, rejectTransfer, respondTransfer, receiverAction, resendReceiverOtp, getTransferStatus, cancelTransfer, getReceivedInvitations, getInvitationStatus, getTransferHistory, inviteShareholder, submitRegistration, sellShares, getShareListings, buyInterest,
+    getMarketplaceDashboard, getMarketplaceListings, createSellListing, getListingDetail, submitBuyerOffer, getMyListings, getListingOffers, acceptBuyerOffer, rejectBuyerOffer, getMyOffers,
+    getOpsMarketplaceDashboard, getOpsMarketplaceListings, getOpsListingDetail, reviewListing, reviewAcceptedOffer, createInvoices, completeTransaction, getOpsMarketplaceConfig, updateOpsMarketplaceConfig,
     getShareholderPreferences, updateShareholderPreferences, getShareholderNotifications, markNotificationsRead, getShareholderDashboard, registerShareholderPush, unregisterShareholderPush,
     // Startup/Sliders
     getLogo, getHomeSliders, getDealOfDay, getBestSeller, getRecommended,
