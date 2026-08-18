@@ -69,7 +69,16 @@ function navCards(){
   if(!session?.role_codes?.includes('shareholder_chairman') || p.manage_marketplace) cards.push(card('Marketplace','Manage share listings and offers','marketplace'));
   return cards.join('');
 }
-function card(title,sub,key,chairman=false){return `<div class="card ${chairman?'chairman':''}" data-section="${key}"><span class="badge">${chairman?'Chairman':'Live data'}</span><strong>${esc(title)}</strong><div class="muted">${esc(sub)}</div></div>`;}
+function card(title,sub,key,chairman=false){
+  return `<div class="card ${chairman?'chairman':''}" data-section="${key}">
+    <div style="display:flex; flex-direction:column; gap:5px;">
+      <span class="badge" style="${chairman ? 'background:#fef3c7; color:#b45309;' : 'background:#e0f2fe; color:#0369a1;'}">${chairman?'Chairman':'Live data'}</span>
+      <strong>${esc(title)}</strong>
+      <div class="muted">${esc(sub)}</div>
+    </div>
+    <div class="arrow">➔</div>
+  </div>`;
+}
 
 async function init(){
   root.innerHTML='<div class="loading">Loading Operations Portal…</div>';
@@ -182,13 +191,13 @@ function renderSection(key,data){
   document.querySelectorAll('[data-listing]').forEach(el=>el.onclick=()=>openListing(el.dataset.listing,key));
 }
 
-function transferTable(rows){if(!rows.length)return '<div class="empty">No transfer records found.</div>';return `<div class="table-wrap"><table class="table"><thead><tr><th>Reference</th><th>Sender</th><th>Receiver</th><th>Shares</th><th>State</th><th>Final Gate</th><th>Ops</th><th>Chairman</th></tr></thead><tbody>${rows.map(r=>`<tr class="rowlink" data-transfer="${r.id}"><td>${fmt(r.reference)}</td><td>${fmt(r.sender?.membership_number)} · ${fmt(r.sender?.name)}</td><td>${fmt(r.receiver?.membership_number)} · ${fmt(r.receiver?.name)}</td><td>${fmt(r.shares)}</td><td class="state ${stateClass(r.state)}">${fmt(r.workflow_phase_label||r.state_label)}</td><td>${r.auto_complete_after_receiver_otp?'Automatic':'Chairman'}</td><td>${fmt(r.operations_review?.status)}</td><td>${fmt(r.chairman_review?.status)}</td></tr>`).join('')}</tbody></table></div>`;}
-function applicationTable(rows){if(!rows.length)return '<div class="empty">No application records found.</div>';return `<div class="table-wrap"><table class="table"><thead><tr><th>Reference</th><th>Applicant</th><th>Mobile</th><th>Shares</th><th>Total</th><th>State</th></tr></thead><tbody>${rows.map(r=>`<tr class="rowlink" data-application="${r.id}"><td>${fmt(r.reference)}</td><td>${fmt(r.applicant_name)}</td><td>${fmt(r.mobile)}</td><td>${fmt(r.requested_shares)}</td><td>${fmt(r.total_amount)}</td><td class="state ${stateClass(r.state)}">${fmt(r.workflow_phase_label||r.state_label)}</td></tr>`).join('')}</tbody></table></div>`;}
+function transferTable(rows){if(!rows.length)return '<div class="empty">No transfer records found.</div>';return `<div class="table-wrap"><table class="table"><thead><tr><th>Reference</th><th>Sender</th><th>Receiver</th><th>Shares</th><th>State</th><th>Final Gate</th><th>Ops</th><th>Chairman</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr class="rowlink" data-transfer="${r.id}"><td>${fmt(r.reference)}</td><td>${fmt(r.sender?.membership_number)} · ${fmt(r.sender?.name)}</td><td>${fmt(r.receiver?.membership_number)} · ${fmt(r.receiver?.name)}</td><td>${fmt(r.shares)}</td><td class="state ${stateClass(r.state)}">${fmt(r.workflow_phase_label||r.state_label)}</td><td>${r.auto_complete_after_receiver_otp?'Automatic':'Chairman'}</td><td>${fmt(r.operations_review?.status)}</td><td>${fmt(r.chairman_review?.status)}</td><td><button class="row-btn" style="padding:4px 10px; font-size:11px; font-weight:bold; background:#087f8c; color:#fff; border:0; border-radius:6px; cursor:pointer;">Open</button></td></tr>`).join('')}</tbody></table></div>`;}
+function applicationTable(rows){if(!rows.length)return '<div class="empty">No application records found.</div>';return `<div class="table-wrap"><table class="table"><thead><tr><th>Reference</th><th>Applicant</th><th>Mobile</th><th>Shares</th><th>Total</th><th>State</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr class="rowlink" data-application="${r.id}"><td>${fmt(r.reference)}</td><td>${fmt(r.applicant_name)}</td><td>${fmt(r.mobile)}</td><td>${fmt(r.requested_shares)}</td><td>${fmt(r.total_amount)}</td><td class="state ${stateClass(r.state)}">${fmt(r.workflow_phase_label||r.state_label)}</td><td><button class="row-btn" style="padding:4px 10px; font-size:11px; font-weight:bold; background:#087f8c; color:#fff; border:0; border-radius:6px; cursor:pointer;">Open</button></td></tr>`).join('')}</tbody></table></div>`;}
 function certificateTable(rows){if(!rows.length)return '<div class="empty">No certificate/share records found.</div>';return `<div class="table-wrap"><table class="table"><thead><tr><th>Certificate</th><th>Shareholder</th><th>Membership</th><th>Shares</th><th>Value</th><th>State</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fmt(r.certificate_number||r.reference)}</td><td>${fmt(r.shareholder?.name)}</td><td>${fmt(r.shareholder?.membership_number)}</td><td>${fmt(r.shares)}</td><td>${fmt(r.total_share_value)}</td><td class="state ${stateClass(r.state)}">${fmt(r.workflow_phase_label||r.state_label)}</td></tr>`).join('')}</tbody></table></div>`;}
 function rewardTable(rows){if(!rows.length)return '<div class="empty">No reward records found.</div>';return `<div class="table-wrap"><table class="table"><thead><tr><th>Reference</th><th>Period</th><th>Dates</th><th>Purchases</th><th>Reward</th><th>State</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fmt(r.reference)}</td><td>${fmt(r.period_type)}</td><td>${fmt(r.date_from)} → ${fmt(r.date_to)}</td><td>${fmt(r.total_purchase)}</td><td>${fmt(r.total_reward)}</td><td class="state ${stateClass(r.state)}">${fmt(r.workflow_phase_label||r.state_label)}</td></tr>`).join('')}</tbody></table></div>`;}
 function notificationTable(rows){if(!rows.length)return '<div class="empty">No notification records found.</div>';return `<div class="table-wrap"><table class="table"><thead><tr><th>Date</th><th>Shareholder</th><th>Title</th><th>Category</th><th>State</th><th>Channels</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fmt(r.created_at)}</td><td>${fmt(r.shareholder?.membership_number)} · ${fmt(r.shareholder?.name)}</td><td>${fmt(r.title)}</td><td>${fmt(r.category)}</td><td class="state ${stateClass(r.state)}">${fmt(r.state)}</td><td>S:${fmt(r.sms_state)} E:${fmt(r.email_state)} P:${fmt(r.push_state)} W:${fmt(r.whatsapp_state)}</td></tr>`).join('')}</tbody></table></div>`;}
 function auditTable(rows){if(!rows.length)return '<div class="empty">No audit records found.</div>';return `<div class="table-wrap"><table class="table"><thead><tr><th>Date</th><th>Actor</th><th>Model</th><th>Record</th><th>Message</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fmt(r.date)}</td><td>${fmt(r.author)}</td><td>${fmt(r.model)}</td><td>${fmt(r.res_id)}</td><td>${fmt(r.body)}</td></tr>`).join('')}</tbody></table></div>`;}
-function marketplaceTable(rows){if(!rows.length)return '<div class="empty">No marketplace listings found.</div>';return `<div class="table-wrap"><table class="table"><thead><tr><th>Reference</th><th>Seller</th><th>Shares</th><th>Price</th><th>Total</th><th>Status</th></tr></thead><tbody>${rows.map(r=>`<tr class="rowlink" data-listing="${r.id}"><td>${fmt(r.reference)}</td><td>${fmt(r.seller_name||r.seller)}</td><td>${fmt(r.number_of_shares)}</td><td>${fmt(r.asking_price_per_share)}</td><td>${fmt(r.total_asking_amount)}</td><td class="state ${stateClass(r.state)}">${fmt(r.state)}</td></tr>`).join('')}</tbody></table></div>`;}
+function marketplaceTable(rows){if(!rows.length)return '<div class="empty">No marketplace listings found.</div>';return `<div class="table-wrap"><table class="table"><thead><tr><th>Reference</th><th>Seller</th><th>Shares</th><th>Price</th><th>Total</th><th>Status</th><th>Action</th></tr></thead><tbody>${rows.map(r=>`<tr class="rowlink" data-listing="${r.id}"><td>${fmt(r.reference)}</td><td>${r.seller?.membership_number ? (fmt(r.seller.membership_number) + ' · ' + fmt(r.seller.name)) : fmt(r.seller?.name || r.seller_name || r.seller)}</td><td>${fmt(r.number_of_shares)}</td><td>${fmt(r.asking_price_per_share)}</td><td>${fmt(r.total_asking_amount)}</td><td class="state ${stateClass(r.state)}">${fmt(r.state)}</td><td><button class="row-btn" style="padding:4px 10px; font-size:11px; font-weight:bold; background:#087f8c; color:#fff; border:0; border-radius:6px; cursor:pointer;">Open</button></td></tr>`).join('')}</tbody></table></div>`;}
 
 async function openListing(id, backKey='marketplace') {
   try {
@@ -201,7 +210,7 @@ async function openListing(id, backKey='marketplace') {
       offerHtml = `<div class="panel" style="margin-top:15px; border-left:4px solid var(--blue);">
         <h3>Accepted Offer</h3>
         <div class="detail-grid">
-          ${field('Buyer', acceptedOffer.buyer?.name || acceptedOffer.buyer_name)}
+          ${field('Buyer', acceptedOffer.buyer?.membership_number ? (acceptedOffer.buyer.membership_number + ' · ' + acceptedOffer.buyer.name) : (acceptedOffer.buyer?.name || acceptedOffer.buyer_name))}
           ${field('Requested Shares', acceptedOffer.number_of_shares)}
           ${field('Offer Price', acceptedOffer.offer_price_per_share)}
           ${field('Offer Status', acceptedOffer.state)}
@@ -212,7 +221,7 @@ async function openListing(id, backKey='marketplace') {
     shell(`<div class="hero"><button class="secondary" id="back">← ${esc(titleFor(backKey))}</button><div><h2>Listing ${fmt(r.reference)}</h2><div class="muted">Status: ${fmt(r.state)}</div></div></div>
     <section class="panel">
       <div class="detail-grid">
-        ${field('Seller', r.seller?.name || r.seller_name)}
+        ${field('Seller', r.seller?.membership_number ? (r.seller.membership_number + ' · ' + r.seller.name) : (r.seller?.name || r.seller_name))}
         ${field('Shares Available', r.number_of_shares)}
         ${field('Asking Price', r.asking_price_per_share)}
         ${field('Total Amount', r.total_asking_amount)}
@@ -251,7 +260,7 @@ async function runListingAction(id, act, backKey) {
     else if (act === 'reject-offer') await requestJson(`/api/shareholder/ops/marketplace/listings/${id}/accepted-offer/review`,{method:'POST',body:{action:'reject',note}});
     else if (act === 'complete-transaction') await requestJson(`/api/shareholder/ops/marketplace/listings/${id}/complete`,{method:'POST',body:{}});
     
-    await openListing(id, backKey);
+    await loadSection(backKey);
   } catch(e) {
     alert(e.message);
   }
@@ -290,7 +299,7 @@ async function runTransferAction(id,act,backKey){
     if(act==='ops-approve'||act==='ops-reject') await requestJson(`/api/shareholder/ops/transfers/${id}/review`,{method:'POST',body:{action:act.endsWith('approve')?'approve':'reject',note}});
     else if(act==='chair-approve'||act==='chair-reject') await requestJson(`/api/shareholder/ops/transfers/${id}/chairman`,{method:'POST',body:{action:act.endsWith('approve')?'approve':'reject',note}});
     else if(act==='complete') await requestJson(`/api/shareholder/ops/transfers/${id}/complete`,{method:'POST',body:{}});
-    await openTransfer(id,backKey);
+    await loadSection(backKey);
   }catch(e){alert(e.message);}
 }
 
@@ -307,7 +316,7 @@ async function openApplication(id,backKey='applications'){
     if(r.state==='document_review' || isOps) a.innerHTML+='<button data-act="finance">Send to Finance</button>';
     if(['submitted','document_review','finance'].includes(r.state) || isOps) a.innerHTML+='<button data-act="approve">Approve Membership</button><button class="danger" data-act="reject">Reject</button>';
   }
-  a.querySelectorAll('button').forEach(btn=>btn.onclick=async()=>{const reason=btn.dataset.act==='reject'?((await customPrompt('Reject', 'Rejection reason'))||''):'';try{await requestJson(`/api/shareholder/ops/applications/${id}/action`,{method:'POST',body:{action:btn.dataset.act,reason}});await openApplication(id,backKey);}catch(e){alert(e.message);}});
+  a.querySelectorAll('button').forEach(btn=>btn.onclick=async()=>{const reason=btn.dataset.act==='reject'?((await customPrompt('Reject', 'Rejection reason'))||''):'';try{await requestJson(`/api/shareholder/ops/applications/${id}/action`,{method:'POST',body:{action:btn.dataset.act,reason}});await loadSection(backKey);}catch(e){alert(e.message);}});
 }
 
 init();
@@ -338,8 +347,8 @@ window.customPrompt = function(title, message, placeholder = '') {
       <p style="color: #64748b; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">${message}</p>
       <input type="text" id="customPromptInput" placeholder="${placeholder}" style="width: 100%; padding: 14px; border: 1px solid #cbd5e1; border-radius: 12px; margin-bottom: 24px; font-size: 14.5px; outline: none; transition: border-color 0.2s; box-sizing: border-box;" />
       <div style="display: flex; gap: 12px; justify-content: flex-end;">
-        <button id="customPromptCancel" class="btn btn-white" style="border: 1px solid #e2e8f0; padding: 10px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px;">Cancel</button>
-        <button id="customPromptOk" class="btn btn-primary" style="padding: 10px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; background: var(--blue); border-color: var(--blue); color: #fff; transition: all 0.2s; font-size: 14px; box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);">Submit</button>
+        <button id="customPromptCancel" style="border: 1px solid #cbd5e1; background: #fff; color: #334155; padding: 10px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px;">Cancel</button>
+        <button id="customPromptOk" style="border: 1px solid #087f8c; background: #087f8c; color: #fff; padding: 10px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px; box-shadow: 0 4px 12px rgba(8, 127, 140, 0.2);">Submit</button>
       </div>
     `;
     overlay.appendChild(box);
@@ -349,7 +358,7 @@ window.customPrompt = function(title, message, placeholder = '') {
     const cancelBtn = overlay.querySelector('#customPromptCancel');
     const okBtn = overlay.querySelector('#customPromptOk');
     
-    input.onfocus = () => input.style.borderColor = 'var(--blue)';
+    input.onfocus = () => input.style.borderColor = '#087f8c';
     input.onblur = () => input.style.borderColor = '#cbd5e1';
     
     setTimeout(() => {
@@ -400,8 +409,8 @@ window.customConfirm = function(title, message) {
       <h3 style="margin-top:0; color: #0f172a; font-size: 20px; font-weight:800; margin-bottom:12px; letter-spacing:-0.5px;">${title}</h3>
       <p style="color: #64748b; font-size: 14.5px; line-height: 1.6; margin-bottom: 28px; padding: 0 10px;">${message}</p>
       <div style="display: flex; gap: 12px;">
-        <button id="customConfirmCancel" class="btn btn-white" style="flex:1; border: 1px solid #e2e8f0; padding: 12px 18px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px;">Cancel</button>
-        <button id="customConfirmOk" class="btn btn-primary" style="flex:1; padding: 12px 18px; border-radius: 12px; font-weight: 600; cursor: pointer; background: var(--blue); border-color: var(--blue); color: #fff; transition: all 0.2s; font-size: 14px; box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);">Yes, Proceed</button>
+        <button id="customConfirmCancel" style="flex:1; border: 1px solid #cbd5e1; background: #fff; color: #334155; padding: 12px 18px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px;">Cancel</button>
+        <button id="customConfirmOk" style="flex:1; border: 1px solid #087f8c; background: #087f8c; color: #fff; padding: 12px 18px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px; box-shadow: 0 4px 12px rgba(8, 127, 140, 0.2);">Yes, Proceed</button>
       </div>
     `;
     overlay.appendChild(box);

@@ -31,6 +31,7 @@ b.getAttribute('onclick') && b.getAttribute('onclick').includes(`switchTab(${sea
     }
   }
   if (index === 8) { // Transfer
+    updateTransferAvailableShares();
     if (!window.transferProgress) {
       window.transferProgress = new StepProgress('transfer-progress', [
         { title: 'Select/Invite Recipient', description: 'Search or invite member' },
@@ -126,7 +127,7 @@ async function loadDashboard() {
     
     let shares = 0;
     if (dash && dash.total_shares !== undefined) shares = dash.total_shares;
-    else if (prof && prof.shares) shares = prof.shares;
+    else if (prof && (prof.shares || prof.number_of_shares || prof.num_shares)) shares = prof.shares || prof.number_of_shares || prof.num_shares;
     document.getElementById('metric-shares').textContent = shares;
 
     // UAT v19.0.2.0.8: Update notification badge with count from dashboard
@@ -339,8 +340,95 @@ async function loadDashboard() {
       }
     }
 
+    // Update tab header count badges dynamically
+    document.querySelectorAll('.badge-pending-sent').forEach(el => {
+      if (outgoingCount > 0) {
+        el.textContent = outgoingCount;
+        el.style.display = 'inline-block';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+    document.querySelectorAll('.badge-incoming').forEach(el => {
+      if (incomingCount > 0) {
+        el.textContent = incomingCount;
+        el.style.display = 'inline-block';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+    document.querySelectorAll('.badge-invitations').forEach(el => {
+      if (invitationCount > 0) {
+        el.textContent = invitationCount;
+        el.style.display = 'inline-block';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+
   } catch (e) {
     console.error("Dashboard error:", e);
+  }
+}
+
+async function updateTransferAvailableShares() {
+  const availSharesEl = document.getElementById('transfer-avail-shares');
+  const availValueEl = document.getElementById('transfer-avail-value');
+  if (!availSharesEl || !availValueEl) return;
+  
+  try {
+    const shNum = localStorage.getItem('cd_shareholder_number');
+    if (!shNum) return;
+    
+    // Fetch profile or certificates to get accurate available shares and value
+    const [profR, certR] = await Promise.allSettled([
+      API.myProfile(),
+      API.getShareholderCertificates(shNum)
+    ]);
+    
+    let shares = 0;
+    let totalValue = 0;
+    
+    if (profR.status === 'fulfilled') {
+      const p = Array.isArray(profR.value.data) ? profR.value.data[0] : profR.value.data;
+      if (p) {
+        shares = parseFloat(p.shares || p.number_of_shares || p.num_shares || 0);
+      }
+    }
+    
+    if (certR.status === 'fulfilled') {
+      const certs = certR.value?.certificates || certR.value?.result?.certificates || certR.value?.data || certR.value?.result || [];
+      const certList = Array.isArray(certs) ? certs : [certs];
+      let calculatedVal = 0;
+      let calculatedShares = 0;
+      certList.forEach(c => {
+        if (c) {
+          calculatedVal += parseFloat(c.total_value || c.total_share_value || 0);
+          calculatedShares += parseFloat(c.number_of_shares || c.num_shares || 0);
+        }
+      });
+      if (calculatedVal > 0) {
+        // Use certificate-based values if available
+        if (calculatedShares > 0 && Math.abs(calculatedShares - shares) < 1) {
+          totalValue = calculatedVal;
+        } else {
+          // Calculate rate from certificates
+          const rate = calculatedVal / calculatedShares;
+          totalValue = shares * rate;
+        }
+      } else {
+        // Fallback: 10 AED per share (nominal UAE cooperative value)
+        totalValue = shares * 10;
+      }
+    } else {
+      // Fallback rate if certs fetch fails
+      totalValue = shares * 10;
+    }
+    
+    availSharesEl.textContent = shares.toLocaleString();
+    availValueEl.textContent = 'AED ' + totalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  } catch (e) {
+    console.error("Failed to load available shares for transfer:", e);
   }
 }
 
@@ -410,14 +498,53 @@ async function loadMembership() {
   container.innerHTML = '<div style="color:var(--muted); text-align:center; padding:20px;">Loading membership details...</div>';
   
   try {
-    const profR = await API.myProfile();
-    const p = Array.isArray(profR.data) ? profR.data[0] : profR.data;
+    const shNum = localStorage.getItem('cd_shareholder_number');
+    const [profR, certR, transR] = await Promise.allSettled([
+      API.myProfile(),
+      API.getShareholderCertificates(shNum),
+      API.getTransferHistory()
+    ]);
+    
+    const p = profR.status === 'fulfilled' ? (Array.isArray(profR.value.data) ? profR.value.data[0] : profR.value.data) : null;
     if (!p) throw new Error("No profile found");
     
-    const memNo = localStorage.getItem('cd_shareholder_number') || p.partner_sequence || p.id;
-    const shares = p.shares || 0;
+    const memNo = shNum || p.partner_sequence || p.id;
+    const shares = parseFloat(p.shares || p.number_of_shares || p.num_shares || 0);
     
+    // Certificates count and value calculation
+    let certCount = 0;
+    let calculatedVal = 0;
+    if (certR.status === 'fulfilled') {
+      const certs = certR.value?.certificates || certR.value?.result?.certificates || certR.value?.data || certR.value?.result || [];
+      const certList = Array.isArray(certs) ? certs : [certs];
+      certList.forEach(c => {
+        if (c && (c.id || c.share_id)) {
+          certCount++;
+          calculatedVal += parseFloat(c.total_value || c.total_share_value || 0);
+        }
+      });
+    }
+    const totalValue = calculatedVal > 0 ? calculatedVal : (shares * 10);
+    
+    // Pending transfers count
+    let pendingTransfers = 0;
+    if (transR.status === 'fulfilled') {
+      const transfers = transR.value?.transfers || [];
+      transfers.forEach(t => {
+        const state = t.state || t.status?.code || '';
+        if (['receiver_otp', 'sender_otp', 'waiting_operations', 'waiting_chairman'].includes(state)) {
+          pendingTransfers++;
+        }
+      });
+    }
+
     container.innerHTML = `
+      <div class="portalmetrics" style="margin-bottom: 20px;">
+        <div class="pmetric"><b>${shares.toLocaleString()}</b><small>Shares Owned</small></div>
+        <div class="pmetric"><b style="color:var(--green);">AED ${totalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</b><small>Estimated Value</small></div>
+        <div class="pmetric"><b>${certCount}</b><small>Certificates</small></div>
+        <div class="pmetric"><b>${pendingTransfers}</b><small>Pending Transfers</small></div>
+      </div>
       <div class="membership-card">
         <div>
           <small>ACTIVE SHAREHOLDER</small>

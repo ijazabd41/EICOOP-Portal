@@ -30,15 +30,24 @@ if (!function_exists('getallheaders')) {
 }
 
 // ── PATH PARSING ─────────────────────────────────────────────────
-$uri = $_SERVER['REQUEST_URI'];
-$parsedUrl = parse_url($uri);
-$path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
-$prefix = '/proxy.php';
-$pos = strpos($path, $prefix);
-if ($pos !== false) {
-    $pathInfo = substr($path, $pos + strlen($prefix));
+if (isset($_GET['_path'])) {
+    $pathInfo = '/' . ltrim($_GET['_path'], '/');
+} elseif (isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])) {
+    $pathInfo = $_SERVER['PATH_INFO'];
+} elseif (isset($_SERVER['ORIG_PATH_INFO']) && !empty($_SERVER['ORIG_PATH_INFO'])) {
+    $pathInfo = $_SERVER['ORIG_PATH_INFO'];
 } else {
-    $pathInfo = $path;
+    // Request URI fallback
+    $uri = $_SERVER['REQUEST_URI'];
+    $parsedUrl = parse_url($uri);
+    $path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
+    $prefix = '/proxy.php';
+    $pos = strpos($path, $prefix);
+    if ($pos !== false) {
+        $pathInfo = substr($path, $pos + strlen($prefix));
+    } else {
+        $pathInfo = $path;
+    }
 }
 
 if ($pathInfo === '/api/config') {
@@ -69,6 +78,15 @@ if (preg_match('/\.(ico|png|jpg|jpeg|gif|svg|css|js|woff|woff2|ttf|map)$/i', $pa
 
 // ── QUERY STRING ─────────────────────────────────────────────────
 $queryString = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+
+// Remove _path parameter from query string if present (used for fallback routing)
+if (!empty($queryString)) {
+    parse_str($queryString, $queryArray);
+    if (isset($queryArray['_path'])) {
+        unset($queryArray['_path']);
+        $queryString = http_build_query($queryArray);
+    }
+}
 
 // Fix: Odoo backend fails to decode %40 in email fields, pass @ unencoded
 $queryString = str_replace('%40', '@', $queryString);
@@ -211,7 +229,7 @@ curl_setopt($ch, CURLOPT_ENCODING, ""); // Auto-handle gzip/deflate
 
 // Timeouts and Keep-Alive settings to prevent hanging requests
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 seconds connect timeout
-curl_setopt($ch, CURLOPT_TIMEOUT, 30);       // 30 seconds total timeout
+curl_setopt($ch, CURLOPT_TIMEOUT, 15);       // 15 seconds total timeout to fail faster than PHP max_execution_time
 curl_setopt($ch, CURLOPT_TCP_KEEPALIVE, 1);
 curl_setopt($ch, CURLOPT_TCP_KEEPIDLE, 120);
 curl_setopt($ch, CURLOPT_TCP_KEEPINTVL, 60);
@@ -234,8 +252,16 @@ $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 if (curl_errno($ch)) {
-    $httpCode = 500;
-    $response = json_encode(['error' => 'Proxy cURL Error: ' . curl_error($ch)]);
+    $httpCode = 504; // Gateway Timeout
+    $errCode = curl_errno($ch) == 28 ? 'BACKEND_TIMEOUT' : 'BACKEND_ERROR';
+    $errMsg = curl_errno($ch) == 28 
+        ? 'The backend server is taking too long to respond. Please try again shortly.' 
+        : 'Proxy cURL Error: ' . curl_error($ch);
+    $response = json_encode([
+        'success' => false,
+        'error_code' => $errCode,
+        'message' => $errMsg
+    ]);
 }
 curl_close($ch);
 

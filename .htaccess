@@ -8,11 +8,11 @@ RewriteEngine On
 # Allow direct access to proxy.php itself
 RewriteRule ^proxy\.php$ - [L]
 
-# Route /api/* through proxy.php
-RewriteRule ^(api/.*)$ proxy.php/$1 [QSA,L]
+# Route /api/* through proxy.php using query string parameter (highly compatible)
+RewriteRule ^(api/.*)$ proxy.php?_path=$1 [QSA,L]
 
-# Route /web/* through proxy.php (for images)
-RewriteRule ^(web/.*)$ proxy.php/$1 [QSA,L]
+# Route /web/* through proxy.php using query string parameter (highly compatible)
+RewriteRule ^(web/.*)$ proxy.php?_path=$1 [QSA,L]
 
 # ── CORS Preflight (OPTIONS) ──────────────────────────────────────
 Header always set Access-Control-Allow-Origin "*"

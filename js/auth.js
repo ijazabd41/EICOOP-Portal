@@ -251,14 +251,23 @@ async function enterPortal() {
 }
 
 function logout() {
-  API.clearSess();
+  if (window.API && typeof window.API.logout === 'function') {
+    window.API.logout().catch(() => {});
+  } else {
+    API.clearSess();
+  }
+  
+  // Clear Odoo session cookies on the client side
+  document.cookie = "session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  document.cookie = "session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax";
+  
   localStorage.removeItem('cd_session_id');
   localStorage.removeItem('cd_user_id');
   localStorage.removeItem('cd_shareholder_number');
   
   document.getElementById('portal').classList.add('hidden');
   document.getElementById('site').classList.remove('hidden');
-  backLogin();
+  backToLookup();
   window.scrollTo(0,0);
 }
 

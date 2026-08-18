@@ -32,7 +32,7 @@
 .founders-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px}.founder{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;text-align:center}.founder-avatar{width:72px;height:72px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;font-size:34px;background:linear-gradient(135deg,#eaf5fb,#fff4df);border:2px solid #fff;box-shadow:0 8px 24px rgba(4,31,53,.12)}.founder h4{margin:0;font-size:14px;line-height:1.45}.about-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0}.fact{background:#f6fafc;border:1px solid var(--line);border-radius:16px;padding:18px}.fact small{display:block;color:var(--muted);margin-bottom:6px}.fact b{color:var(--navy)}.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.news-card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 12px 35px rgba(4,31,53,.07)}.news-card img{width:100%;height:190px;object-fit:cover}.news-card .content{padding:20px}.news-card h3{margin:6px 0 8px}.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.contact-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px}.contact-list{display:grid;gap:14px}.contact-item{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:14px;background:#f7fafc}.coming{display:inline-block;padding:5px 9px;border-radius:999px;background:#fff2d9;color:#9b5b00;font-size:10px;font-weight:800;margin-left:6px}.simple-purpose{background:linear-gradient(135deg,#07345b,#0b72b9);color:white;border-radius:24px;padding:32px;margin-top:28px}.simple-purpose p{color:#d7eaf6;line-height:1.8}.founder-note{color:var(--muted);font-size:13px;margin-top:10px}
 @media(max-width:900px){.founders-grid{grid-template-columns:repeat(2,1fr)}.about-facts{grid-template-columns:repeat(2,1fr)}.news-grid,.contact-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.founders-grid,.about-facts{grid-template-columns:1fr}.logo{max-width:105px!important;height:auto!important}.navin{height:82px!important;gap:5px!important}.navin .btn{padding:8px 10px;font-size:11px;gap:4px}.hide-mobile{display:none}} summary{list-style:none;outline:none;} summary::-webkit-details-marker{display:none;} details[open] summary .chevron{transform:rotate(180deg);} details[open] summary .expand-text:before{content:"Close";} details:not([open]) summary .expand-text:before{content:"View All";} .founder-summary{background:linear-gradient(135deg,var(--deep),var(--blue));color:white;border:none;border-radius:24px;padding:35px 45px;box-shadow:0 15px 40px rgba(11,114,185,.3);transition:all 0.3s ease;margin-bottom:40px!important;display:flex;justify-content:space-between;align-items:center;gap:30px;} @media(max-width:768px){.founder-summary{flex-direction:column;align-items:flex-start;gap:20px;padding:30px;}} .founder-summary:hover{box-shadow:0 25px 50px rgba(11,114,185,.4);transform:translateY(-3px);} .expand-indicator{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:12px 24px;border-radius:999px;background:rgba(255,255,255,0.1);color:var(--gold);font-weight:bold;transition:all 0.3s;border:1px solid rgba(255,255,255,0.2);} .founder-summary:hover .expand-indicator{background:rgba(255,255,255,0.2);transform:scale(1.02);} .chevron{transition:transform 0.3s;display:inline-block;}
-</style>
+.btn-white:hover .srv-arrow{transform:translateX(4px)}</style>
 </head>
 <body>
 <div id="site">
@@ -62,12 +62,12 @@
   
   <div id="tab-0" class="portal-tab">
     <div class="portalmetrics"><div class="pmetric"><b id="metric-orders">-</b><small>Orders</small></div><div class="pmetric"><b id="metric-shares">-</b><small>Shares</small></div><div class="pmetric"><b id="metric-invoices">-</b><small>Invoices</small></div><div class="pmetric"><b>-</b><small>Loyalty Points</small></div></div><section class="welcome"><div><h2 style="margin:0 0 7px">Welcome back, <span class="user-name">Shareholder</span> 👋</h2><p style="margin:0;color:var(--muted)">Your membership and cooperative activity at a glance.</p></div><button class="btn btn-primary" onclick="window.location.href='/shop.html'">Continue Shopping →</button></section>
-    <section class="portalcard"><h3>Recent Orders</h3><div id="recent-orders-list"><div style="color:var(--muted); text-align:center; padding:20px;">Loading orders...</div></div></section>
     <!-- UAT v19.0.2.0.8: Incoming/Outgoing transfers & Invitations from dashboard API -->
     <div id="dash-incoming-transfers-section" style="display:none; margin-bottom:0;"></div>
     <div id="dash-outgoing-transfers-section" style="display:none; margin-bottom:0;"></div>
     <div id="dash-pending-invitations-section" style="display:none; margin-bottom:0;"></div>
     <div id="dash-marketplace-section" style="display:none; margin-bottom:0;"></div>
+    <section class="portalcard"><h3>Recent Orders</h3><div id="recent-orders-list"><div style="color:var(--muted); text-align:center; padding:20px;">Loading orders...</div></div></section>
   </div>
   
   <div id="tab-1" class="portal-tab hidden">
@@ -99,14 +99,29 @@
       <strong>ℹ️ Membership Details:</strong> Review your current membership status, share balance, and the benefits you are entitled to as a registered shareholder.
     </div>
     <div id="membership-details-content"></div>
-    <div class="portalcard" style="margin-top:20px;">
-      <h3 style="margin-top:0;margin-bottom:15px;">Share Services</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;">
-        <button class="btn btn-white" onclick="switchTab(8, null)" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;white-space:normal;height:auto;line-height:1.4;">🔁 Transfer Shares</button>
-        <button class="btn btn-white" onclick="switchTab(18, null)" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;white-space:normal;height:auto;line-height:1.4;">🕒 Transfer History</button>
-        <button class="btn btn-white" onclick="switchTab(15, null)" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;white-space:normal;height:auto;line-height:1.4;">📥 Received Invitations</button>
-        <button class="btn btn-white" onclick="switchTab(12, null)" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;white-space:normal;height:auto;line-height:1.4;">💵 Sell Shares</button>
-        <button class="btn btn-white" onclick="switchTab(13, null)" style="justify-content:flex-start;border:1px solid var(--line);box-shadow:none;white-space:normal;height:auto;line-height:1.4;">➕ Buy Shares</button>
+    <div class="portalcard" style="margin-top:20px; border-radius: 20px; padding: 28px;">
+      <h3 style="margin-top:0;margin-bottom:20px; color:var(--navy); font-size:18px;">Share Services</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
+        <button class="btn btn-white" onclick="switchTab(8, null)" style="display:flex; justify-content:space-between; align-items:center; border:1px solid var(--line); box-shadow:none; border-radius:18px; padding:20px 24px; min-height:80px; transition: all 0.22s ease; cursor:pointer; text-align:left; width:100%;">
+          <span style="font-weight:700; color:var(--navy); font-size:15px; display:flex; align-items:center; gap:10px;">🔁 Transfer Shares</span>
+          <span class="srv-arrow" style="color:var(--orange); font-weight:800; font-size:18px; transition: transform 0.2s;">➔</span>
+        </button>
+        <button class="btn btn-white" onclick="switchTab(18, null)" style="display:flex; justify-content:space-between; align-items:center; border:1px solid var(--line); box-shadow:none; border-radius:18px; padding:20px 24px; min-height:80px; transition: all 0.22s ease; cursor:pointer; text-align:left; width:100%;">
+          <span style="font-weight:700; color:var(--navy); font-size:15px; display:flex; align-items:center; gap:10px;">🕒 Transfer History</span>
+          <span class="srv-arrow" style="color:var(--orange); font-weight:800; font-size:18px; transition: transform 0.2s;">➔</span>
+        </button>
+        <button class="btn btn-white" onclick="switchTab(15, null)" style="display:flex; justify-content:space-between; align-items:center; border:1px solid var(--line); box-shadow:none; border-radius:18px; padding:20px 24px; min-height:80px; transition: all 0.22s ease; cursor:pointer; text-align:left; width:100%;">
+          <span style="font-weight:700; color:var(--navy); font-size:15px; display:flex; align-items:center; gap:10px;">📥 Received Invitations</span>
+          <span class="srv-arrow" style="color:var(--orange); font-weight:800; font-size:18px; transition: transform 0.2s;">➔</span>
+        </button>
+        <button class="btn btn-white" onclick="switchTab(12, null)" style="display:flex; justify-content:space-between; align-items:center; border:1px solid var(--line); box-shadow:none; border-radius:18px; padding:20px 24px; min-height:80px; transition: all 0.22s ease; cursor:pointer; text-align:left; width:100%;">
+          <span style="font-weight:700; color:var(--navy); font-size:15px; display:flex; align-items:center; gap:10px;">💵 Sell Shares</span>
+          <span class="srv-arrow" style="color:var(--orange); font-weight:800; font-size:18px; transition: transform 0.2s;">➔</span>
+        </button>
+        <button class="btn btn-white" onclick="switchTab(13, null)" style="display:flex; justify-content:space-between; align-items:center; border:1px solid var(--line); box-shadow:none; border-radius:18px; padding:20px 24px; min-height:80px; transition: all 0.22s ease; cursor:pointer; text-align:left; width:100%;">
+          <span style="font-weight:700; color:var(--navy); font-size:15px; display:flex; align-items:center; gap:10px;">➕ Buy Shares</span>
+          <span class="srv-arrow" style="color:var(--orange); font-weight:800; font-size:18px; transition: transform 0.2s;">➔</span>
+        </button>
       </div>
     </div>
   </div>
@@ -143,9 +158,9 @@
       <div style="display:flex; gap:10px; margin-bottom: 20px; flex-wrap:wrap;">
         <button class="btn btn-primary" onclick="switchTab(8)" style="padding:8px 15px; font-size:13px;">🆕 New Transfer</button>
         <button class="btn btn-white" onclick="switchTab(18)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">🕒 History</button>
-        <button class="btn btn-white" onclick="switchTab(19)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">⏳ Pending Sent</button>
-        <button class="btn btn-white" onclick="switchTab(20)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Incoming</button>
-        <button class="btn btn-white" onclick="switchTab(15)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Invitations</button>
+        <button class="btn btn-white" onclick="switchTab(19)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">⏳ Pending Sent<span class="badge-pending-sent" style="margin-left:6px; display:none; background:var(--blue); color:#fff; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
+        <button class="btn btn-white" onclick="switchTab(20)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Incoming<span class="badge-incoming" style="margin-left:6px; display:none; background:#e53935; color:#fff; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
+        <button class="btn btn-white" onclick="switchTab(15)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Invitations<span class="badge-invitations" style="margin-left:6px; display:none; background:var(--gold,#f59e0b); color:#7c3f00; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
       </div>
       <div id="transfer-progress"></div>
       <div style="background:#fffcf0; border:1px solid #ffe69c; border-radius:14px; padding:18px; margin-bottom:20px; font-size:13px; line-height:1.6; color:#664d03;">
@@ -176,6 +191,19 @@
               ✉️ Invite a Member Now
             </button>
           </div>
+        </div>
+      </div>
+
+      <!-- Available Shares and Value Box -->
+      <div style="background:#eaf7ff; border:1px solid #bce1f7; border-radius:14px; padding:18px; margin-bottom:20px; display:flex; justify-content:space-around; align-items:center; text-align:center;">
+        <div>
+          <div style="font-size:12px; color:var(--muted); font-weight:800; text-transform:uppercase;">My Available Shares</div>
+          <div style="font-size:24px; font-weight:800; color:var(--blue);" id="transfer-avail-shares">-</div>
+        </div>
+        <div style="width:1px; height:40px; background:#dbe7ef;"></div>
+        <div>
+          <div style="font-size:12px; color:var(--muted); font-weight:800; text-transform:uppercase;">Estimated Total Value</div>
+          <div style="font-size:24px; font-weight:800; color:var(--green);" id="transfer-avail-value">-</div>
         </div>
       </div>
 
@@ -219,9 +247,9 @@
       <div style="display:flex; gap:10px; margin-bottom: 20px; flex-wrap:wrap;">
         <button class="btn btn-white" onclick="switchTab(8)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">🆕 New Transfer</button>
         <button class="btn btn-white" onclick="switchTab(18)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">🕒 History</button>
-        <button class="btn btn-white" onclick="switchTab(19)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">⏳ Pending Sent</button>
-        <button class="btn btn-white" onclick="switchTab(20)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Incoming</button>
-        <button class="btn btn-primary" onclick="switchTab(15)" style="padding:8px 15px; font-size:13px;">📥 Invitations</button>
+        <button class="btn btn-white" onclick="switchTab(19)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">⏳ Pending Sent<span class="badge-pending-sent" style="margin-left:6px; display:none; background:var(--blue); color:#fff; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
+        <button class="btn btn-white" onclick="switchTab(20)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Incoming<span class="badge-incoming" style="margin-left:6px; display:none; background:#e53935; color:#fff; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
+        <button class="btn btn-primary" onclick="switchTab(15)" style="padding:8px 15px; font-size:13px;">📥 Invitations<span class="badge-invitations" style="margin-left:6px; display:none; background:var(--gold,#f59e0b); color:#7c3f00; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
       </div>
       <div style="background:#f5f9fc; color:var(--navy); padding:15px; border-radius:8px; border:1px solid #dbe7ef; margin-bottom:20px; font-size:14px; line-height:1.5;">
         <strong>ℹ️ Invitations:</strong> Approve or decline share transfer requests initiated by other members to your membership number.
@@ -326,9 +354,9 @@
     <div style="display:flex; gap:10px; margin-bottom: 20px; flex-wrap:wrap;">
       <button class="btn btn-white" onclick="switchTab(8)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">🆕 New Transfer</button>
       <button class="btn btn-primary" onclick="switchTab(18)" style="padding:8px 15px; font-size:13px;">🕒 History</button>
-      <button class="btn btn-white" onclick="switchTab(19)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">⏳ Pending Sent</button>
-      <button class="btn btn-white" onclick="switchTab(20)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Incoming</button>
-      <button class="btn btn-white" onclick="switchTab(15)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Invitations</button>
+      <button class="btn btn-white" onclick="switchTab(19)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">⏳ Pending Sent<span class="badge-pending-sent" style="margin-left:6px; display:none; background:var(--blue); color:#fff; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
+      <button class="btn btn-white" onclick="switchTab(20)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Incoming<span class="badge-incoming" style="margin-left:6px; display:none; background:#e53935; color:#fff; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
+      <button class="btn btn-white" onclick="switchTab(15)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Invitations<span class="badge-invitations" style="margin-left:6px; display:none; background:var(--gold,#f59e0b); color:#7c3f00; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
     </div>
     <div style="background:#f5f9fc; color:var(--navy); padding:15px; border-radius:8px; border:1px solid #dbe7ef; margin-bottom:20px; font-size:14px; line-height:1.5;">
       <strong>ℹ️ Transfer Log:</strong> Review a complete log of all your past share transfers, both sent and received.
@@ -343,9 +371,9 @@
     <div style="display:flex; gap:10px; margin-bottom: 20px; flex-wrap:wrap;">
       <button class="btn btn-white" onclick="switchTab(8)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">🆕 New Transfer</button>
       <button class="btn btn-white" onclick="switchTab(18)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">🕒 History</button>
-      <button class="btn btn-primary" onclick="switchTab(19)" style="padding:8px 15px; font-size:13px;">⏳ Pending Sent</button>
-      <button class="btn btn-white" onclick="switchTab(20)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Incoming</button>
-      <button class="btn btn-white" onclick="switchTab(15)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Invitations</button>
+      <button class="btn btn-primary" onclick="switchTab(19)" style="padding:8px 15px; font-size:13px;">⏳ Pending Sent<span class="badge-pending-sent" style="margin-left:6px; display:none; background:var(--blue); color:#fff; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
+      <button class="btn btn-white" onclick="switchTab(20)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Incoming<span class="badge-incoming" style="margin-left:6px; display:none; background:#e53935; color:#fff; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
+      <button class="btn btn-white" onclick="switchTab(15)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Invitations<span class="badge-invitations" style="margin-left:6px; display:none; background:var(--gold,#f59e0b); color:#7c3f00; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
     </div>
     <div style="background:#f5f9fc; color:var(--navy); padding:15px; border-radius:8px; border:1px solid #dbe7ef; margin-bottom:20px; font-size:14px; line-height:1.5;">
       <strong>ℹ️ Sent Requests:</strong> Monitor the status of share transfers you have initiated. You may cancel requests before the receiver validates their OTP.
@@ -360,9 +388,9 @@
     <div style="display:flex; gap:10px; margin-bottom: 20px; flex-wrap:wrap;">
       <button class="btn btn-white" onclick="switchTab(8)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">🆕 New Transfer</button>
       <button class="btn btn-white" onclick="switchTab(18)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">🕒 History</button>
-      <button class="btn btn-white" onclick="switchTab(19)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">⏳ Pending Sent</button>
-      <button class="btn btn-primary" onclick="switchTab(20)" style="padding:8px 15px; font-size:13px;">📥 Incoming</button>
-      <button class="btn btn-white" onclick="switchTab(15)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Invitations</button>
+      <button class="btn btn-white" onclick="switchTab(19)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">⏳ Pending Sent<span class="badge-pending-sent" style="margin-left:6px; display:none; background:var(--blue); color:#fff; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
+      <button class="btn btn-primary" onclick="switchTab(20)" style="padding:8px 15px; font-size:13px;">📥 Incoming<span class="badge-incoming" style="margin-left:6px; display:none; background:#e53935; color:#fff; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
+      <button class="btn btn-white" onclick="switchTab(15)" style="padding:8px 15px; font-size:13px; border:1px solid var(--line);">📥 Invitations<span class="badge-invitations" style="margin-left:6px; display:none; background:var(--gold,#f59e0b); color:#7c3f00; font-size:11px; font-weight:800; padding:1px 6px; border-radius:10px;">0</span></button>
     </div>
     <div style="background:#f5f9fc; color:var(--navy); padding:15px; border-radius:8px; border:1px solid #dbe7ef; margin-bottom:20px; font-size:14px; line-height:1.5;">
       <strong>ℹ️ Transfer Requests:</strong> Accept or reject incoming share transfers. Accepting a transfer generates a one-time password (OTP) sent to your mobile for final verification.
