@@ -39,13 +39,9 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
   // proxy server URL. When served by the proxy itself, use a relative path.
   const PROXY_PORT = '3001';
   const PX = (() => {
-    if (typeof location === 'undefined') return '';
-    if (location.protocol === 'file:') return `http://localhost:8000/proxy.php`;
-    // Local development using PHP built-in server
-    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-      return '/proxy.php';
-    }
-    return ''; // Production relies on .htaccess rewriting
+    if (typeof location === 'undefined') return '/proxy.php?_path=';
+    if (location.protocol === 'file:') return 'http://localhost:8000/proxy.php?_path=';
+    return '/proxy.php?_path=';
   })();
   
   // ── CDN CONFIGURATION ──────────────────────────────────────────

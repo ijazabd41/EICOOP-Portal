@@ -1,4 +1,4 @@
-const BASE_URL = window.location.origin + (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '/proxy.php' : '');
+const BASE_URL = window.location.origin + '/proxy.php?_path=';
 const root = document.getElementById('ops-root');
 let session = null;
 let dashboard = null;

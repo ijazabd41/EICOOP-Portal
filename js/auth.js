@@ -296,7 +296,7 @@ async function loginManagement() {
   if (btn) { btn.disabled = true; btn.textContent = 'Authenticating...'; }
   
   try {
-    const px = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? '/proxy.php' : '';
+    const px = '/proxy.php?_path=';
     const confRes = await fetch(px + '/api/config');
     let conf = { db: 'production' };
     try { conf = await confRes.json(); } catch(e) {}

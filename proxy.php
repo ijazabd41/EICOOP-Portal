@@ -31,7 +31,18 @@ if (!function_exists('getallheaders')) {
 
 // ── PATH PARSING ─────────────────────────────────────────────────
 if (isset($_GET['_path'])) {
-    $pathInfo = '/' . ltrim($_GET['_path'], '/');
+    $rawPath = $_GET['_path'];
+    if (($pos = strpos($rawPath, '?')) !== false) {
+        $pathInfo = '/' . ltrim(substr($rawPath, 0, $pos), '/');
+        $lostQuery = substr($rawPath, $pos + 1);
+        if (empty($_SERVER['QUERY_STRING'])) {
+            $_SERVER['QUERY_STRING'] = $lostQuery;
+        } else {
+            $_SERVER['QUERY_STRING'] .= '&' . $lostQuery;
+        }
+    } else {
+        $pathInfo = '/' . ltrim($rawPath, '/');
+    }
 } elseif (isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])) {
     $pathInfo = $_SERVER['PATH_INFO'];
 } elseif (isset($_SERVER['ORIG_PATH_INFO']) && !empty($_SERVER['ORIG_PATH_INFO'])) {

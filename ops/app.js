@@ -1,5 +1,5 @@
 window.EIC_OPS = {
-  baseUrl: window.location.origin + (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '/proxy.php' : ''),
+  baseUrl: window.location.origin + '/proxy.php?_path=',
   pollSeconds: 30,
   endpoints: {
     dashboard: '/api/shareholder/dashboard',

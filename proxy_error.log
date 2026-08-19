@@ -1595,3 +1595,6 @@ Response: {"status": "error", "success": false, "code": 400, "message": "Missing
 2026-08-19 09:35:17 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
 Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
 
+2026-08-19 10:02:57 - Error 403 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/transfers/71/chairman
+Response: {"success": false, "code": "CHAIRMAN_REVIEW_FAILED", "message": "ROLE_NOT_ALLOWED: shareholder_chairman required."}
+

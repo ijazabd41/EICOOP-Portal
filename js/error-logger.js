@@ -17,13 +17,9 @@ const ErrorLogger = (() => {
   // The proxy allowlist already covers /api/ which matches /api/v1/error-log/*.
   const PROXY_PORT = '3001';
   const BASE_URL = (() => {
-    if (typeof location === 'undefined') return '/proxy';
-    if (location.protocol === 'file:') return `http://localhost:8000/proxy.php`;
-    if (['3000', '5500', '8000', '8080'].includes(location.port) || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-      return `/proxy.php`;
-    }
-    if (location.port === PROXY_PORT) return '/proxy';
-    return ''; // Production relies on .htaccess rewriting
+    if (typeof location === 'undefined') return '/proxy.php?_path=';
+    if (location.protocol === 'file:') return 'http://localhost:8000/proxy.php?_path=';
+    return '/proxy.php?_path=';
   })();
 
   const _origin = (typeof location !== 'undefined' && location.origin !== 'null') ? location.origin : 'http://localhost';

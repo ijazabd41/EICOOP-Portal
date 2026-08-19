@@ -443,7 +443,7 @@ async function loadProfile() {
     if (!shNum) throw new Error('Not logged in as shareholder');
     
     // Fetch profile using the backend API
-    const px = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? '/proxy.php' : '';
+    const px = '/proxy.php?_path=';
     const r = await fetch(px + '/api/shareholder/lookup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
