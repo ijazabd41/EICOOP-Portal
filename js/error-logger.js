@@ -23,7 +23,7 @@ const ErrorLogger = (() => {
       return `/proxy.php`;
     }
     if (location.port === PROXY_PORT) return '/proxy';
-    return '/proxy.php';
+    return ''; // Production relies on .htaccess rewriting
   })();
 
   const _origin = (typeof location !== 'undefined' && location.origin !== 'null') ? location.origin : 'http://localhost';

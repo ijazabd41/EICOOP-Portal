@@ -1,4 +1,4 @@
-const BASE_URL = window.location.origin + '/proxy.php';
+const BASE_URL = window.location.origin + (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '/proxy.php' : '');
 const root = document.getElementById('ops-root');
 let session = null;
 let dashboard = null;
@@ -279,16 +279,13 @@ async function openTransfer(id,backKey='transfers'){
     </div><div class="notice">Operations approval before the receiver is notified is mandatory for every transfer. This transfer will ${r.auto_complete_after_receiver_otp?'complete automatically after receiver OTP.':'wait for Chairman final approval after receiver OTP.'}</div><div class="actions" id="actions"></div></section>`, backKey);
     document.getElementById('back').onclick=()=>loadSection(backKey);
     const a=document.getElementById('actions');
-    const isOps = session?.role_codes?.includes('shareholder_operation_manager');
-    const isChair = session?.role_codes?.includes('shareholder_chairman');
+    const showOps = r.can_operations_review === true;
+    const showChair = r.can_chairman_approve === true;
+    const showComplete = r.can_complete === true;
 
-    const showOps = r.can_operations_review ?? (isOps && ['operator', 'waiting_operations', 'submitted'].includes(r.state));
-    const showChair = r.can_chairman_approve ?? (isChair && ['approved', 'waiting_chairman', 'operator'].includes(r.state));
-    const showComplete = r.can_complete ?? (isOps && ['approved', 'operator'].includes(r.state));
-
-    if(showOps || isOps){a.innerHTML+=`<button data-act="ops-approve"${!showOps ? ' disabled' : ''}>Approve & Send to Receiver</button><button class="danger" data-act="ops-reject"${!showOps ? ' disabled' : ''}>Operations Reject</button>`;}
-    if(showChair || isChair){a.innerHTML+=`<button class="gold" data-act="chair-approve"${!showChair ? ' disabled' : ''}>Chairman Approve</button><button class="danger" data-act="chair-reject"${!showChair ? ' disabled' : ''}>Chairman Reject</button>`;}
-    if(showComplete || isOps){a.innerHTML+=`<button data-act="complete"${!showComplete ? ' disabled' : ''}>Complete Transfer</button>`;}
+    if(showOps){a.innerHTML+=`<button data-act="ops-approve">Approve & Send to Receiver</button><button class="danger" data-act="ops-reject">Operations Reject</button>`;}
+    if(showChair){a.innerHTML+=`<button class="gold" data-act="chair-approve">Chairman Approve</button><button class="danger" data-act="chair-reject">Chairman Reject</button>`;}
+    if(showComplete){a.innerHTML+=`<button data-act="complete">Complete Transfer</button>`;}
     a.querySelectorAll('button').forEach(btn=>btn.onclick=()=>runTransferAction(id,btn.dataset.act,backKey));
   }catch(e){shell(`<div class="panel"><p class="error">${esc(e.message)}</p></div>`);}
 }
@@ -299,7 +296,7 @@ async function runTransferAction(id,act,backKey){
     if(act==='ops-approve'||act==='ops-reject') await requestJson(`/api/shareholder/ops/transfers/${id}/review`,{method:'POST',body:{action:act.endsWith('approve')?'approve':'reject',note}});
     else if(act==='chair-approve'||act==='chair-reject') await requestJson(`/api/shareholder/ops/transfers/${id}/chairman`,{method:'POST',body:{action:act.endsWith('approve')?'approve':'reject',note}});
     else if(act==='complete') await requestJson(`/api/shareholder/ops/transfers/${id}/complete`,{method:'POST',body:{}});
-    await loadSection(backKey);
+    await openTransfer(id, backKey);
   }catch(e){alert(e.message);}
 }
 

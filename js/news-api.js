@@ -6,7 +6,8 @@ Expected JSON: {success:true, posts:[{id,title,subtitle,published_date,image_url
   const grid=document.getElementById('newsGrid');
   if(!grid) return;
   try{
-    const r=await fetch('/proxy.php/api/website/news?limit=6&lang=en_US',{credentials:'include'});
+    const px = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? '/proxy.php' : '';
+    const r=await fetch(px + '/api/website/news?limit=6&lang=en_US',{credentials:'include'});
     if(!r.ok) return;
     const data=await r.json();
     if(!data.success || !Array.isArray(data.posts) || !data.posts.length) return;

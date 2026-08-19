@@ -1345,3 +1345,253 @@ Response: {"success": "", "error_code": "INSUFFICIENT_SHARES", "message": "Insuf
 2026-08-17 12:16:39 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
 Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
 
+2026-08-17 12:42:48 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/dashboard
+Response: {"success": "", "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-17 12:42:48 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/notifications?page=1&limit=1&unread_only=true
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-17 12:42:49 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:42:49 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:42:49 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:42:49 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:43:07 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/dashboard
+Response: {"success": "", "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-17 12:43:07 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/notifications?page=1&limit=1&unread_only=true
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-17 12:43:08 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:43:08 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:43:08 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:43:08 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:44:54 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/dashboard
+Response: {"success": "", "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-17 12:44:54 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/notifications?page=1&limit=1&unread_only=true
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-17 12:44:55 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:44:55 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:44:55 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 12:44:55 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 14:31:36 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/dashboard
+Response: {"success": "", "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-17 14:31:39 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/notifications?page=1&limit=1&unread_only=true
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-17 14:31:39 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 14:31:39 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 14:31:39 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 14:31:39 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 14:48:05 - Error 409 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/applications/7/action
+Response: {"success": false, "code": "APPLICATION_ACTION_FAILED", "message": "Applicant must be an Emirati citizen.\nUAE Family Book number and attachment are required."}
+
+2026-08-17 14:48:13 - Error 409 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/applications/7/action
+Response: {"success": false, "code": "APPLICATION_ACTION_FAILED", "message": "Applicant must be an Emirati citizen.\nUAE Family Book number and attachment are required."}
+
+2026-08-17 14:50:07 - Error 409 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/receiver_action
+Response: {"success": "", "error_code": "INVALID_TRANSFER_STATE", "message": "This transfer is not waiting for receiver approval.", "transfer": {"id": "12", "reference": "SHT/00012", "transfer_reference": "SHT/00012", "from_membership_no": "5551", "from_name": "Abdullah", "from": "Abdullah", "to_membership_no": "5555", "to_name": "Abdullah 5555", "to": "Abdullah 5555", "number_of_shares": "55.0", "shares": "55.0", "state": "receiver_otp", "status": {"code": "receiver_otp", "label": "Receiver OTP Pending", "next_action": "verify_receiver_otp", "next_action_code": "VERIFY_RECEIVER_OTP", "current_user_role": "receiver", "progress": "75", "is_terminal": ""}, "status_label": "Receiver OTP Pending", "progress": "75", "next_action": "verify_receiver_otp", "next_action_code": "VERIFY_RECEIVER_OTP", "current_user_role": "receiver", "date": "2026-07-30", "created_at": "2026-07-30 13:33:36", "expires_at": "", "sender_otp_verified": "true", "receiver_approval_state": "pending", "receiver_otp_verified": "", "auto_complete_after_receiver_otp": "", "final_approval_policy": "chairman_final_approval", "operations_pre_receiver_approval_required": "true", "chairman_final_approval_required": "true", "sender_otp_sent_at": "", "sender_verified_at": "2026-07-30 13:33:50", "receiver_approval_at": "", "receiver_otp_sent_at": "", "receiver_otp_resend_count": "0", "receiver_otp_last_resent_at": "", "can_resend_receiver_otp": "", "receiver_action_endpoint": "/api/shareholder/transfer/receiver_action", "resend_receiver_otp_endpoint": "/api/shareholder/transfer/resend_receiver_otp", "receiver_verified_at": "", "approved_at": "", "operator": "Nuha Abbas", "completed_at": "", "cancelled_at": "", "cancellable": "", "review_required": "", "available_actions": ["verify_receiver_otp", "resend_receiver_otp"], "timeline": [{"code": "validated", "label": "Validated", "completed": "true", "at": "2026-07-30 13:33:36"}, {"code": "created", "label": "Request Created", "completed": "true", "at": "2026-07-30 13:33:36"},
+
+2026-08-17 14:50:07 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 14:50:24 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/offers/1/accept
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-17 14:50:24 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 14:52:24 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/listings/15/offers
+Response: {"success": "", "error_code": "LISTING_NOT_AVAILABLE", "message": "Listing not available."}
+
+2026-08-17 14:52:25 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 14:53:44 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/offers/1/accept
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-17 14:53:44 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 15:07:50 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/verify_otp
+Response: {"success": "", "message": "Invalid OTP."}
+
+2026-08-17 15:08:16 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/offers/1/accept
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-17 15:08:16 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 15:11:52 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/offers/1/accept
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-17 15:11:52 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 15:12:20 - Error 500 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/offers/1/accept
+Response: <!doctype html>
+<html lang=en>
+<title>500 Internal Server Error</title>
+<h1>Internal Server Error</h1>
+<p>The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.</p>
+
+
+2026-08-17 15:12:21 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 15:13:29 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/dashboard
+Response: {"success": "", "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-17 15:13:29 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/notifications?page=1&limit=1&unread_only=true
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-17 15:13:30 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 15:13:30 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 15:13:30 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 15:13:30 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 15:14:55 - Error 409 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/marketplace/listings/14/review
+Response: {"success": false, "code": "INVALID_STATE", "message": "Listing must be Submitted."}
+
+2026-08-17 15:15:30 - Error 409 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/ops/marketplace/listings/13/review
+Response: {"success": false, "code": "INVALID_STATE", "message": "Listing must be Submitted."}
+
+2026-08-17 15:17:21 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/listings/13/offers
+Response: {"success": "", "error_code": "LISTING_NOT_AVAILABLE", "message": "Listing not available."}
+
+2026-08-17 15:17:24 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 15:18:14 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/listings/15/offers
+Response: {"success": "", "error_code": "LISTING_NOT_AVAILABLE", "message": "Listing not available."}
+
+2026-08-17 15:18:17 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 15:52:59 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/listings/13/offers
+Response: {"success": "", "error_code": "LISTING_NOT_AVAILABLE", "message": "Listing not available."}
+
+2026-08-17 15:52:59 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 15:53:45 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/listings/13/offers
+Response: {"success": "", "error_code": "LISTING_NOT_AVAILABLE", "message": "Listing not available."}
+
+2026-08-17 15:53:45 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 16:00:23 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/listings/13/offers
+Response: {"success": "", "error_code": "LISTING_NOT_AVAILABLE", "message": "Listing not available."}
+
+2026-08-17 16:00:23 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 16:00:34 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/listings/13/offers
+Response: {"success": "", "error_code": "LISTING_NOT_AVAILABLE", "message": "Listing not available."}
+
+2026-08-17 16:00:35 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-17 16:15:19 - Error 404 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/marketplace/listings/13/offers
+Response: {"success": "", "error_code": "LISTING_NOT_AVAILABLE", "message": "Listing not available."}
+
+2026-08-17 16:15:19 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-19 09:28:42 - Error 504 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/verify_otp
+Response: {"success":false,"error_code":"BACKEND_TIMEOUT","message":"The backend server is taking too long to respond. Please try again shortly."}
+
+2026-08-19 09:28:56 - Error 504 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/verify_otp
+Response: {"success":false,"error_code":"BACKEND_TIMEOUT","message":"The backend server is taking too long to respond. Please try again shortly."}
+
+2026-08-19 09:29:40 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/verify_otp
+Response: {"success": "", "message": "OTP was not requested or has expired."}
+
+2026-08-19 09:29:46 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/verify_otp
+Response: {"success": "", "message": "OTP was not requested or has expired."}
+
+2026-08-19 09:31:14 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/transfer/status/SHT/00071
+Response: {"success": "", "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-19 09:31:15 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-19 09:35:15 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/dashboard
+Response: {"success": "", "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-19 09:35:16 - Error 401 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/shareholder/notifications?page=1&limit=1&unread_only=true
+Response: {"success": false, "error_code": "AUTH_REQUIRED", "message": "Authenticated shareholder session required."}
+
+2026-08-19 09:35:16 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-19 09:35:17 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-19 09:35:17 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+
+2026-08-19 09:35:17 - Error 400 on http://coopdiscerp923492dj2j.ddnsgeek.com:8076/api/v1/error-log/push?by_AJR=1
+Response: {"status": "error", "success": false, "code": 400, "message": "Missing required parameter(s): source, error_title, error_detail", "required_parameters": ["source", "error_title", "error_detail"]}
+

@@ -296,11 +296,12 @@ async function loginManagement() {
   if (btn) { btn.disabled = true; btn.textContent = 'Authenticating...'; }
   
   try {
-    const confRes = await fetch('/proxy.php/api/config');
+    const px = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? '/proxy.php' : '';
+    const confRes = await fetch(px + '/api/config');
     let conf = { db: 'production' };
     try { conf = await confRes.json(); } catch(e) {}
 
-    const r = await fetch('/proxy.php/web/session/authenticate', {
+    const r = await fetch(px + '/web/session/authenticate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
