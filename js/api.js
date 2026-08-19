@@ -2203,7 +2203,10 @@ const API = ((_DB='production', SK='cd_session', NOTIFY='eicoopit@gmail.com') =>
   const receiverAction = (transfer_reference, action, reason = '') => POST('/api/shareholder/transfer/receiver_action', { transfer_reference, action, reason });
   // UAT v19.0.2.0.8: Proper OTP resend (expires previous OTP, generates a new one).
   const resendReceiverOtp = (transfer_reference) => POST('/api/shareholder/transfer/resend_receiver_otp', { transfer_reference });
-  const getTransferStatus = (transfer_reference) => GET(`/api/shareholder/transfer/status/${encodeURIComponent(transfer_reference)}`);
+  const getTransferStatus = (transfer_reference, status_endpoint = null) => {
+    if (status_endpoint) return GET(status_endpoint);
+    return GET(`/api/shareholder/transfer/status?reference=${encodeURIComponent(transfer_reference)}`);
+  };
   const cancelTransfer = (transfer_reference, reason) => POST('/api/shareholder/transfer/cancel', { transfer_reference, reason });
   const getReceivedInvitations = () => GET('/api/shareholder/invitations');
   const getInvitationStatus = () => GET('/api/shareholder/invitation/status');

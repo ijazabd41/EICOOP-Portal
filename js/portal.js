@@ -238,7 +238,7 @@ async function loadDashboard() {
                     <div style="font-size:18px; font-weight:800; color:var(--blue);">${parseFloat(t.shares || t.number_of_shares || 0).toLocaleString()}</div>
                     <div style="font-size:10px; color:var(--muted); font-weight:700; text-transform:uppercase;">Shares</div>
                   </div>
-                  <button class="btn btn-white" style="padding:8px 12px; font-size:12px; border:1px solid var(--line);" onclick="switchTab(21); viewTransferStatus('${t.transfer_reference || t.reference || ''}')">Track</button>
+                  <button class="btn btn-white" style="padding:8px 12px; font-size:12px; border:1px solid var(--line);" onclick="switchTab(21); viewTransferStatus('${t.transfer_reference || t.reference || ''}', '${t.status_endpoint || ''}')">Track</button>
                 </div>
               </div>
             `).join('')}
@@ -1216,6 +1216,7 @@ async function handleLookupReceiver(e) {
 
 
 let currentTransferId = null;
+let currentTransferEndpoint = null;
 
 async function handleTransferSubmit(e) {
   e.preventDefault();
@@ -1241,6 +1242,7 @@ async function handleTransferSubmit(e) {
       if (isSuccess) {
           showToast('Transfer request submitted! Please verify OTP.');
           currentTransferId = res.transfer_reference || res.transfer?.reference || res.transfer?.id || res.id || shNum;
+          currentTransferEndpoint = res.status_endpoint || res.transfer?.status_endpoint || null;
           if (window.transferProgress) window.transferProgress.setStep(4);
           
           document.getElementById('transferStep2').style.display = 'none';
@@ -1308,7 +1310,7 @@ async function handleTransferOtpSubmit(e) {
           
           // Switch to Status tab to track it!
           switchTab(21);
-          viewTransferStatus(currentTransferId);
+          viewTransferStatus(currentTransferId, currentTransferEndpoint);
       } else {
           showToast('Error verifying OTP: ' + (res?.message || res?.error || 'Invalid OTP'), true);
       }
@@ -2105,7 +2107,7 @@ async function loadPendingTransfers() {
           <div>
             <div style="font-size:20px; font-weight:800; color:var(--blue); margin-bottom:8px; text-align:right;">${t.number_of_shares} Shares</div>
             <div style="display:flex; gap:8px;">
-              <button class="btn btn-primary" style="padding:8px 12px; font-size:12px;" onclick="switchTab(21); viewTransferStatus('${t.reference || t.id}')">View Status</button>
+              <button class="btn btn-primary" style="padding:8px 12px; font-size:12px;" onclick="switchTab(21); viewTransferStatus('${t.reference || t.id}', '${t.status_endpoint || ''}')">View Status</button>
               ${isCancellable ? `<button class="btn btn-white" style="padding:8px 12px; font-size:12px; color:red; border:1px solid red;" onclick="cancelTransferRequest('${t.reference || t.id}')">Cancel</button>` : ''}
             </div>
           </div>
@@ -2563,7 +2565,7 @@ async function cancelTransferRequest(reference) {
   }
 }
 
-async function viewTransferStatus(reference) {
+async function viewTransferStatus(reference, endpoint = null) {
   document.getElementById('statusPageTitle').textContent = `📊 Transfer Status: ${reference}`;
   document.getElementById('currentTransferState').textContent = 'Loading...';
   document.getElementById('transferTimeline').innerHTML = '';
@@ -2575,7 +2577,7 @@ async function viewTransferStatus(reference) {
   
   const fetchStatus = async () => {
     try {
-      const res = await API.getTransferStatus(reference);
+      const res = await API.getTransferStatus(reference, endpoint);
       
       const transferData = res.transfer || res;
       const statusObj = transferData.status || {};
